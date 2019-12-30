@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "203504468157",
+    "firebase_url": "https://pamon-567cd.firebaseio.com",
+    "project_id": "pamon-567cd",
+    "storage_bucket": "pamon-567cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203504468157:android:a639807398d32d63b3f7d4",
+        "android_client_info": {
+          "package_name": "no.adamtek.pamon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203504468157-q990l9eqb29a37k84qh9e9qrr7n0jn9a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbo6d-oo8OnQpAEQN0mGA1SH4QT7_UAbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203504468157-q990l9eqb29a37k84qh9e9qrr7n0jn9a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
