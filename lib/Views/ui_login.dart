@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/Views/listview_rooms.dart';
+import 'package:hello_world/services/auth.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key key, this.title}) : super(key: key);
@@ -26,8 +27,12 @@ class PasswordFieldValidator {
 }
 
 class _LoginWidget extends State<LoginWidget> {
-  String _email;
-  String _password;
+
+  final AuthService _auth = AuthService();
+  String _email = '';
+  String _password = '';
+  String error = '';
+
   FormType _formType = FormType.login;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -150,6 +155,7 @@ class _LoginWidget extends State<LoginWidget> {
     final FormState form = formKey.currentState;
     if (form.validate()) {
       form.save();
+
       return true;
     }
     return false;
@@ -157,11 +163,20 @@ class _LoginWidget extends State<LoginWidget> {
 
   Future<void> validateAndSubmit(BuildContext context) async {
     if (validateAndSave()) {
-      //call Firebase.
-     Navigator.push(
-       context,
-       MaterialPageRoute(builder: (context) => ListViewRooms()),
-     );
+      print(_email);
+      print(_password);
+      dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
+      if(result == null)
+        {
+          setState(() => error = 'could not sign in with those credentials.');
+        }
+      if(result != null) {
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ListViewRooms()),
+        );
+      }
 
     }
   }
