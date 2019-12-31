@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/listview_beds.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -14,12 +15,11 @@ class RoomCard extends StatefulWidget {
 class _RoomCardState extends State<RoomCard> {
   int count = 0;
 
-
-  void _updateNotificationcounter()
-  {
-    widget.room.totalNotifications+=1;
+  void _updateNotificationcounter() {
+    widget.room.totalNotifications += 1;
     count = widget.room.totalNotifications;
   }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,9 +29,8 @@ class _RoomCardState extends State<RoomCard> {
           width: 50, // can be whatever value you want
           child: Row(
             children: <Widget>[
-             // FlutterLogo(),
+              // FlutterLogo(),
               new Icon(Icons.exit_to_app),
-              
             ],
           )),
       title: Center(
@@ -44,12 +43,23 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildTrial() {
-    if (count == 0)
-      return new Icon(Icons.notifications_active);
-    else
-      return Badge(
-          badgeContent: Text("$count", style: TextStyle(color: Colors.white)),
-          child: new Icon(Icons.notifications_active));
+    return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      IconButton(
+        alignment: Alignment(30.0, 0.0),
+        icon: Icon(Icons.people),
+        iconSize: 30,
+        color: Colors.grey,
+        onPressed: () {},
+      ),
+      IconButton(
+        alignment: Alignment(15.0, 0.0),
+        icon: Icon(Icons.people),
+        iconSize: 30,
+        color: Colors.red,
+        onPressed: () {},
+      
+      ),
+    ]);
   }
 
   Widget buildSubTrial() {
@@ -77,28 +87,27 @@ class _RoomCardState extends State<RoomCard> {
     }
   }
 
-void onTapBrowseToBeds(BuildContext  context) async {
-
-  
+  void onTapBrowseToBeds(BuildContext context) async {
     // navigate to the next screen.
-     Navigator.push(
-       context,
-       MaterialPageRoute(builder: (context) => ListViewBeds(
-         beds: widget.room.beds,parentAction: _updateNotificationcounter,)),
-     );
-}
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ListViewBeds(
+                beds: widget.room.beds,
+                parentAction: _updateNotificationcounter,
+              )),
+    );
+  }
 
-
-
-
-
-
-@override
+  @override
   void initState() {
     count = this.widget.room.totalNotifications;
     super.initState();
   }
 
 
+  void timeToTalk(BuildContext context)
+  {
+  
+  }
 }
-
