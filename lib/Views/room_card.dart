@@ -14,6 +14,7 @@ class _RoomCardState extends State<RoomCard> {
   int count = 0;
   Color iconTalk1Color = Colors.red;
   Color iconTalk2Color = Colors.grey;
+  Color cardColor = Colors.white;
 
   void _updateNotificationcounter() {
     widget.room.totalNotifications += 1;
@@ -24,6 +25,7 @@ class _RoomCardState extends State<RoomCard> {
   Widget build(BuildContext context) {
     return Card(
         //
+        color: cardColor,
         child: ListTile(
       leading: Container(
           width: 50, // can be whatever value you want
@@ -34,7 +36,8 @@ class _RoomCardState extends State<RoomCard> {
             ],
           )),
       title: Center(
-        child: Text(widget.room.roomName),
+        child: Text(widget.room.roomName ,
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 20), ),
       ),
       subtitle: buildSubTrial(),
       trailing: buildTrial(),
@@ -66,7 +69,7 @@ class _RoomCardState extends State<RoomCard> {
       return new Center(
           child: new Text(
         "אין הוראות חדשות",
-        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold,fontSize: 18),
         overflow: TextOverflow.fade,
         maxLines: 1,
         softWrap: true,
@@ -75,10 +78,11 @@ class _RoomCardState extends State<RoomCard> {
       String text2 = "הוראות שלא בוצעו ";
 
       String text3 = text2 + "$count";
+      cardColor = Colors.red.withOpacity(0.4);
       return new Center(
           child: new Text(
         text3,
-        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold , fontSize: 18),
         overflow: TextOverflow.visible,
         maxLines: 1,
         softWrap: false,
@@ -105,6 +109,8 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   handleTalk1() {
+
+    
     setState(() {
       iconTalk1Color = Colors.yellow;
     });
