@@ -11,7 +11,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 1,
       child: ListTile(
-        leading: IconButton(
+        trailing: IconButton(
           icon: Icon(
             Icons.person,
             color: Colors.blue,
@@ -24,7 +24,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 2,
       child: ListTile(
-        leading: IconButton(
+        trailing: IconButton(
           icon: Icon(
             Icons.settings,
             color: Colors.blue,
@@ -37,7 +37,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 3,
       child: ListTile(
-        leading: IconButton(
+        trailing: IconButton(
           icon: Icon(
             Icons.exit_to_app,
             color: Colors.blue,
