@@ -4,6 +4,8 @@ import 'package:hello_world/Views/room_card.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
+import 'appBar.dart';
+
 class ListViewRooms extends StatefulWidget {
   _ListViewRoomsState createState() => _ListViewRoomsState();
 }
@@ -20,8 +22,10 @@ class _ListViewRoomsState extends State<ListViewRooms> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('Click Listener ListView Example'),
+        appBar: BaseAppBar(
+          title: Text('title'),
+          appBar: AppBar(),
+          
         ),
         body: Center(
           child:  FutureBuilder(

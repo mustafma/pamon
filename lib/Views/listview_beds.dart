@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Views/bed_card.dart';
 
+import 'appBar.dart';
+
 
 class ListViewBeds extends StatefulWidget {
   final List<Bed> beds;
@@ -25,8 +27,10 @@ class _ListViewBedsState extends State<ListViewBeds> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text('Click Listener ListView Example'),
+        appBar: BaseAppBar(
+          title: Text('title'),
+          appBar: AppBar(),
+         
         ),
         body: Center(child: 
         ListView.builder(
