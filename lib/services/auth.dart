@@ -4,12 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseUser user;
 
   // sign in anony.
   Future signInAnon() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
+      user = result.user;
       return user;
     } catch(e)
     {
@@ -21,7 +22,8 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try{
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+
+      user = result.user;
       return user;
     }
     catch(e) {

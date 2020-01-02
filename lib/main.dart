@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:hello_world/Views/listview_rooms.dart';
 import 'package:hello_world/Views/ui_login.dart';
+import 'Views/landing_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pamon App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginWidget(),//ListViewRooms(),
+      home: LandingPage(),//home: LoginWidget(),//ListViewRooms(),
         );
   }
 }
