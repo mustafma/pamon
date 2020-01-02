@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/listview_beds.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 
 class RoomCard extends StatefulWidget {
   final Room room;
@@ -14,6 +12,8 @@ class RoomCard extends StatefulWidget {
 
 class _RoomCardState extends State<RoomCard> {
   int count = 0;
+  Color iconTalk1Color = Colors.red;
+  Color iconTalk2Color = Colors.grey;
 
   void _updateNotificationcounter() {
     widget.room.totalNotifications += 1;
@@ -48,16 +48,15 @@ class _RoomCardState extends State<RoomCard> {
         alignment: Alignment(30.0, 0.0),
         icon: Icon(Icons.people),
         iconSize: 30,
-        color: Colors.grey,
-        onPressed: () {},
+        color: iconTalk2Color,
+        onPressed: () => handleTalk1(),
       ),
       IconButton(
         alignment: Alignment(15.0, 0.0),
         icon: Icon(Icons.people),
         iconSize: 30,
-        color: Colors.red,
-        onPressed: () {},
-      
+        color: iconTalk1Color,
+        onPressed: ()  =>handleTalk1(),
       ),
     ]);
   }
@@ -105,9 +104,9 @@ class _RoomCardState extends State<RoomCard> {
     super.initState();
   }
 
-
-  void timeToTalk(BuildContext context)
-  {
-  
+  handleTalk1() {
+    setState(() {
+      iconTalk1Color = Colors.yellow;
+    });
   }
 }
