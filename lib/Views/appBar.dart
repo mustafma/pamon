@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_world/Views/ui_login.dart';
+import 'package:hello_world/services/auth.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor = Colors.blue;
   final Text title;
   final AppBar appBar;
-
+  final AuthService _auth = AuthService();
   BaseAppBar({Key key, this.title, this.appBar}) : super(key: key);
 
   final List<PopupMenuEntry<int>> _listOfType = [
@@ -44,12 +47,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
             Icons.exit_to_app,
             color: Colors.blue,
           ),
-          onPressed: () {},
+          onPressed: () {_handleSignout();},
+
         ),
         title: Text('יציאה'),
       ),
       //child: Text('יציאה'),
     ),
+
   ];
 
   @override
@@ -66,4 +71,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
+
+
+
+}
+
+
+Future<LoginWidget> _handleSignout() async{
+  await FirebaseAuth.instance.signOut();
+  return new LoginWidget();
+
 }
