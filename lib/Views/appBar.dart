@@ -9,9 +9,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
+
       value: 1,
       child: ListTile(
-        trailing: IconButton(
+      
+        trailing: IconButton(  
           icon: Icon(
             Icons.person,
             color: Colors.blue,
