@@ -4,6 +4,8 @@ import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/session.dart';
 import 'package:hello_world/services/auth.dart';
 
+import 'listview_notifications.dart';
+
 class BedCard extends StatefulWidget {
   final Bed bed;
   final parentRoomAction;
@@ -61,23 +63,19 @@ class _BedCardState extends State<BedCard> {
           ),
           subtitle: buildSubTrial(),
           trailing: buildTrial(),
-          //onTap: () => increamentCounter(),
+          onTap: () => onTapBrowseToBedInstructions(context),
         ));
   }
 
-
-
-
-Widget buildLeading()
-{
-  return new PopupMenuButton(
-        enabled: popMenueBtnEnaled1,
-        onSelected: (value) => _selectBedStatus(value),
-        itemBuilder: (BuildContext context) {
-          return _listOfBedStatuses;
-        },
-      );
-}
+  Widget buildLeading() {
+    return new PopupMenuButton(
+      enabled: popMenueBtnEnaled1,
+      onSelected: (value) => _selectBedStatus(value),
+      itemBuilder: (BuildContext context) {
+        return _listOfBedStatuses;
+      },
+    );
+  }
 
   Widget buildTrial() {
     if (count == 0)
@@ -136,11 +134,7 @@ Widget buildLeading()
     increamentCounter();
   }
 
-
-void _selectBedStatus(int choice)
-{
-
-}
+  void _selectBedStatus(int choice) {}
   void increamentCounter() {
     // Call Service to update DB  and Push  Notification
     widget.parentRoomAction();
@@ -158,16 +152,24 @@ void _selectBedStatus(int choice)
       cardColor = Colors.red.withOpacity(0.9);
     else
       cardColor = Colors.white;
-    if (session.instance().iSNursePermessions) 
-    {
+    if (session.instance().iSNursePermessions) {
       popMenueBtnEnaled = false;
       popMenueBtnEnaled1 = true;
-    }
-    else{
-       popMenueBtnEnaled = true;
+    } else {
+      popMenueBtnEnaled = true;
       popMenueBtnEnaled1 = false;
     }
 
     super.initState();
+  }
+
+  void onTapBrowseToBedInstructions(BuildContext context) {
+    // navigate to the next screen.
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ListViewInstructions(
+                  bedInstructions: widget.bed.notifications,
+                )));
   }
 }

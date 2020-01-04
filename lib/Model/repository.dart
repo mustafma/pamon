@@ -34,6 +34,9 @@ class Repository {
     bed1.totalActiveNotifications = 2;
     bed1.name = "מיטה 1";
 
+
+    
+
     Bed bed2 = new Bed();
     bed2.roomId = 1;
     bed2.bedNumber = 2;
@@ -79,6 +82,13 @@ class Repository {
     bed33.name = "מיטה 3";
 
 
+    BedInstruction bedInstruction1 = new BedInstruction();
+    bedInstruction1.notificationId = 1;
+    bedInstruction1.notificationType = "A";
+    bedInstruction1.notificationText = "הוראה סוג A";
+    bedInstruction1.parentBedId = 1;
+
+    bed1.notifications.add(bedInstruction1);
 
     room2.beds.add(bed11);
     room2.beds.add(bed22);

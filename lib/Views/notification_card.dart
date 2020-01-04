@@ -1,70 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart';
+import 'package:hello_world/Model/bed.dart';
+import 'package:hello_world/Model/session.dart';
 
-class NotificationCard extends StatefulWidget{
+class NotificationCard extends StatefulWidget {
+  final BedInstruction bedInstruction;
 
-    _NotificationCard createState() => _NotificationCard();
-
-
+  NotificationCard({Key key, @required this.bedInstruction});
+  _NotificationCard createState() => _NotificationCard();
 }
 
-class _NotificationCard extends State<NotificationCard>{
+class _NotificationCard extends State<NotificationCard> {
+  int count = 0;
+  bool popMenueBtnEnaled = false;
+  Color cardColor;
 
- int count = 0;
+  List<PopupMenuEntry<int>> _listOfBedStatuses = [
+    new PopupMenuItem<int>(
+      value: 1,
+      child: Text('בצע הוראה'),
+    ),
+  ];
 
- @override
+  @override
   Widget build(BuildContext context) {
-return Card(
+    return Card(
         //
+        color: cardColor,
         child: ListTile(
-      leading: Container(
-          width: 50, // can be whatever value you want
-          child: Row(
-            children: <Widget>[
-              FlutterLogo()
-              
-            ],
-          )),
-      title: Center(
-        child: Text("CCC"),
-      ),
-      subtitle: buildSubTrial(),
-      trailing: buildTrial(),
-
-    ));
-  }
-  Widget buildTrial() {
-    if (count == 0)
-      return new Icon(Icons.notifications_active);
-    else
-      return Badge(
-          badgeContent: Text("$count", style: TextStyle(color: Colors.white)),
-          child: new Icon(Icons.notifications_active));
+          leading: buildLeading(),
+          title: Center(
+            child: Text(widget.bedInstruction.notificationText),
+          ),
+          //onTap: () => onTapBrowseToBedInstructions(context),
+        ));
   }
 
-  Widget buildSubTrial() {
-    if (count == 0)
-      return new Center(
-          child: new Text(
-        "אין הוראות חדשות",
-        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-        overflow: TextOverflow.fade,
-        maxLines: 1,
-        softWrap: true,
-      ));
-    else {
-      String text2 = "הוראות שלא בוצעו ";
+  Widget buildLeading() {
+    return new PopupMenuButton(
+      enabled: popMenueBtnEnaled,
+      onSelected: (value) => _selectInstructionAction(value),
+      itemBuilder: (BuildContext context) {
+        return _listOfBedStatuses;
+      },
+    );
+  }
 
-      String text3 = text2 + "$count";
-      return new Center(
-          child: new Text(
-        text3,
-        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-        overflow: TextOverflow.visible,
-        maxLines: 1,
-        softWrap: false,
-      ));
+  @override
+  void initState() {
+    if (session.instance().iSNursePermessions) {
+      popMenueBtnEnaled = true;
+    } else {
+      popMenueBtnEnaled = false;
     }
+
+    super.initState();
   }
 
+  void _selectInstructionAction(int choice) {}
 }
