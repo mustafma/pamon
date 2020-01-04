@@ -15,6 +15,8 @@ class BedCard extends StatefulWidget {
 
 class _BedCardState extends State<BedCard> {
   bool popMenueBtnEnaled = false;
+  bool popMenueBtnEnaled1 = false;
+
   List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
       value: 1,
@@ -30,7 +32,22 @@ class _BedCardState extends State<BedCard> {
     ),
   ];
 
-  Color cardColor = Colors.white;
+  List<PopupMenuEntry<int>> _listOfBedStatuses = [
+    new PopupMenuItem<int>(
+      value: 1,
+      child: Text('מיטה פנוייה'),
+    ),
+    new PopupMenuItem<int>(
+      value: 2,
+      child: Text('מיטה לשחרור'),
+    ),
+    new PopupMenuItem<int>(
+      value: 3,
+      child: Text('מיטה עם זיהום'),
+    ),
+  ];
+
+  Color cardColor;
   int count = 0;
   @override
   Widget build(BuildContext context) {
@@ -38,15 +55,7 @@ class _BedCardState extends State<BedCard> {
         //
         color: cardColor,
         child: ListTile(
-          leading: Container(
-              width: 50, // can be whatever value you want
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.notification_important,
-                  ),
-                ],
-              )),
+          leading: buildLeading(),
           title: Center(
             child: Text(widget.bed.name),
           ),
@@ -55,6 +64,20 @@ class _BedCardState extends State<BedCard> {
           //onTap: () => increamentCounter(),
         ));
   }
+
+
+
+
+Widget buildLeading()
+{
+  return new PopupMenuButton(
+        enabled: popMenueBtnEnaled1,
+        onSelected: (value) => _selectBedStatus(value),
+        itemBuilder: (BuildContext context) {
+          return _listOfBedStatuses;
+        },
+      );
+}
 
   Widget buildTrial() {
     if (count == 0)
@@ -84,7 +107,6 @@ class _BedCardState extends State<BedCard> {
 
   Widget buildSubTrial() {
     if (count == 0) {
-      cardColor = Colors.white;
       return new Center(
           child: new Text(
         "אין הוראות חדשות",
@@ -95,7 +117,6 @@ class _BedCardState extends State<BedCard> {
         softWrap: true,
       ));
     } else {
-      cardColor = Colors.red.withOpacity(0.9);
       String text2 = "הוראות שלא בוצעו ";
 
       String text3 = text2 + "$count";
@@ -115,19 +136,37 @@ class _BedCardState extends State<BedCard> {
     increamentCounter();
   }
 
+
+void _selectBedStatus(int choice)
+{
+
+}
   void increamentCounter() {
     // Call Service to update DB  and Push  Notification
     widget.parentRoomAction();
     setState(() {
       count = count + 1;
-      this.widget.bed.totalActiveNotifications += 1;
+      this.widget.bed.totalActiveNotifications = count;
+      cardColor = Colors.red.withOpacity(0.9);
     });
   }
 
   @override
   void initState() {
     count = this.widget.bed.totalActiveNotifications;
-    if (session.iSNursePermessions()) popMenueBtnEnaled = true;
+    if (count > 0)
+      cardColor = Colors.red.withOpacity(0.9);
+    else
+      cardColor = Colors.white;
+    if (session.instance().iSNursePermessions) 
+    {
+      popMenueBtnEnaled = false;
+      popMenueBtnEnaled1 = true;
+    }
+    else{
+       popMenueBtnEnaled = true;
+      popMenueBtnEnaled1 = false;
+    }
 
     super.initState();
   }

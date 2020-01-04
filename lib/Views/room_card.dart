@@ -27,22 +27,27 @@ class _RoomCardState extends State<RoomCard> {
         //
         color: cardColor,
         child: ListTile(
-      leading: Container(
-          width: 50, // can be whatever value you want
-          child: Row(
-            children: <Widget>[
-              // FlutterLogo(),
-              new Icon(Icons.exit_to_app),
-            ],
-          )),
-      title: Center(
-        child: Text(widget.room.roomName ,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,fontSize: 20), ),
-      ),
-      subtitle: buildSubTrial(),
-      trailing: buildTrial(),
-      onTap: () => onTapBrowseToBeds(context),
-    ));
+          leading: Container(
+              width: 50, // can be whatever value you want
+              child: Row(
+                children: <Widget>[
+                  // FlutterLogo(),
+                  new Icon(Icons.exit_to_app),
+                ],
+              )),
+          title: Center(
+            child: Text(
+              widget.room.roomName,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+            ),
+          ),
+          subtitle: buildSubTrial(),
+          trailing: buildTrial(),
+          onTap: () => onTapBrowseToBeds(context),
+        ));
   }
 
   Widget buildTrial() {
@@ -59,7 +64,7 @@ class _RoomCardState extends State<RoomCard> {
         icon: Icon(Icons.people),
         iconSize: 30,
         color: iconTalk1Color,
-        onPressed: ()  =>handleTalk1(),
+        onPressed: () => handleTalk1(),
       ),
     ]);
   }
@@ -69,7 +74,8 @@ class _RoomCardState extends State<RoomCard> {
       return new Center(
           child: new Text(
         "אין הוראות חדשות",
-        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold,fontSize: 18),
+        style: TextStyle(
+            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 18),
         overflow: TextOverflow.fade,
         maxLines: 1,
         softWrap: true,
@@ -78,11 +84,12 @@ class _RoomCardState extends State<RoomCard> {
       String text2 = "הוראות שלא בוצעו ";
 
       String text3 = text2 + "$count";
-      cardColor = Colors.red.withOpacity(0.4);
+
       return new Center(
           child: new Text(
         text3,
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold , fontSize: 18),
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
         overflow: TextOverflow.visible,
         maxLines: 1,
         softWrap: false,
@@ -105,12 +112,14 @@ class _RoomCardState extends State<RoomCard> {
   @override
   void initState() {
     count = this.widget.room.totalNotifications;
+    if (count > 0)
+      cardColor = Colors.red.withOpacity(0.4);
+    else
+      cardColor = Colors.white;
     super.initState();
   }
 
   handleTalk1() {
-
-    
     setState(() {
       iconTalk1Color = Colors.yellow;
     });

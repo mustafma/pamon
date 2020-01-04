@@ -5,7 +5,7 @@ import 'package:hello_world/Views/listview_rooms.dart';
 import 'package:hello_world/Views/ui_login.dart';
 
 class LandingPage extends StatelessWidget {
-  static session sessionObj;
+  static session sessionObj = session.instance();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<FirebaseUser>(
@@ -17,7 +17,10 @@ class LandingPage extends StatelessWidget {
             return LoginWidget();
           }
           // initialize session again 
-          sessionObj = new session("yosef", "N", DateTime.now());
+          if(sessionObj.userType == null || sessionObj.userType.isEmpty)
+          sessionObj.userType =  "N";
+          sessionObj.userID = user.displayName;
+       
           return ListViewRooms();
         } else {
           return Scaffold(
