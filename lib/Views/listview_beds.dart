@@ -28,7 +28,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('title'),
+          title: Text('רשימת מיטות'),
           appBar: AppBar(),
          
         ),

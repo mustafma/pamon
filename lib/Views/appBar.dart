@@ -59,14 +59,21 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-        title: Text("pamon"),
+    return Directionality(textDirection: TextDirection.rtl,
+    child: AppBar(
+        
+        title:  Center(child: title),
         backgroundColor: backgroundColor,
         actions: <Widget>[
           new PopupMenuButton(itemBuilder: (BuildContext context) {
             return _listOfType;
           }),
-        ]);
+        ])
+    
+    ,);
+    
+    
+    
   }
 
   @override

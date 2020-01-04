@@ -22,7 +22,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('title'),
+          title: Text('רשימת ההוראות' , textDirection:TextDirection.rtl),
           appBar: AppBar(),
         ),
         body: Center(

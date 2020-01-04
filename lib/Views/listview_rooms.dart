@@ -23,7 +23,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('title'),
+          title: Text('רשימת חדרים'),
           appBar: AppBar(),
           
         ),
