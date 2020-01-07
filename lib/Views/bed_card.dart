@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/session.dart';
-import 'package:hello_world/services/auth.dart';
 
 import 'listview_notifications.dart';
 

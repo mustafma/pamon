@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/session.dart';
@@ -13,6 +15,8 @@ class _NotificationCard extends State<NotificationCard> {
   int count = 0;
   bool popMenueBtnEnaled = false;
   Color cardColor;
+  int diffInMints = 0;
+  Timer timer;
 
   List<PopupMenuEntry<int>> _listOfBedStatuses = [
     new PopupMenuItem<int>(
@@ -31,6 +35,7 @@ class _NotificationCard extends State<NotificationCard> {
           title: Center(
             child: Text(widget.bedInstruction.notificationText),
           ),
+          subtitle: buildSubTrial(),
           //onTap: () => onTapBrowseToBedInstructions(context),
         ));
   }
@@ -45,6 +50,12 @@ class _NotificationCard extends State<NotificationCard> {
     );
   }
 
+  Widget buildSubTrial() {
+    return new Center(
+      child: Text("passed more than :" + diffInMints.toString()),
+    );
+  }
+
   @override
   void initState() {
     if (session.instance().iSNursePermessions) {
@@ -53,8 +64,18 @@ class _NotificationCard extends State<NotificationCard> {
       popMenueBtnEnaled = false;
     }
 
+    timer = Timer.periodic(
+        Duration(seconds: 15), (Timer t) => calculatePassedTime());
     super.initState();
   }
 
   void _selectInstructionAction(int choice) {}
+
+  void calculatePassedTime() {
+    DateTime now = DateTime.now();
+    setState(() {
+      diffInMints = now.difference(widget.bedInstruction.createdAt).inMinutes;
+    });
+    
+  }
 }
