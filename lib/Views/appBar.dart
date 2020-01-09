@@ -78,14 +78,10 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
-
-
-
 }
 
 
 Future<LoginWidget> _handleSignout() async{
   await FirebaseAuth.instance.signOut();
-  return new LoginWidget();
-
+  return LoginWidget();
 }

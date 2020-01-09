@@ -58,7 +58,7 @@ class _NotificationCard extends State<NotificationCard> {
 
   @override
   void initState() {
-    if (session.instance().iSNursePermessions) {
+    if (Session.instance().iSNursePermessions) {
       popMenueBtnEnaled = true;
     } else {
       popMenueBtnEnaled = false;

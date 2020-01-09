@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class session {
+class Session {
   @protected
   String _userId;
   @protected
@@ -8,14 +8,14 @@ class session {
   // @protected
   // DateTime _lastlogindt;
 
-  static session _instance;
+  static Session _instance;
 
-  session._privateConstructor();
+  Session._privateConstructor();
 
   //dart is single thread programming no need for thread safe code
-  static session instance() {
+  static Session instance() {
     if (_instance == null) {
-      _instance = session._privateConstructor();
+      _instance = Session._privateConstructor();
     }
 
     return _instance;

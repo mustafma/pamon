@@ -151,7 +151,7 @@ class _BedCardState extends State<BedCard> {
       cardColor = Colors.red.withOpacity(0.9);
     else
       cardColor = Colors.white;
-    if (session.instance().iSNursePermessions) {
+    if (Session.instance().iSNursePermessions) {
       popMenueBtnEnaled = false;
       popMenueBtnEnaled1 = true;
     } else {
