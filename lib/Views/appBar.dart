@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/Views/ui_login.dart';
 import 'package:hello_world/services/auth.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,12 +13,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 1,
       child: ListTile(
-        trailing: IconButton(
-          icon: Icon(
-            Icons.person,
-            color: Colors.blue,
-          ),
-          onPressed: () {},
+        trailing: Icon(
+          Icons.person,
+          color: Color.fromRGBO(64, 75, 96, 9),
         ),
         title: Text('פרופיל'),
       ),
@@ -30,7 +26,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         trailing: Icon(
           // icon: Icon(
           Icons.settings,
-          color: Colors.blue,
+          color: Color.fromRGBO(64, 75, 96, 9),
           //  ),
           // onPressed: () {},
         ),
@@ -43,14 +39,14 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         trailing: Icon(
           // icon: Icon(
           Icons.exit_to_app,
-          color: Colors.blue,
+          color: Color.fromRGBO(64, 75, 96, 9),
           // ),
         ),
         title: Text('יציאה'),
-      //  onTap: ()  async {
+        //  onTap: ()  async {
         //   await _handleSignout();
 
-       // },
+        // },
       ),
       //child: Text('יציאה'),
     ),
@@ -61,19 +57,24 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: AppBar(
+          elevation: 0.1,
           title: Center(child: title),
-          backgroundColor: backgroundColor,
+          backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
           actions: <Widget>[
-            new PopupMenuButton(itemBuilder: (BuildContext context) {
-              return _listOfType;
-            },
-            onSelected: (selection){
-              switch(selection){
-                case 3:
-                   _handleSignout(context);
-                break;
-              }
-            },),
+            new PopupMenuButton(
+              initialValue: 1,
+              icon: Icon(Icons.list),
+              itemBuilder: (BuildContext context) {
+                return _listOfType;
+              },
+              onSelected: (selection) {
+                switch (selection) {
+                  case 3:
+                    _handleSignout(context);
+                    break;
+                }
+              },
+            ),
           ]),
     );
   }
@@ -84,6 +85,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 Future _handleSignout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
- Navigator.pushNamed(context, '/SignOut');
+  Navigator.pushNamed(context, '/SignOut');
   //return LoginWidget();
 }

@@ -12,9 +12,9 @@ class RoomCard extends StatefulWidget {
 
 class _RoomCardState extends State<RoomCard> {
   int count = 0;
-  Color iconTalk1Color = Colors.red;
+  Color iconTalk1Color = Colors.white;
   Color iconTalk2Color = Colors.grey;
-  Color cardColor = Colors.white;
+  //Color cardColor = Colors.grey;
 
   void _updateNotificationcounter() {
     widget.room.totalNotifications += 1;
@@ -23,44 +23,53 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        //
-        color: cardColor,
-        child: ListTile(
-          leading: Container(
-              width: 50, // can be whatever value you want
-              child: Row(
-                children: <Widget>[
-                  // FlutterLogo(),
-                  new Icon(Icons.exit_to_app),
-                ],
-              )),
-          title: Center(
-            child: Text(
-              widget.room.roomName,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-          ),
-          subtitle: buildSubTrial(),
-          trailing: buildTrial(),
-          onTap: () => onTapBrowseToBeds(context),
-        ));
+    return Container(
+        // height: 100,
+        child: Card(
+            elevation: 8.0,
+            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+            //color: cardColor,
+            child: Container(
+                decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, 9)),
+                child: ListTile(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  leading: Container(
+                      padding: EdgeInsets.only(right: 12.0),
+                      decoration: new BoxDecoration(
+                          border: new Border(
+                              right: new BorderSide(
+                                  width: 1.0, color: Colors.white24))),
+                      width: 50, // can be whatever value you want
+                      child: Row(
+                        children: <Widget>[
+                          // FlutterLogo(),
+                          new Icon(
+                            Icons.autorenew,
+                            color: Colors.white,
+                          ),
+                        ],
+                      )),
+                  title: Align(
+                    alignment: Alignment(0, -0.75),
+                    child: Text(
+                      widget.room.roomName,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                  subtitle: buildSubTrial(),
+                  trailing: buildTrial(),
+                  onTap: () => onTapBrowseToBeds(context),
+                ))));
   }
 
   Widget buildTrial() {
     return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
       IconButton(
-        alignment: Alignment(30.0, 0.0),
-        icon: Icon(Icons.people),
-        iconSize: 30,
-        color: iconTalk2Color,
-        onPressed: () => handleTalk1(),
-      ),
-      IconButton(
-        alignment: Alignment(15.0, 0.0),
+        alignment: Alignment(-1.0, -10.0),
         icon: Icon(Icons.people),
         iconSize: 30,
         color: iconTalk1Color,
@@ -71,29 +80,31 @@ class _RoomCardState extends State<RoomCard> {
 
   Widget buildSubTrial() {
     if (count == 0)
-      return new Center(
+      return new Align(
+          alignment: Alignment(0, -2.8),
           child: new Text(
-        "אין הוראות חדשות",
-        style: TextStyle(
-            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 18),
-        overflow: TextOverflow.fade,
-        maxLines: 1,
-        softWrap: true,
-      ));
+            "אין הוראות חדשות",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            overflow: TextOverflow.fade,
+            maxLines: 3,
+            // softWrap: true,
+          ));
     else {
       String text2 = "הוראות שלא בוצעו ";
 
       String text3 = text2 + "$count";
 
-      return new Center(
+      return new Align(
+          alignment: Alignment(0, -2.8),
           child: new Text(
-        text3,
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-        overflow: TextOverflow.visible,
-        maxLines: 1,
-        softWrap: false,
-      ));
+            text3,
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            overflow: TextOverflow.visible,
+            maxLines: 1,
+            softWrap: false,
+          ));
     }
   }
 
@@ -112,10 +123,10 @@ class _RoomCardState extends State<RoomCard> {
   @override
   void initState() {
     count = this.widget.room.totalNotifications;
-    if (count > 0)
-      cardColor = Colors.red.withOpacity(0.4);
-    else
-      cardColor = Colors.white;
+    // if (count > 0)
+    //   cardColor = Colors.red.withOpacity(0.9);
+    // else
+    //  cardColor = Colors.green.withOpacity(0.7);
     super.initState();
   }
 
