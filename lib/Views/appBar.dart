@@ -12,11 +12,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
-
       value: 1,
       child: ListTile(
-      
-        trailing: IconButton(  
+        trailing: IconButton(
           icon: Icon(
             Icons.person,
             color: Colors.blue,
@@ -29,12 +27,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 2,
       child: ListTile(
-        trailing: IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Colors.blue,
-          ),
-          onPressed: () {},
+        trailing: Icon(
+          // icon: Icon(
+          Icons.settings,
+          color: Colors.blue,
+          //  ),
+          // onPressed: () {},
         ),
         title: Text('הגדרות'),
       ),
@@ -42,46 +40,50 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     new PopupMenuItem<int>(
       value: 3,
       child: ListTile(
-        trailing: IconButton(
-          icon: Icon(
-            Icons.exit_to_app,
-            color: Colors.blue,
-          ),
-          onPressed: () {_handleSignout();},
-
+        trailing: Icon(
+          // icon: Icon(
+          Icons.exit_to_app,
+          color: Colors.blue,
+          // ),
         ),
         title: Text('יציאה'),
+      //  onTap: ()  async {
+        //   await _handleSignout();
+
+       // },
       ),
       //child: Text('יציאה'),
     ),
-
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(textDirection: TextDirection.rtl,
-    child: AppBar(
-        
-        title:  Center(child: title),
-        backgroundColor: backgroundColor,
-        actions: <Widget>[
-          new PopupMenuButton(itemBuilder: (BuildContext context) {
-            return _listOfType;
-          }),
-        ])
-    
-    ,);
-    
-    
-    
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: AppBar(
+          title: Center(child: title),
+          backgroundColor: backgroundColor,
+          actions: <Widget>[
+            new PopupMenuButton(itemBuilder: (BuildContext context) {
+              return _listOfType;
+            },
+            onSelected: (selection){
+              switch(selection){
+                case 3:
+                   _handleSignout(context);
+                break;
+              }
+            },),
+          ]),
+    );
   }
 
   @override
   Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
 }
 
-
-Future<LoginWidget> _handleSignout() async{
+Future _handleSignout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
-  return LoginWidget();
+ Navigator.pushNamed(context, '/SignOut');
+  //return LoginWidget();
 }
