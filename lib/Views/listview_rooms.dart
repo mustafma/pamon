@@ -58,6 +58,24 @@ class _ListViewRoomsState extends State<ListViewRooms> {
 
           
 
-        ));
-  }
+        ),
+      bottomNavigationBar: BottomAppBar(
+        color: Color.fromRGBO(64, 75, 96, 9),
+      
+      child: new Container(
+        height: 40,
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+        
+         Align(
+           alignment: Alignment.center,
+           child:Text("Powered  By Adamtec", style: TextStyle(
+            color: Colors.white38, fontWeight: FontWeight.bold, fontSize: 18)))
+        ],
+      ),
+    ))
+        
+        );
+}
 }
