@@ -17,6 +17,7 @@ class BedCard extends StatefulWidget {
 class _BedCardState extends State<BedCard> {
   bool popMenueBtnEnaled = false;
   bool popMenueBtnEnaled1 = false;
+  Color iconTalk1Color = Colors.white;
 
   List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
@@ -48,26 +49,81 @@ class _BedCardState extends State<BedCard> {
     ),
   ];
 
-  Color cardColor;
+  Color cardColor = Color.fromRGBO(64, 75, 96, 9);
   int count = 0;
   @override
   Widget build(BuildContext context) {
-    return Card(
-        //
-        color: cardColor,
-        child: ListTile(
-          leading: buildLeading(),
-          title: Center(
-            child: Text(widget.bed.name),
-          ),
-          subtitle: buildSubTrial(),
-          trailing: buildTrial(),
-          onTap: () => onTapBrowseToBedInstructions(context),
-        ));
+    return Container(
+        height: 135,
+        child: Card(
+            elevation: 8.0,
+            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+            child: Column(children: <Widget>[
+              Container(
+                  decoration: BoxDecoration(color: cardColor),
+                  child: ListTile(
+                    leading: buildLeading(),
+                    title: Center(
+                      child: Text(widget.bed.name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    subtitle: buildSubTrial(),
+                    trailing: buildTrial(),
+                    onTap: () => onTapBrowseToBedInstructions(context),
+                  )),
+              Container(
+                decoration: BoxDecoration(
+                    color: cardColor,
+                    border: new Border(
+                        top: new BorderSide(width: 3.0, color: Colors.orange))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.explore),
+                      iconSize: 30,
+                      color: iconTalk1Color,
+                      onPressed: () => {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.explore),
+                      iconSize: 30,
+                      color: iconTalk1Color,
+                      onPressed: () => {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.explore),
+                      iconSize: 30,
+                      color: iconTalk1Color,
+                      onPressed: () => {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.explore),
+                      iconSize: 30,
+                      color: iconTalk1Color,
+                      onPressed: () => {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.explore),
+                      iconSize: 30,
+                      color: iconTalk1Color,
+                      onPressed: () => {},
+                    )
+                  ],
+                ),
+              )
+            ])));
   }
 
   Widget buildLeading() {
     return new PopupMenuButton(
+      icon: Icon(
+        Icons.security,
+        color: Colors.white,
+      ),
       enabled: popMenueBtnEnaled1,
       onSelected: (value) => _selectBedStatus(value),
       itemBuilder: (BuildContext context) {
@@ -79,6 +135,10 @@ class _BedCardState extends State<BedCard> {
   Widget buildTrial() {
     if (count == 0)
       return new PopupMenuButton(
+        icon: Icon(
+          Icons.notifications,
+          color: Colors.white,
+        ),
         enabled: popMenueBtnEnaled,
         onSelected: (value) => _select(value),
         itemBuilder: (BuildContext context) {
@@ -87,13 +147,18 @@ class _BedCardState extends State<BedCard> {
       );
     else
       return Badge(
-          badgeColor: Colors.yellow,
+          badgeColor: Colors.orange,
           badgeContent: Text("$count",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
                   fontWeight: FontWeight.bold)),
           child: new PopupMenuButton(
+            icon: Icon(
+              Icons.notifications,
+              color: Colors.white,
+            ),
+            color: Colors.white,
             enabled: popMenueBtnEnaled,
             onSelected: (value) => _select(value),
             itemBuilder: (BuildContext context) {
@@ -108,7 +173,7 @@ class _BedCardState extends State<BedCard> {
           child: new Text(
         "אין הוראות חדשות",
         style: TextStyle(
-            color: Colors.green, fontWeight: FontWeight.bold, fontSize: 18),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         overflow: TextOverflow.fade,
         maxLines: 1,
         softWrap: true,
@@ -121,7 +186,7 @@ class _BedCardState extends State<BedCard> {
           child: new Text(
         text3,
         style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
         overflow: TextOverflow.visible,
         maxLines: 1,
         softWrap: false,
@@ -140,7 +205,7 @@ class _BedCardState extends State<BedCard> {
     setState(() {
       count = count + 1;
       this.widget.bed.totalActiveNotifications = count;
-      cardColor = Colors.red.withOpacity(0.9);
+      cardColor = Colors.red;
     });
   }
 
@@ -148,9 +213,9 @@ class _BedCardState extends State<BedCard> {
   void initState() {
     count = this.widget.bed.totalActiveNotifications;
     if (count > 0)
-      cardColor = Colors.red.withOpacity(0.9);
+      cardColor = Colors.red;
     else
-      cardColor = Colors.white;
+      cardColor = Color.fromRGBO(64, 75, 96, 9);
     if (Session.instance().iSNursePermessions) {
       popMenueBtnEnaled = false;
       popMenueBtnEnaled1 = true;
