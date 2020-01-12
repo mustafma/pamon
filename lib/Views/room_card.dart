@@ -36,23 +36,7 @@ class _RoomCardState extends State<RoomCard> {
                     child: ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                      leading: Container(
-                        padding: EdgeInsets.only(right: 12.0),
-                        child: Row(
-                          children: <Widget>[
-                            // FlutterLogo(),
-                            new Icon(
-                              Icons.autorenew,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                        decoration: new BoxDecoration(
-                            border: new Border(
-                                right: new BorderSide(
-                                    width: 4.0, color: Colors.white24))),
-                        width: 50, // can be whatever value you want
-                      ),
+     
                       title: Align(
                         alignment: Alignment(0, -0.75),
                         child: Text(
@@ -64,7 +48,7 @@ class _RoomCardState extends State<RoomCard> {
                         ),
                       ),
                       subtitle: buildSubTrial(),
-                      trailing: buildTrial(),
+                     // trailing: buildTrial(),
                       onTap: () => onTapBrowseToBeds(context),
                     )),
                 Container(
@@ -74,7 +58,9 @@ class _RoomCardState extends State<RoomCard> {
                     border: new Border(top:new BorderSide(width: 3.0,color: Colors.orange)))
                     ,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                    
                       IconButton(
                         icon: Icon(Icons.explore),
                         iconSize: 30,
