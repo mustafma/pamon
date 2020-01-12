@@ -14,7 +14,7 @@ class _RoomCardState extends State<RoomCard> {
   int count = 0;
   Color iconTalk1Color = Colors.white;
   Color iconTalk2Color = Colors.grey;
-  //Color cardColor = Colors.grey;
+  Color cardColor = Color.fromRGBO(64, 75, 96, 9);
 
   void _updateNotificationcounter() {
     widget.room.totalNotifications += 1;
@@ -24,58 +24,117 @@ class _RoomCardState extends State<RoomCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // height: 100,
+        height: 147,
         child: Card(
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             //color: cardColor,
-            child: Container(
-                decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, 9)),
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                  leading: Container(
-                      padding: EdgeInsets.only(right: 12.0),
-                      decoration: new BoxDecoration(
-                          border: new Border(
-                              right: new BorderSide(
-                                  width: 1.0, color: Colors.white24))),
-                      width: 50, // can be whatever value you want
-                      child: Row(
-                        children: <Widget>[
-                          // FlutterLogo(),
-                          new Icon(
-                            Icons.autorenew,
-                            color: Colors.white,
-                          ),
-                        ],
-                      )),
-                  title: Align(
-                    alignment: Alignment(0, -0.75),
-                    child: Text(
-                      widget.room.roomName,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                    decoration: BoxDecoration(color: cardColor),
+                    child: ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                      leading: Container(
+                        padding: EdgeInsets.only(right: 12.0),
+                        child: Row(
+                          children: <Widget>[
+                            // FlutterLogo(),
+                            new Icon(
+                              Icons.autorenew,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                        decoration: new BoxDecoration(
+                            border: new Border(
+                                right: new BorderSide(
+                                    width: 4.0, color: Colors.white24))),
+                        width: 50, // can be whatever value you want
+                      ),
+                      title: Align(
+                        alignment: Alignment(0, -0.75),
+                        child: Text(
+                          widget.room.roomName,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ),
+                      subtitle: buildSubTrial(),
+                      trailing: buildTrial(),
+                      onTap: () => onTapBrowseToBeds(context),
+                    )),
+                Container(
+                  decoration: BoxDecoration(
+                    
+                    color: cardColor,
+                    border: new Border(top:new BorderSide(width: 3.0,color: Colors.orange)))
+                    ,
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.explore),
+                        iconSize: 30,
+                        color: iconTalk1Color,
+                        onPressed: () => {},
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.explore),
+                        iconSize: 30,
+                        color: iconTalk1Color,
+                        onPressed: () => {},
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.explore),
+                        iconSize: 30,
+                        color: iconTalk1Color,
+                        onPressed: () => {},
+                      ),
+                            IconButton(
+                        icon: Icon(Icons.explore),
+                        iconSize: 30,
+                        color: iconTalk1Color,
+                        onPressed: () => {},
+                      ),
+                            IconButton(
+                        icon: Icon(Icons.explore),
+                        iconSize: 30,
+                        color: iconTalk1Color,
+                        onPressed: () => {},
+                      )
+                    ],
                   ),
-                  subtitle: buildSubTrial(),
-                  trailing: buildTrial(),
-                  onTap: () => onTapBrowseToBeds(context),
-                ))));
+                )
+              ],
+            )));
   }
 
   Widget buildTrial() {
-    return Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-      IconButton(
-        alignment: Alignment(-1.0, -10.0),
-        icon: Icon(Icons.people),
-        iconSize: 30,
-        color: iconTalk1Color,
-        onPressed: () => handleTalk1(),
-      ),
-    ]);
+    return SingleChildScrollView(
+      //padding: const EdgeInsets.all(8.0),
+      child: Column(children: <Widget>[
+        // Column(
+        // children: <Widget>[
+
+        //  ],
+        //),
+        //Column(
+        //children: <Widget>[
+        IconButton(
+          // alignment: Alignment(10.0, 10.0),
+          icon: Icon(Icons.exit_to_app),
+          iconSize: 30,
+          color: iconTalk1Color,
+          onPressed: () => handleTalk1(),
+        ),
+
+        //],
+        //)
+      ]),
+    );
   }
 
   Widget buildSubTrial() {
@@ -123,8 +182,7 @@ class _RoomCardState extends State<RoomCard> {
   @override
   void initState() {
     count = this.widget.room.totalNotifications;
-    // if (count > 0)
-    //   cardColor = Colors.red.withOpacity(0.9);
+    if (count > 0) cardColor = Colors.red;
     // else
     //  cardColor = Colors.green.withOpacity(0.7);
     super.initState();

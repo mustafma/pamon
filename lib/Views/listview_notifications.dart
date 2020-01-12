@@ -20,6 +20,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Color.fromRGBO(58,66,86,1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
           title: Text('רשימת ההוראות' , textDirection:TextDirection.rtl),

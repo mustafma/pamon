@@ -26,6 +26,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Color.fromRGBO(58,66,86,1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
           title: Text('רשימת מיטות'),

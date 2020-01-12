@@ -21,6 +21,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Color.fromRGBO(58,66,86,1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
