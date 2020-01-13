@@ -26,7 +26,7 @@ class Repository {
     room1.roomId = 1;
     room1.roomName = "חדר 1";
     room1.beds = new List<Bed>();
-    room1.totalNotifications = 3;
+    //room1.totalNotifications = room1.getTotalNumberOfNotifications();
 
     Bed bed1 = new Bed();
     bed1.roomId = 1;
@@ -61,7 +61,7 @@ class Repository {
     room2.roomId = 2;
     room2.roomName = "חדר 2";
     room2.beds = new List<Bed>();
-    room2.totalNotifications = 0;
+    //room2.totalNotifications = 0;
 
     Bed bed11 = new Bed();
     bed11.roomId = 1;

@@ -6,7 +6,7 @@ import 'appBar.dart';
 
 
 class ListViewBeds extends StatefulWidget {
-  final List<Bed> beds;
+    List<dynamic> beds;
     final  parentAction;
     ListViewBeds({Key key, @required this.beds , this.parentAction});
 
@@ -17,7 +17,7 @@ class ListViewBeds extends StatefulWidget {
 class _ListViewBedsState extends State<ListViewBeds> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-   List<Bed> _listViewData;
+   List<dynamic> _listViewData;
 
   void _updateRoomCounter()
   {

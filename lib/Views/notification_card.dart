@@ -64,8 +64,8 @@ class _NotificationCard extends State<NotificationCard> {
       popMenueBtnEnaled = false;
     }
 
-    timer = Timer.periodic(
-        Duration(seconds: 15), (Timer t) => calculatePassedTime());
+ /*   timer = Timer.periodic(
+        Duration(seconds: 15), (Timer t) => calculatePassedTime());*/
     super.initState();
   }
 

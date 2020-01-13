@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/listview_beds.dart';
 
@@ -17,8 +18,9 @@ class _RoomCardState extends State<RoomCard> {
   Color cardColor = Color.fromRGBO(64, 75, 96, 9);
 
   void _updateNotificationcounter() {
-    widget.room.totalNotifications += 1;
-    count = widget.room.totalNotifications;
+    var totalNotifications = widget.room.getTotalNumberOfNotifications();
+    totalNotifications += 1;
+    count =totalNotifications;
   }
 
   @override
@@ -167,7 +169,7 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   void initState() {
-    count = this.widget.room.totalNotifications;
+    count = this.widget.room.getTotalNumberOfNotifications();
     if (count > 0) cardColor = Colors.red;
     // else
     //  cardColor = Colors.green.withOpacity(0.7);

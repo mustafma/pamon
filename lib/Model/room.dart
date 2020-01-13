@@ -1,19 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hello_world/Model/bed.dart';
 
 class Room {
   int roomId;
   String departmentID;
   String roomName;
- int totalNotifications = 0;//getTotalNumberOfNotifications();
-  List<Bed> beds = new List<Bed>();
-
+  //int totalNotifications = 0;//getTotalNumberOfNotifications();
+  List<dynamic> beds = new List<Bed>();
   Room({this.roomId, this.roomName, this.beds});
 
-  Room.fromMap(Map snapshot,int id) :
-        roomId = id ?? '',
+
+  Room.fromMap(Map snapshot,String id) :
+        roomId = int.parse(id),
         roomName = snapshot['name'] ?? '',
         departmentID = snapshot['departmntID'] ?? '',
-        beds = snapshot['beds'] ?? null;
+        beds = snapshot['beds'].map((map) => new Bed.fromMap(map, map['bedId'])).toList();
+
+
+
+
+  //map(((doc) =>doc.get().then(Bed.fromMap(doc.value, doc.value.documentID.toString())))).toList() ?? null;
+
+
 
   toJson() {
     return {
@@ -25,11 +33,11 @@ class Room {
 
   int getTotalNumberOfNotifications()
   {
-    int sum = 0;
-    for (int i = 0; i<beds.length;i++)
-      {
-        sum += beds[i].totalActiveNotifications;
-      }
+    var sum = 0;
+    for(Bed bed in beds)
+    {
+      sum = sum + bed.totalActiveNotifications;
+    }
     return sum;
   }
 }

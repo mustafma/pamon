@@ -6,7 +6,7 @@ import 'appBar.dart';
 import 'notification_card.dart';
 
 class ListViewInstructions extends StatefulWidget {
-  final List<BedInstruction> bedInstructions;
+  List<dynamic> bedInstructions;
   ListViewInstructions({Key key, @required this.bedInstructions});
 
   _ListViewInstructionsState createState() => _ListViewInstructionsState();
@@ -16,7 +16,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Repository repository = new Repository();
-  List<BedInstruction> _listViewData;
+  List<dynamic> _listViewData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world/Model/repository.dart';
+import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/room_card.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 import 'appBar.dart';
@@ -16,6 +17,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
   //final List<String> _listViewData = ["Room 1", "Room 2", "Room 3", "Room 4"];
 
   Repository repository = new Repository();
+  var _firestoreRef = Firestore.instance.collection('rooms');
 
 
   @override
@@ -30,22 +32,22 @@ class _ListViewRoomsState extends State<ListViewRooms> {
           
         ),
         body: Center(
-          child:  FutureBuilder(
-            future: repository.getRooms(),
+          child:  StreamBuilder(
+            stream: _firestoreRef.snapshots(),
             builder:(BuildContext context , AsyncSnapshot snapshot){
               if(snapshot.data == null){
-                 return Container(
-                   child:Center(
-                     child: Text("Loading ...")
-                   )
-                   );
+                return LinearProgressIndicator();
               }
               else{
+                List item = [];
+
+                item = snapshot.data.documents.map((doc) => Room.fromMap(doc.data, doc.documentID.toString())).toList();
+
                   return ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: item.length,
                   itemBuilder: (BuildContext context, int index){
                     RoomCard roomCard = RoomCard(
-                  room: repository.rooms[index],
+                  room: item[index],
                 );
                 return roomCard;
                   },
