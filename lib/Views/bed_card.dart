@@ -10,14 +10,23 @@ class BedCard extends StatefulWidget {
   final parentRoomAction;
 
   BedCard({Key key, @required this.bed, this.parentRoomAction});
-
   _BedCardState createState() => _BedCardState();
 }
+
+enum Status { none, withKatter, forCT, isInficted, fasting }
 
 class _BedCardState extends State<BedCard> {
   bool popMenueBtnEnaled = false;
   bool popMenueBtnEnaled1 = false;
   Color iconTalk1Color = Colors.white;
+  Color cardColor = Color.fromRGBO(64, 75, 96, 9);
+  int count = 0;
+
+  Color icon1Color = Colors.white;
+  Color icon2Color = Colors.white;
+  Color icon3Color = Colors.white;
+  Color icon4Color = Colors.white;
+  Color icon5Color = Colors.white;
 
   List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
@@ -49,8 +58,6 @@ class _BedCardState extends State<BedCard> {
     ),
   ];
 
-  Color cardColor = Color.fromRGBO(64, 75, 96, 9);
-  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,31 +92,35 @@ class _BedCardState extends State<BedCard> {
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: iconTalk1Color,
-                      onPressed: () => {},
+                      color: icon1Color,
+                      onPressed: () => alertDialog(
+                          context, "החולה עם קטטר", Status.withKatter),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: iconTalk1Color,
-                      onPressed: () => {},
+                      color: icon2Color,
+                       onPressed: () => alertDialog(
+                          context, "החולה יעבור CT", Status.forCT),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: iconTalk1Color,
-                      onPressed: () => {},
+                      color: icon3Color,
+                         onPressed: () => alertDialog(
+                          context, "החולה צריך להיות בצום ", Status.fasting),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: iconTalk1Color,
-                      onPressed: () => {},
+                      color: icon4Color,
+                         onPressed: () => alertDialog(
+                          context, "החולה עם זיהום ", Status.isInficted),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: iconTalk1Color,
+                      color: icon5Color,
                       onPressed: () => {},
                     )
                   ],
@@ -235,5 +246,84 @@ class _BedCardState extends State<BedCard> {
             builder: (context) => ListViewInstructions(
                   bedInstructions: widget.bed.notifications,
                 )));
+  }
+
+  void handleIconStatusSelection(Status status, bool highlight) {
+    switch (status) {
+      case Status.withKatter:
+        setState(() {
+          if (highlight)
+            icon1Color = Colors.yellow;
+          else
+            icon1Color = Colors.white;
+        });
+        break;
+      case Status.forCT:
+        setState(() {
+          if (highlight)
+            icon2Color = Colors.yellow;
+          else
+            icon2Color = Colors.white;
+        });
+        break;
+      case Status.isInficted:
+        setState(() {
+          if (highlight)
+            icon4Color = Colors.yellow;
+          else
+            icon4Color = Colors.white;
+        });
+        break;
+      case Status.fasting:
+        setState(() {
+          if (highlight)
+            icon3Color = Colors.yellow;
+          else
+            icon3Color = Colors.white;
+        });
+        break;
+      case Status.none:
+        break;
+    }
+  }
+
+  void alertDialog(BuildContext context, String message, Status status) {
+    var alert = new Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: new Text("הודעה",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          content: new Text(message,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                handleIconStatusSelection(status, true);
+              },
+              child: new Text("כן",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                handleIconStatusSelection(status, false);
+              },
+              child: new Text("לא",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            )
+          ],
+        ));
+    showDialog(
+        context: context,
+        builder: (BuildContext c) {
+          return alert;
+        });
   }
 }
