@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hello_world/Model/session.dart';
@@ -16,6 +17,10 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return LoginWidget();
           }
+          var uid = user.uid;
+
+          //var datat = Firestore.instance.collection('users').document(uid);
+          //var t = datat.get().then((doc) => {role = doc.data['role']});
           // initialize session again 
         //  sessionObj = new Session("yosef", "N", DateTime.now());
           return ListViewRooms();
