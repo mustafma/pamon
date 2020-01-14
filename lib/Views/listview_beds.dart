@@ -55,8 +55,12 @@ class _ListViewBedsState extends State<ListViewBeds> {
             itemBuilder: (context, index) {
               BedCard bedCard = BedCard(
                               bed: item[index],
-                              parentRoomAction: _updateRoomCounter,
+                              parentRoomAction:( _updateRoomCounter),
+                             // cardColor:   ((item[index] as Bed).totalActiveNotifications > 0 ) ? Colors.red : Color.fromRGBO(64, 75, 96, 9),
                             );
+
+                          
+                             
                             return bedCard;
               });}
 

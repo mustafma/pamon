@@ -60,6 +60,13 @@ class _BedCardState extends State<BedCard> {
 
   @override
   Widget build(BuildContext context) {
+    count = this.widget.bed.totalActiveNotifications;
+    if (count > 0)
+      cardColor = Colors.red;
+    else
+      cardColor = Color.fromRGBO(64, 75, 96, 9);
+      
+   // initState();
     return Container(
         height: 135,
         child: Card(
@@ -221,11 +228,7 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
-    count = this.widget.bed.totalActiveNotifications;
-    if (count > 0)
-      cardColor = Colors.red;
-    else
-      cardColor = Color.fromRGBO(64, 75, 96, 9);
+    
     if (Session.instance().iSNursePermessions) {
       popMenueBtnEnaled = false;
       popMenueBtnEnaled1 = true;
