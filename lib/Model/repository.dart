@@ -23,7 +23,7 @@ class Repository {
 
    List<Room> temporaryRooms = [];
    Room room1 = new Room();
-    room1.roomId = 1;
+    room1.roomId = "1";
     room1.roomName = "חדר 1";
     room1.beds = new List<Bed>();
     //room1.totalNotifications = room1.getTotalNumberOfNotifications();
@@ -58,7 +58,7 @@ class Repository {
 
 
   Room room2 = new Room();
-    room2.roomId = 2;
+    room2.roomId = "2";
     room2.roomName = "חדר 2";
     room2.beds = new List<Bed>();
     //room2.totalNotifications = 0;

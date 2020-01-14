@@ -144,7 +144,7 @@ class _BedCardState extends State<BedCard> {
   }
 
   Widget buildTrial() {
-    if (count == 0)
+    if (widget.bed.totalActiveNotifications == 0)
       return new PopupMenuButton(
         icon: Icon(
           Icons.notifications,
@@ -159,7 +159,7 @@ class _BedCardState extends State<BedCard> {
     else
       return Badge(
           badgeColor: Colors.orange,
-          badgeContent: Text("$count",
+          badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
@@ -179,7 +179,7 @@ class _BedCardState extends State<BedCard> {
   }
 
   Widget buildSubTrial() {
-    if (count == 0) {
+    if (widget.bed.totalActiveNotifications == 0) {
       return new Center(
           child: new Text(
         "אין הוראות חדשות",
@@ -192,7 +192,7 @@ class _BedCardState extends State<BedCard> {
     } else {
       String text2 = "הוראות שלא בוצעו ";
 
-      String text3 = text2 + "$count";
+      String text3 = text2 + widget.bed.totalActiveNotifications.toString();
       return new Center(
           child: new Text(
         text3,
@@ -214,8 +214,7 @@ class _BedCardState extends State<BedCard> {
     // Call Service to update DB  and Push  Notification
     widget.parentRoomAction();
     setState(() {
-      count = count + 1;
-      this.widget.bed.totalActiveNotifications = count;
+      widget.bed.totalActiveNotifications = widget.bed.totalActiveNotifications + 1;
       cardColor = Colors.red;
     });
   }

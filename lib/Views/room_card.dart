@@ -162,6 +162,7 @@ class _RoomCardState extends State<RoomCard> {
       MaterialPageRoute(
           builder: (context) => ListViewBeds(
                 beds: widget.room.beds,
+                roomId: widget.room.roomId,
                 parentAction: _updateNotificationcounter,
               )),
     );

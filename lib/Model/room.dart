@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hello_world/Model/bed.dart';
 
 class Room {
-  int roomId;
+  String roomId;
   String departmentID;
   String roomName;
   //int totalNotifications = 0;//getTotalNumberOfNotifications();
@@ -11,7 +11,7 @@ class Room {
 
 
   Room.fromMap(Map snapshot,String id) :
-        roomId = int.parse(id),
+        roomId = id,
         roomName = snapshot['name'] ?? '',
         departmentID = snapshot['departmntID'] ?? '',
         beds = snapshot['beds'].map((map) => new Bed.fromMap(map, map['bedId'])).toList();
