@@ -101,28 +101,28 @@ class _BedCardState extends State<BedCard> {
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: icon1Color,
+                      color: widget.bed.withCut? Colors.yellow: Colors.white,
                       onPressed: () => alertDialog(
                           context, "החולה עם קטטר", Status.withKatter),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: icon2Color,
+                      color: widget.bed.forCT? Colors.yellow: Colors.white,
                        onPressed: () => alertDialog(
                           context, "החולה יעבור CT", Status.forCT),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: icon3Color,
+                      color: widget.bed.fasting? Colors.yellow: Colors.white,
                          onPressed: () => alertDialog(
                           context, "החולה צריך להיות בצום ", Status.fasting),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: icon4Color,
+                      color: widget.bed.isInfected? Colors.yellow: Colors.white,
                          onPressed: () => alertDialog(
                           context, "החולה עם זיהום ", Status.isInficted),
                     ),
@@ -264,6 +264,7 @@ class _BedCardState extends State<BedCard> {
             icon1Color = Colors.white;
           }
         });
+        widget.bed.withCut = highlight;
         widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
       case Status.forCT:
@@ -273,6 +274,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon2Color = Colors.white;
         });
+        widget.bed.forCT = highlight;
         widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
       case Status.isInficted:
@@ -282,6 +284,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon4Color = Colors.white;
         });
+        widget.bed.isInfected = highlight;
         widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case Status.fasting:
@@ -291,6 +294,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon3Color = Colors.white;
         });
+        widget.bed.fasting = highlight;
         widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
       case Status.none:

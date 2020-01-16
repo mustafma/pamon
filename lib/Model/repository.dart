@@ -83,7 +83,7 @@ class Repository {
 
 
     BedInstruction bedInstruction1 = new BedInstruction();
-    bedInstruction1.notificationId = 1;
+    bedInstruction1.notificationId = "1";
     bedInstruction1.notificationType = "A";
     bedInstruction1.notificationText = "הוראה סוג A";
     bedInstruction1.createdAt = DateTime.parse("2020-01-07 17:00");

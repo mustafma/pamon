@@ -4,12 +4,20 @@ class Bed {
   int bedNumber;
   String name;
   int totalActiveNotifications;
+  bool withCut = false;
+  bool isInfected = false;
+  bool forCT = false;
+  bool fasting = false;
   List<dynamic> notifications = new List<BedInstruction>();
 
   Bed();
   Bed.fromMap(Map snapshot,String id) :
         bedId = id,
         name = snapshot['bedName'] ?? '',
+        withCut = snapshot['withCut'] ?? false,
+        isInfected = snapshot['isInfected'] ?? false,
+        forCT = snapshot['forCT'] ?? false,
+        fasting = snapshot['fasting'] ?? false,
         totalActiveNotifications = snapshot['totalActiveNotifications'],
         notifications = snapshot['notifications'].map((map) => new BedInstruction.fromMap(map, map['notificationId'])).toList();
 }
@@ -17,7 +25,7 @@ class Bed {
 
 
 class BedInstruction{
-  int notificationId;
+  String notificationId;
   int parentBedId;
   String notificationType;
   String notificationText;
@@ -25,7 +33,7 @@ class BedInstruction{
 
   BedInstruction();
   BedInstruction.fromMap(Map snapshot,String id) :
-        notificationId = int.parse(id),
+        notificationId = id,
         notificationType = snapshot['notificationType'] ?? '',
         notificationText = snapshot['notificationText'],
         createdAt = new DateTime.fromMillisecondsSinceEpoch(1000);
