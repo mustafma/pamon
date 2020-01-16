@@ -1,5 +1,5 @@
 class Bed {
-  int bedId;
+  String bedId;
   int roomId;
   int bedNumber;
   String name;
@@ -8,7 +8,7 @@ class Bed {
 
   Bed();
   Bed.fromMap(Map snapshot,String id) :
-        bedId = int.parse(id),
+        bedId = id,
         name = snapshot['bedName'] ?? '',
         totalActiveNotifications = snapshot['totalActiveNotifications'],
         notifications = snapshot['notifications'].map((map) => new BedInstruction.fromMap(map, map['notificationId'])).toList();

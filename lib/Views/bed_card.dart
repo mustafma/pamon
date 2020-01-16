@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/session.dart';
+import 'package:hello_world/services/crud.dart';
 
 import 'listview_notifications.dart';
 
 class BedCard extends StatefulWidget {
   final Bed bed;
+  String roomId;
   final parentRoomAction;
-
-  BedCard({Key key, @required this.bed, this.parentRoomAction});
+  CrudMethods crudObj = new CrudMethods();
+  BedCard({Key key, @required this.bed, this.parentRoomAction, this.roomId});
   _BedCardState createState() => _BedCardState();
 }
 
@@ -254,11 +256,15 @@ class _BedCardState extends State<BedCard> {
     switch (status) {
       case Status.withKatter:
         setState(() {
-          if (highlight)
+          if (highlight) {
+
             icon1Color = Colors.yellow;
-          else
+          }
+          else {
             icon1Color = Colors.white;
+          }
         });
+        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
       case Status.forCT:
         setState(() {
@@ -267,6 +273,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon2Color = Colors.white;
         });
+        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
       case Status.isInficted:
         setState(() {
@@ -275,6 +282,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon4Color = Colors.white;
         });
+        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case Status.fasting:
         setState(() {
@@ -283,6 +291,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon3Color = Colors.white;
         });
+        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
       case Status.none:
         break;
