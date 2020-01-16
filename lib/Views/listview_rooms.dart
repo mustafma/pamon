@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/Model/repository.dart';
 import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/room_card.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'appBar.dart';
 
@@ -13,6 +13,33 @@ class ListViewRooms extends StatefulWidget {
 
 class _ListViewRoomsState extends State<ListViewRooms> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+_register() {
+  _firebaseMessaging.getToken().then((token) => print(token));
+}
+
+
+void getMessage(){
+  _firebaseMessaging.configure(
+    onMessage: (Map<String,dynamic> message) async {
+      print('on message $message');
+    },
+    onResume: (Map<String,dynamic> message) async {
+      print('on message $message');
+    },
+    onLaunch: (Map<String,dynamic> message) async {
+      print('on message $message');
+    }
+    
+    
+    );
+
+  
+}
+
 
   //final List<String> _listViewData = ["Room 1", "Room 2", "Room 3", "Room 4"];
 
@@ -80,4 +107,10 @@ class _ListViewRoomsState extends State<ListViewRooms> {
         
         );
 }
+@override
+  void initState() {
+    super.initState();
+    getMessage();
+    _register();
+  }
 }
