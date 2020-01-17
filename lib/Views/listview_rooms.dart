@@ -13,7 +13,7 @@ class ListViewRooms extends StatefulWidget {
 
 class _ListViewRoomsState extends State<ListViewRooms> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+String _message ="";
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -26,6 +26,9 @@ void getMessage(){
   _firebaseMessaging.configure(
     onMessage: (Map<String,dynamic> message) async {
       print('on message $message');
+      setState(() {
+        _message = message["notification"]["title"];
+      });
     },
     onResume: (Map<String,dynamic> message) async {
       print('on message $message');
