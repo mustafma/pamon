@@ -15,7 +15,7 @@ class Bed {
         bedId = id,
         name = snapshot['bedName'] ?? '',
         withCut = snapshot['withCut'] ?? false,
-        isInfected = snapshot['isInfected'] ?? false,
+        isInfected = snapshot['isInficted'] ?? false,
         forCT = snapshot['forCT'] ?? false,
         fasting = snapshot['fasting'] ?? false,
         totalActiveNotifications = snapshot['totalActiveNotifications'],

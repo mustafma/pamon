@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/Views/ui_login.dart';
-import 'Views/landing_page.dart';
 
-void main() => runApp(MyApp());
+import 'Views/landing_page.dart';
+import 'Views/settings_view.dart';
+
+
+void main()  {
+
+runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
+// create FirebaseMessaging Obj
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
           '/SignOut': (context) => LoginWidget(),
+          '/Settings': (context) => SettingsWindow(),
         },
         theme: new ThemeData(
           primaryColor: Color.fromRGBO(58, 66, 86, 1.0)
@@ -23,4 +33,5 @@ class MyApp extends StatelessWidget {
         //home: LoginWidget(),//ListViewRooms(),
         );
   }
+
 }

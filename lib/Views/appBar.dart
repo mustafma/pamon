@@ -72,6 +72,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                   case 3:
                     _handleSignout(context);
                     break;
+                         case 2:
+                    _handleSettings(context);
+                    break;
                 }
               },
             ),
@@ -86,5 +89,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 Future _handleSignout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
   Navigator.pushNamed(context, '/SignOut');
+  //return LoginWidget();
+}
+
+void _handleSettings(BuildContext context)  {
+ 
+  Navigator.pushNamed(context, '/Settings');
   //return LoginWidget();
 }
