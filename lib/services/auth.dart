@@ -27,7 +27,7 @@ class AuthService {
           email: email, password: password);
 
       user = result.user;
-      setUserInfo(user.displayName , "Dr"); // Set UserInfor
+      setUserInfo(user.displayName , "Nr"); // Set UserInfor
       return user;
     } catch (e) {
       throw new AuthException(e.code, e.message);
