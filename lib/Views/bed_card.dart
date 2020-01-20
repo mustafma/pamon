@@ -141,7 +141,7 @@ class _BedCardState extends State<BedCard> {
   Widget buildLeading() {
     return new PopupMenuButton(
       icon: Icon(
-        Icons.security,
+        Icons.airline_seat_individual_suite,
         color: Colors.white,
       ),
       enabled: popMenueBtnEnaled1,
@@ -156,7 +156,7 @@ class _BedCardState extends State<BedCard> {
     if (widget.bed.totalActiveNotifications == 0)
       return new PopupMenuButton(
         icon: Icon(
-          Icons.notifications,
+          Icons.add_circle,
           color: Colors.white,
         ),
         enabled: popMenueBtnEnaled,
@@ -175,7 +175,7 @@ class _BedCardState extends State<BedCard> {
                   fontWeight: FontWeight.bold)),
           child: new PopupMenuButton(
             icon: Icon(
-              Icons.notifications,
+              Icons.add_circle,
               color: Colors.white,
             ),
             color: Colors.white,
