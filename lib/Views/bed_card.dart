@@ -265,7 +265,8 @@ class _BedCardState extends State<BedCard> {
           }
         });
         widget.bed.withCut = highlight;
-        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "withCut", highlight);
+        widget.crudObj.moveBed(widget.roomId, "002", widget.bed.bedId);
+        //widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
       case Status.forCT:
         setState(() {
