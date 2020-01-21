@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/Views/ui_login.dart';
+import 'package:hello_world/locator.dart';
 
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';
 
 
 void main()  {
-
-runApp(MyApp());
+  setupLocator();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
