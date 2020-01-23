@@ -5,6 +5,7 @@ enum UserType { Doctor, Nurse, NurseShiftManager, DepartmentManager }
 class User {
   @protected
   String _userId;
+  String _displayName;
   UserType _userType;
 
   static User _instance;
@@ -18,7 +19,9 @@ class User {
   void setUserId(String id) {
     _userId = id;
   }
-
+  void setUserName(String displayName){
+    _displayName = displayName;
+  }
   User._internal();
 
   static User getInstance() {
