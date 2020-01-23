@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/locator.dart';
 import 'package:hello_world/services/auth.dart';
 
@@ -67,6 +69,34 @@ class CrudMethods {
                 notifications.removeAt(i);
               }
 
+              break;
+            }
+          }
+          await tx.update(roomRef, <String, dynamic>{'beds': beds});
+        }
+      }).then((_) {
+        print("Success");
+      });
+    }
+  }
+
+  Future<void> addInstruction(roomId, bedId,instructionType, instructionText ) {
+    if (isLoggedIn()) {
+      DocumentReference roomRef =
+      Firestore.instance.collection("rooms").document(roomId);
+      Firestore.instance.runTransaction((Transaction tx) async {
+        DocumentSnapshot postSnapshot = await tx.get(roomRef);
+        if (postSnapshot.exists) {
+          List beds = List.from(postSnapshot.data['beds']);
+          for (int i = 0; i < beds.length; i++) {
+            if (beds[i]['bedId'] == bedId) {
+              List notifications =
+              List.from(postSnapshot.data['beds'][i]['notifications']);
+
+              BedInstruction newInstruction = new BedInstruction(instructionText, instructionType, bedId);
+              dynamic instructionMap = newInstruction.toMap();
+              notifications.add(instructionMap);
+              beds[i]["notifications"] = notifications;
               break;
             }
           }

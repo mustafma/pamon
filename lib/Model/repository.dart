@@ -82,12 +82,12 @@ class Repository {
     bed33.name = "מיטה 3";
 
 
-    BedInstruction bedInstruction1 = new BedInstruction();
+    BedInstruction bedInstruction1 = new BedInstruction("notificationText", "notificationType", "parentBedId");
     bedInstruction1.notificationId = "1";
     bedInstruction1.notificationType = "A";
     bedInstruction1.notificationText = "הוראה סוג A";
     bedInstruction1.createdAt = DateTime.parse("2020-01-07 17:00");
-    bedInstruction1.parentBedId = 1;
+    bedInstruction1.parentBedId = "1";
 
     bed1.notifications.add(bedInstruction1);
 

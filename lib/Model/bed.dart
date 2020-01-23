@@ -26,15 +26,38 @@ class Bed {
 
 class BedInstruction{
   String notificationId;
-  int parentBedId;
+  String parentBedId;
   String notificationType;
   String notificationText;
   DateTime createdAt;
 
-  BedInstruction();
+
+
+  BedInstruction(notificationText, notificationType, parentBedId){
+    this.notificationText = notificationText;
+    this.parentBedId = parentBedId;
+    this.notificationType = notificationType;
+    this.createdAt = new DateTime.now();
+    this.notificationId = this.createdAt.toString();
+
+  }
+
+
+
+
   BedInstruction.fromMap(Map snapshot,String id) :
         notificationId = id,
         notificationType = snapshot['notificationType'] ?? '',
         notificationText = snapshot['notificationText'],
         createdAt = new DateTime.fromMillisecondsSinceEpoch(1000);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'notificationId':this.notificationId,
+      'notificationText': this.notificationText,
+      'notificationType': this.notificationType,
+      'createdAt':this.createdAt,
+      'parentBedId': this.parentBedId
+    };
+  }
 }

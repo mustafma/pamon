@@ -236,6 +236,7 @@ class _BedCardState extends State<BedCard> {
       switch (choice) {
         case 1:
           widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
+          //widget.crudObj.addInstruction(widget.roomId, widget.bed.bedId,"type", "eat potato");
           break;
         case 2:
 
