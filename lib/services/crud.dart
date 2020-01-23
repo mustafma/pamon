@@ -63,7 +63,7 @@ class CrudMethods {
               beds[i]["totalActiveNotifications"] = 0;
               List notifications =
                   List.from(postSnapshot.data['beds'][i]['notifications']);
-              for (int i = 0; i < beds.length; i++) {
+              for (int i = 0; i < notifications.length; i++) {
                 notifications.removeAt(i);
               }
 
@@ -78,7 +78,7 @@ class CrudMethods {
     }
   }
 
-  Future<void> removeBed(roomId, bedId) async {
+  Future<void> removeBed(roomId, bedId)  {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
@@ -143,7 +143,7 @@ class CrudMethods {
     }
   }*/
 
-  Future<void> moveBed(fromRoomId, toRoomId, bedId) async {
+  Future<void> moveBed(fromRoomId, toRoomId, bedId) {
     FutureOr<dynamic> _toMap;
     if (isLoggedIn()) {
       DocumentReference fromRoomRef =
