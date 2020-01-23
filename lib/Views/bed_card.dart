@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/bed.dart';
-import 'package:hello_world/Model/session.dart';
+import 'package:hello_world/Model/enumTypes.dart';
 import 'package:hello_world/services/crud.dart';
 
 import 'listview_notifications.dart';
@@ -33,9 +33,9 @@ class _BedCardState extends State<BedCard> {
   Color icon4Color = Colors.white;
   Color icon5Color = Colors.white;
 
-  List<PopupMenuEntry<int>> _listOfType = [
-    new PopupMenuItem<int>(
-      value: 1,
+  List<PopupMenuEntry<InstructionType>> _listOfType = [
+    new PopupMenuItem<InstructionType>(
+      value: InstructionType.IVP,
       child: ListTile(
         trailing: Icon(
           Icons.filter_1,
@@ -44,8 +44,8 @@ class _BedCardState extends State<BedCard> {
         title: Text('הוראה סוג א'),
       ),
     ),
-    new PopupMenuItem<int>(
-      value: 2,
+    new PopupMenuItem<InstructionType>(
+      value: InstructionType.XX,
       child: ListTile(
         trailing: Icon(
           Icons.filter_2,
@@ -54,8 +54,8 @@ class _BedCardState extends State<BedCard> {
         title: Text('הוראה סוג ב'),
       ),
     ),
-    new PopupMenuItem<int>(
-      value: 3,
+    new PopupMenuItem<InstructionType>(
+      value: InstructionType.YY,
       child: ListTile(
         trailing: Icon(
           Icons.filter_3,
@@ -244,8 +244,8 @@ class _BedCardState extends State<BedCard> {
     }
   }
 
-  void _select(int choice) {
-    increamentCounter();
+  void _select(InstructionType choice) {
+    addInstruction(choice);
   }
 
   void _selectBedStatus(int choice) {
@@ -262,8 +262,12 @@ class _BedCardState extends State<BedCard> {
       }
   }
 
-  void increamentCounter() {
+  void addInstruction(InstructionType choice) {
     // Call Service to update DB  and Push  Notification
+
+    widget.crudObj.addInstruction(
+        widget.roomId, widget.bed.bedId, choice, "instructionText");
+
     widget.parentRoomAction();
     setState(() {
       widget.bed.totalActiveNotifications =
@@ -392,5 +396,3 @@ class _BedCardState extends State<BedCard> {
         });
   }
 }
-
-            
