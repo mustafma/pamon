@@ -45,7 +45,7 @@ class AuthService {
     await _auth.signOut();
   }
 
-  void setUserInfo(String userId, String displayName, String typeAsString) {
+  static void setUserInfo(String userId, String displayName, String typeAsString) {
     User user = User.getInstance();
     user.setUserId(userId);
     user.setUserName(displayName);

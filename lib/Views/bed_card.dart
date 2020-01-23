@@ -24,6 +24,8 @@ class _BedCardState extends State<BedCard> {
   Color iconTalk1Color = Colors.white;
   Color cardColor = Color.fromRGBO(64, 75, 96, 9);
   int count = 0;
+  bool allowedForBedStatus = false;
+  bool allowedaddingInstruction = false;
 
   Color icon1Color = Colors.white;
   Color icon2Color = Colors.white;
@@ -135,29 +137,31 @@ class _BedCardState extends State<BedCard> {
   }
 
   Widget buildLeading() {
-    return new PopupMenuButton(
-      icon: Icon(
-        Icons.airline_seat_individual_suite,
-        color: Colors.white,
-      ),
-      // enabled: popMenueBtnEnaled1,
-      onSelected: (value) => _selectBedStatus(value),
-      itemBuilder: (BuildContext context) {
-        return _listOfBedStatuses;
-      },
-    );
+    if (allowedForBedStatus) {
+      return new PopupMenuButton(
+        icon: Icon(
+          Icons.airline_seat_individual_suite,
+          color: Colors.white,
+        ),
+        // enabled: popMenueBtnEnaled1,
+        onSelected: (value) => _selectBedStatus(value),
+        itemBuilder: (BuildContext context) {
+          return _listOfBedStatuses;
+        },
+      );
+    }
+    return null;
   }
 
   Widget buildTrial() {
-    if (User.getInstance().loggedInUserType == UserType.Doctor ||
-        User.getInstance().loggedInUserType == UserType.DepartmentManager) {
+    if (allowedaddingInstruction) {
       if (widget.bed.totalActiveNotifications == 0)
         return new PopupMenuButton(
           icon: Icon(
             Icons.add_circle,
             color: Colors.white,
           ),
-          enabled: popMenueBtnEnaled,
+          //enabled: popMenueBtnEnaled,
           onSelected: (value) => _select(value),
           itemBuilder: (BuildContext context) {
             return _listOfType;
@@ -177,7 +181,7 @@ class _BedCardState extends State<BedCard> {
                 color: Colors.white,
               ),
               color: Colors.white,
-              enabled: popMenueBtnEnaled,
+              //enabled: popMenueBtnEnaled,
               onSelected: (value) => _select(value),
               itemBuilder: (BuildContext context) {
                 return _listOfType;
@@ -227,8 +231,8 @@ class _BedCardState extends State<BedCard> {
   }
 
   void _selectBedStatus(int choice) {
-    //if (User.getInstance().loggedInUserType == UserType.Doctor ||
-       // User.getInstance().loggedInUserType == UserType.NurseShiftManager)
+    if (User.getInstance().loggedInUserType == UserType.Nurse ||
+        User.getInstance().loggedInUserType == UserType.NurseShiftManager)
       switch (choice) {
         case 1:
           widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
@@ -252,12 +256,16 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
-    if (Session.instance().iSNursePermessions) {
-      popMenueBtnEnaled = false;
-      popMenueBtnEnaled1 = true;
-    } else {
-      popMenueBtnEnaled = true;
-      popMenueBtnEnaled1 = false;
+    if (User.getInstance().loggedInUserType == UserType.Doctor ||
+        User.getInstance().loggedInUserType == UserType.DepartmentManager) {
+      allowedaddingInstruction = true;
+      allowedForBedStatus = false;
+    }
+
+    if (User.getInstance().loggedInUserType == UserType.Nurse ||
+        User.getInstance().loggedInUserType == UserType.NurseShiftManager) {
+      allowedaddingInstruction = false;
+      allowedForBedStatus = true;
     }
 
     super.initState();
