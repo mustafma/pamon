@@ -36,15 +36,33 @@ class _BedCardState extends State<BedCard> {
   List<PopupMenuEntry<int>> _listOfType = [
     new PopupMenuItem<int>(
       value: 1,
-      child: Text('הוראה סוג 1'),
+      child: ListTile(
+        trailing: Icon(
+          Icons.filter_1,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('הוראה סוג א'),
+      ),
     ),
     new PopupMenuItem<int>(
       value: 2,
-      child: Text('הוראה סוג 2'),
+      child: ListTile(
+        trailing: Icon(
+          Icons.filter_2,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('הוראה סוג ב'),
+      ),
     ),
     new PopupMenuItem<int>(
       value: 3,
-      child: Text('הוראה סוג 3'),
+      child: ListTile(
+        trailing: Icon(
+          Icons.filter_3,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('הוראה סוג ג'),
+      ),
     ),
   ];
 
@@ -236,7 +254,6 @@ class _BedCardState extends State<BedCard> {
       switch (choice) {
         case 1:
           widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
-          //widget.crudObj.addInstruction(widget.roomId, widget.bed.bedId,"type", "eat potato");
           break;
         case 2:
 
@@ -375,3 +392,5 @@ class _BedCardState extends State<BedCard> {
         });
   }
 }
+
+            

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/bed.dart';
-import 'package:hello_world/Model/session.dart';
 
 class NotificationCard extends StatefulWidget {
   final BedInstruction bedInstruction;
@@ -16,13 +15,21 @@ class _NotificationCard extends State<NotificationCard> {
   int count = 0;
   bool popMenueBtnEnaled = false;
   Color cardColor;
+  String currentTimer = "00:00";
   int diffInMints = 0;
   Timer timer;
+  bool allowChangeInstrStatus = false;
 
   List<PopupMenuEntry<int>> _listOfBedStatuses = [
     new PopupMenuItem<int>(
       value: 1,
-      child: Text('בצע הוראה'),
+      child: ListTile(
+        trailing: Icon(
+          Icons.done,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('בצע הוראה'),
+      ),
     ),
   ];
 
@@ -49,18 +56,21 @@ class _NotificationCard extends State<NotificationCard> {
   }
 
   Widget buildLeading() {
-    return new PopupMenuButton(
-      enabled: popMenueBtnEnaled,
-      onSelected: (value) => _selectInstructionAction(value),
-      itemBuilder: (BuildContext context) {
-        return _listOfBedStatuses;
-      },
-    );
+    if (allowChangeInstrStatus) {
+      return new PopupMenuButton(
+        //enabled: popMenueBtnEnaled,
+        onSelected: (value) => _selectInstructionAction(value),
+        itemBuilder: (BuildContext context) {
+          return _listOfBedStatuses;
+        },
+      );
+    } else
+      return null;
   }
 
   Widget buildSubTrial() {
     return new Center(
-      child: Text("passed more than :" + diffInMints.toString(),
+      child: Text(currentTimer,
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
     );
@@ -81,14 +91,13 @@ class _NotificationCard extends State<NotificationCard> {
 
   @override
   void initState() {
-    if (Session.instance().iSNursePermessions) {
-      popMenueBtnEnaled = true;
-    } else {
-      popMenueBtnEnaled = false;
-    }
-
-    /*   timer = Timer.periodic(
-        Duration(seconds: 15), (Timer t) => calculatePassedTime());*/
+    timer = Timer.periodic(
+        Duration(seconds: 60), (Timer t) => calculatePassedTime());
+    UserType userType = User.getInstance().loggedInUserType;
+    if (userType == UserType.Nurse || userType == UserType.NurseShiftManager)
+      allowChangeInstrStatus = true;
+    else
+      allowChangeInstrStatus = false;
     super.initState();
   }
 
@@ -98,13 +107,19 @@ class _NotificationCard extends State<NotificationCard> {
     DateTime now = DateTime.now();
     setState(() {
       diffInMints = now.difference(widget.bedInstruction.createdAt).inMinutes;
+      int hours = diffInMints ~/ 60;
+      int minutes = diffInMints % 60;
+
+      currentTimer = hours.toString().padLeft(2, "0") +
+          ":" +
+          minutes.toString().padLeft(2, "0");
     });
   }
 
   void doAction(BuildContext context) {
-    UserType userType = User.getInstance().loggedInUserType;
-
-    if (userType == UserType.Nurse || userType == UserType.NurseShiftManager) {alertDialog(context);}
+    if (allowChangeInstrStatus) {
+      alertDialog(context);
+    }
   }
 
   void alertDialog(BuildContext context) {
@@ -147,7 +162,6 @@ class _NotificationCard extends State<NotificationCard> {
         });
   }
 
-void setInstructionAsSeen() {} // To  be implemented when implementing server side Crud method.
+  void
+      setInstructionAsSeen() {} // To  be implemented when implementing server side Crud method.
 }
-
-
