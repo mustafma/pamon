@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/session.dart';
 import 'package:hello_world/services/crud.dart';
@@ -67,8 +68,8 @@ class _BedCardState extends State<BedCard> {
       cardColor = Colors.red;
     else
       cardColor = Color.fromRGBO(64, 75, 96, 9);
-      
-   // initState();
+
+    // initState();
     return Container(
         height: 135,
         child: Card(
@@ -101,36 +102,31 @@ class _BedCardState extends State<BedCard> {
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: widget.bed.withCut? Colors.yellow: Colors.white,
+                      color: widget.bed.withCut ? Colors.yellow : Colors.white,
                       onPressed: () => alertDialog(
                           context, "החולה עם קטטר", Status.withKatter),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: widget.bed.forCT? Colors.yellow: Colors.white,
-                       onPressed: () => alertDialog(
-                          context, "החולה יעבור CT", Status.forCT),
+                      color: widget.bed.forCT ? Colors.yellow : Colors.white,
+                      onPressed: () =>
+                          alertDialog(context, "החולה יעבור CT", Status.forCT),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: widget.bed.fasting? Colors.yellow: Colors.white,
-                         onPressed: () => alertDialog(
+                      color: widget.bed.fasting ? Colors.yellow : Colors.white,
+                      onPressed: () => alertDialog(
                           context, "החולה צריך להיות בצום ", Status.fasting),
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
                       iconSize: 30,
-                      color: widget.bed.isInfected? Colors.yellow: Colors.white,
-                         onPressed: () => alertDialog(
+                      color:
+                          widget.bed.isInfected ? Colors.yellow : Colors.white,
+                      onPressed: () => alertDialog(
                           context, "החולה עם זיהום ", Status.isInficted),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.explore),
-                      iconSize: 30,
-                      color: icon5Color,
-                      onPressed: () => {},
                     )
                   ],
                 ),
@@ -144,7 +140,7 @@ class _BedCardState extends State<BedCard> {
         Icons.airline_seat_individual_suite,
         color: Colors.white,
       ),
-      enabled: popMenueBtnEnaled1,
+      // enabled: popMenueBtnEnaled1,
       onSelected: (value) => _selectBedStatus(value),
       itemBuilder: (BuildContext context) {
         return _listOfBedStatuses;
@@ -153,38 +149,50 @@ class _BedCardState extends State<BedCard> {
   }
 
   Widget buildTrial() {
-    if (widget.bed.totalActiveNotifications == 0)
-      return new PopupMenuButton(
-        icon: Icon(
-          Icons.add_circle,
-          color: Colors.white,
-        ),
-        enabled: popMenueBtnEnaled,
-        onSelected: (value) => _select(value),
-        itemBuilder: (BuildContext context) {
-          return _listOfType;
-        },
-      );
-    else
-      return Badge(
-          badgeColor: Colors.orange,
-          badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold)),
-          child: new PopupMenuButton(
-            icon: Icon(
-              Icons.add_circle,
-              color: Colors.white,
-            ),
+    if (User.getInstance().loggedInUserType == UserType.Doctor ||
+        User.getInstance().loggedInUserType == UserType.DepartmentManager) {
+      if (widget.bed.totalActiveNotifications == 0)
+        return new PopupMenuButton(
+          icon: Icon(
+            Icons.add_circle,
             color: Colors.white,
-            enabled: popMenueBtnEnaled,
-            onSelected: (value) => _select(value),
-            itemBuilder: (BuildContext context) {
-              return _listOfType;
-            },
-          ));
+          ),
+          enabled: popMenueBtnEnaled,
+          onSelected: (value) => _select(value),
+          itemBuilder: (BuildContext context) {
+            return _listOfType;
+          },
+        );
+      else
+        return Badge(
+            badgeColor: Colors.orange,
+            badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold)),
+            child: new PopupMenuButton(
+              icon: Icon(
+                Icons.add_circle,
+                color: Colors.white,
+              ),
+              color: Colors.white,
+              enabled: popMenueBtnEnaled,
+              onSelected: (value) => _select(value),
+              itemBuilder: (BuildContext context) {
+                return _listOfType;
+              },
+            ));
+    } else {
+      return Badge(
+        badgeColor: Colors.orange,
+        badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+                fontWeight: FontWeight.bold)),
+      );
+    }
   }
 
   Widget buildSubTrial() {
@@ -218,19 +226,32 @@ class _BedCardState extends State<BedCard> {
     increamentCounter();
   }
 
-  void _selectBedStatus(int choice) {}
+  void _selectBedStatus(int choice) {
+    //if (User.getInstance().loggedInUserType == UserType.Doctor ||
+       // User.getInstance().loggedInUserType == UserType.NurseShiftManager)
+      switch (choice) {
+        case 1:
+          widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
+          break;
+        case 2:
+
+        case 3:
+          break;
+      }
+  }
+
   void increamentCounter() {
     // Call Service to update DB  and Push  Notification
     widget.parentRoomAction();
     setState(() {
-      widget.bed.totalActiveNotifications = widget.bed.totalActiveNotifications + 1;
+      widget.bed.totalActiveNotifications =
+          widget.bed.totalActiveNotifications + 1;
       cardColor = Colors.red;
     });
   }
 
   @override
   void initState() {
-    
     if (Session.instance().iSNursePermessions) {
       popMenueBtnEnaled = false;
       popMenueBtnEnaled1 = true;
@@ -257,16 +278,15 @@ class _BedCardState extends State<BedCard> {
       case Status.withKatter:
         setState(() {
           if (highlight) {
-
             icon1Color = Colors.yellow;
-          }
-          else {
+          } else {
             icon1Color = Colors.white;
           }
         });
         widget.bed.withCut = highlight;
         //widget.crudObj.moveBed(widget.roomId, "002", widget.bed.bedId);
-        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "withCut", highlight);
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
       case Status.forCT:
         setState(() {
@@ -276,7 +296,8 @@ class _BedCardState extends State<BedCard> {
             icon2Color = Colors.white;
         });
         widget.bed.forCT = highlight;
-        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "forCT", highlight);
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
       case Status.isInficted:
         setState(() {
@@ -286,7 +307,8 @@ class _BedCardState extends State<BedCard> {
             icon4Color = Colors.white;
         });
         widget.bed.isInfected = highlight;
-        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "isInficted", highlight);
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case Status.fasting:
         setState(() {
@@ -296,7 +318,8 @@ class _BedCardState extends State<BedCard> {
             icon3Color = Colors.white;
         });
         widget.bed.fasting = highlight;
-        widget.crudObj.updateBedStatus(widget.roomId, widget.bed.bedId, "fasting", highlight);
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
       case Status.none:
         break;
