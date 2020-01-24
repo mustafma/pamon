@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/session.dart';
 import 'package:hello_world/services/crud.dart';
@@ -13,7 +17,8 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInAnonymously();
       _userCached = result.user;
-      setUserInfo(_userCached.uid, _userCached.displayName , "Dr"); // Set UserInfor
+      setUserInfo(
+          _userCached.uid, _userCached.displayName, "Dr"); // Set UserInfor
       return _userCached;
     } catch (e) {
       print(e.toString());
@@ -21,8 +26,7 @@ class AuthService {
     }
   }
 
-  FirebaseUser getUser()
-  {
+  FirebaseUser getUser() {
     return _userCached;
   }
 
@@ -34,7 +38,9 @@ class AuthService {
 
       _userCached = result.user;
       CrudMethods crudObj = new CrudMethods();
-      setUserInfo(_userCached.uid , _userCached.displayName, await crudObj.getUserRole(_userCached.uid)); // Set UserInfor
+      setUserInfo(_userCached.uid, _userCached.displayName,
+          await crudObj.getUserRole(_userCached.uid)); // Set UserInfor
+          AuthService.regiterTokenOfLoggedInDevise(_userCached.uid);
       return _userCached;
     } catch (e) {
       throw new AuthException(e.code, e.message);
@@ -45,10 +51,28 @@ class AuthService {
     await _auth.signOut();
   }
 
-  static void setUserInfo(String userId, String displayName, String typeAsString) {
+  static void setUserInfo(
+      String userId, String displayName, String typeAsString) {
     User user = User.getInstance();
     user.setUserId(userId);
     user.setUserName(displayName);
     user.setUserType(user.stringToUserTypeConvert(typeAsString));
+  }
+
+  static Future<void> regiterTokenOfLoggedInDevise(uid) async {
+    final FirebaseMessaging _fcm = FirebaseMessaging();
+    String fcmToken = await _fcm.getToken();
+    if (fcmToken != null) {
+      var tokens = Firestore.instance
+          .collection('users')
+          .document(uid)
+          .collection('token')
+          .document(fcmToken);
+      await tokens.setData({
+        'token': fcmToken,
+        'createdAt': FieldValue.serverTimestamp(),
+        'platform': Platform.operatingSystem
+      });
+    }
   }
 }
