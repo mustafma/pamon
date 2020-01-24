@@ -264,9 +264,9 @@ class _BedCardState extends State<BedCard> {
 
   void addInstruction(InstructionType choice) {
     // Call Service to update DB  and Push  Notification
-
+    String choiceText = choice.toString().split('.').last;
     widget.crudObj.addInstruction(
-        widget.roomId, widget.bed.bedId, choice, "instructionText");
+        widget.roomId, widget.bed.bedId, choice.index, choiceText);
 
     widget.parentRoomAction();
     setState(() {
