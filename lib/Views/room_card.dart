@@ -15,7 +15,7 @@ class _RoomCardState extends State<RoomCard> {
   int count = 0;
   Color iconTalk1Color = Colors.white;
   Color iconTalk2Color = Colors.grey;
-  Color cardColor = Color.fromRGBO(64, 75, 96, 9);
+  Color cardColor ;
 
   void _updateNotificationcounter() {
     var totalNotifications = widget.room.getTotalNumberOfNotifications();
@@ -34,7 +34,7 @@ class _RoomCardState extends State<RoomCard> {
             child: Column(
               children: <Widget>[
                 Container(
-                    decoration: BoxDecoration(color: cardColor),
+                    decoration: BoxDecoration(color: Theme.of(context).cardColor),
                     child: ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -56,7 +56,7 @@ class _RoomCardState extends State<RoomCard> {
                 Container(
                   decoration: BoxDecoration(
                     
-                    color: cardColor,
+                    color: Theme.of(context).cardColor,
                     border: new Border(top:new BorderSide(width: 3.0,color: Colors.orange)))
                     ,
                   child: Row(

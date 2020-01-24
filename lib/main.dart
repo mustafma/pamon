@@ -5,15 +5,13 @@ import 'package:hello_world/locator.dart';
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';
 
-
-void main()  {
+void main() {
   setupLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
 // create FirebaseMessaging Obj
-
 
   // This widget is the root of your application.
   @override
@@ -24,8 +22,14 @@ class MyApp extends StatelessWidget {
           '/Settings': (context) => SettingsWindow(),
         },
         theme: new ThemeData(
-          primaryColor: Color.fromRGBO(58, 66, 86, 1.0)
-          ),
+            primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
+            cardColor: Color.fromRGBO(64, 75, 96, 9),
+            popupMenuTheme: new PopupMenuThemeData(
+              color: Colors.white,
+            ),
+            iconTheme: new IconThemeData(
+              color: Colors.white,
+            )),
         home: Directionality(
           textDirection: TextDirection.rtl,
           child: LandingPage(),
@@ -34,5 +38,4 @@ class MyApp extends StatelessWidget {
         //home: LoginWidget(),//ListViewRooms(),
         );
   }
-
 }

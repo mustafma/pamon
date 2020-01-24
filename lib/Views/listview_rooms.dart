@@ -44,7 +44,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        backgroundColor: Theme.of(context).primaryColor, //Color.fromRGBO(58, 66, 86, 1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
           title: Text('רשימת חדרים'),

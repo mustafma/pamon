@@ -87,7 +87,7 @@ class _BedCardState extends State<BedCard> {
     if (count > 0)
       cardColor = Colors.red;
     else
-      cardColor = Color.fromRGBO(64, 75, 96, 9);
+      cardColor = Theme.of(context).cardColor;
 
     // initState();
     return Container(
@@ -157,6 +157,7 @@ class _BedCardState extends State<BedCard> {
   Widget buildLeading() {
     if (allowedForBedStatus) {
       return new PopupMenuButton(
+        color: Theme.of(context).popupMenuTheme.color,
         icon: Icon(
           Icons.airline_seat_individual_suite,
           color: Colors.white,
@@ -175,6 +176,7 @@ class _BedCardState extends State<BedCard> {
     if (allowedaddingInstruction) {
       if (widget.bed.totalActiveNotifications == 0)
         return new PopupMenuButton(
+          color: Theme.of(context).popupMenuTheme.color,
           icon: Icon(
             Icons.add_circle,
             color: Colors.white,
@@ -323,7 +325,7 @@ class _BedCardState extends State<BedCard> {
           if (highlight)
             icon2Color = Colors.yellow;
           else
-            icon2Color = Colors.white;
+            icon2Color = Theme.of(context).iconTheme.color;
         });
         widget.bed.forCT = highlight;
         widget.crudObj.updateBedStatus(
@@ -334,7 +336,7 @@ class _BedCardState extends State<BedCard> {
           if (highlight)
             icon4Color = Colors.yellow;
           else
-            icon4Color = Colors.white;
+            icon4Color = Theme.of(context).iconTheme.color;
         });
         widget.bed.isInfected = highlight;
         widget.crudObj.updateBedStatus(
@@ -345,7 +347,7 @@ class _BedCardState extends State<BedCard> {
           if (highlight)
             icon3Color = Colors.yellow;
           else
-            icon3Color = Colors.white;
+            icon3Color = Theme.of(context).iconTheme.color;
         });
         widget.bed.fasting = highlight;
         widget.crudObj.updateBedStatus(

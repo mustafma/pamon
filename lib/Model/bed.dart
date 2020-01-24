@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Bed {
   String bedId;
   int roomId;
@@ -49,7 +51,10 @@ class BedInstruction{
         notificationId = id,
         notificationType = snapshot['notificationType'] ?? '',
         notificationText = snapshot['notificationText'],
-        createdAt = new DateTime.fromMillisecondsSinceEpoch(1000);
+        
+
+  createdAt = (snapshot['createdAt'] as Timestamp).toDate();
+
 
   Map<String, dynamic> toMap() {
     return {
