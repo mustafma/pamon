@@ -35,5 +35,6 @@ class LandingPage extends StatelessWidget {
   void setUser(String userId, String displayName) async{
       CrudMethods crudObj = new CrudMethods();
       AuthService.setUserInfo(userId , displayName, await crudObj.getUserRole(userId));
+      AuthService.regiterTokenOfLoggedInDevise(userId);
   }
 }

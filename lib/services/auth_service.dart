@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
@@ -23,9 +27,9 @@ class AuthService with ChangeNotifier {
   // wrapping the firebase calls
   Future createUser(
       {String firstName,
-        String lastName,
-        String email,
-        String password}) async {
+      String lastName,
+      String email,
+      String password}) async {
     var r = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -47,8 +51,10 @@ class AuthService with ChangeNotifier {
       // since something changed, let's notify the listeners...
       notifyListeners();
       return result.user;
-    }  catch (e) {
+    } catch (e) {
       throw new AuthException(e.code, e.message);
     }
   }
+
+ 
 }
