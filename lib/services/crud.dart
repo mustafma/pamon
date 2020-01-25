@@ -96,6 +96,7 @@ class CrudMethods {
               dynamic instructionMap = newInstruction.toMap();
               notifications.add(instructionMap);
               beds[i]["notifications"] = notifications;
+              beds[i]["totalActiveNotifications"] = beds[i]["totalActiveNotifications"] + 1;
               break;
             }
           }
@@ -123,6 +124,7 @@ class CrudMethods {
                   {
                     notifications.removeAt(j);
                     beds[i]["notifications"] = notifications;
+                    beds[i]["totalActiveNotifications"] = beds[i]["totalActiveNotifications"] - 1;
                     break;
                   }
               }

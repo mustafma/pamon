@@ -29,7 +29,7 @@ class Bed {
 class BedInstruction{
   String notificationId;
   String parentBedId;
-  String notificationType;
+  int notificationType;
   String notificationText;
   DateTime createdAt;
 

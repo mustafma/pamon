@@ -126,7 +126,7 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildSubTrial() {
-    if (count == 0)
+    if ( widget.room.getTotalNumberOfNotifications() == 0)
       return new Align(
           alignment: Alignment(0, -2.8),
           child: new Text(
@@ -140,7 +140,7 @@ class _RoomCardState extends State<RoomCard> {
     else {
       String text2 = "הוראות שלא בוצעו ";
 
-      String text3 = text2 + "$count";
+      String text3 = text2 +  widget.room.getTotalNumberOfNotifications().toString();
 
       return new Align(
           alignment: Alignment(0, -2.8),
