@@ -56,7 +56,7 @@ class _RoomCardState extends State<RoomCard> {
                 Container(
                   decoration: BoxDecoration(
                     
-                    color: Theme.of(context).cardColor,
+                    color: (widget.room.getTotalNumberOfNotifications() == 0)?Theme.of(context).cardColor:Colors.red,
                     border: new Border(top:new BorderSide(width: 3.0,color: Colors.orange)))
                     ,
                   child: Row(

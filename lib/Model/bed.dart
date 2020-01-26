@@ -49,7 +49,7 @@ class BedInstruction{
 
   BedInstruction.fromMap(Map snapshot,String id) :
         notificationId = id,
-        notificationType = snapshot['notificationType'] ?? '',
+        notificationType = "1",//snapshot['notificationType'] ?? '',
         notificationText = snapshot['notificationText'],
         
 
