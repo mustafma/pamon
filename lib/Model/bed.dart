@@ -29,7 +29,7 @@ class Bed {
 class BedInstruction{
   String notificationId;
   String parentBedId;
-  int notificationType;
+  String notificationType;
   String notificationText;
   DateTime createdAt;
 
@@ -38,7 +38,7 @@ class BedInstruction{
   BedInstruction(notificationText, notificationType, parentBedId){
     this.notificationText = notificationText;
     this.parentBedId = parentBedId;
-    this.notificationType = notificationType;
+    this.notificationType = notificationType.toString();
     this.createdAt = new DateTime.now();
     this.notificationId = this.createdAt.toString();
 
