@@ -29,7 +29,7 @@ class Bed {
 class BedInstruction{
   String notificationId;
   String parentBedId;
-  String notificationType;
+  int notificationType;
   String notificationText;
   DateTime createdAt;
 
@@ -38,7 +38,7 @@ class BedInstruction{
   BedInstruction(notificationText, notificationType, parentBedId){
     this.notificationText = notificationText;
     this.parentBedId = parentBedId;
-    this.notificationType = notificationType.toString();
+    this.notificationType = notificationType;
     this.createdAt = new DateTime.now();
     this.notificationId = this.createdAt.toString();
 
@@ -49,7 +49,11 @@ class BedInstruction{
 
   BedInstruction.fromMap(Map snapshot,String id) :
         notificationId = id,
+<<<<<<< HEAD
         notificationType = "1",//snapshot['notificationType'] ?? '',
+=======
+        notificationType = snapshot['notificationType'],
+>>>>>>> 6e0a39cde737f8df1fd20bda830671b60ce199fe
         notificationText = snapshot['notificationText'],
         
 
