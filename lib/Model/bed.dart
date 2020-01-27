@@ -51,8 +51,6 @@ class BedInstruction{
         notificationId = id,
         notificationType = snapshot['notificationType'],
         notificationText = snapshot['notificationText'],
-        
-
   createdAt = (snapshot['createdAt'] as Timestamp).toDate();
 
 
