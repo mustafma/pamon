@@ -49,7 +49,11 @@ class BedInstruction{
 
   BedInstruction.fromMap(Map snapshot,String id) :
         notificationId = id,
+<<<<<<< HEAD
+        notificationType = "1",//snapshot['notificationType'] ?? '',
+=======
         notificationType = snapshot['notificationType'],
+>>>>>>> 6e0a39cde737f8df1fd20bda830671b60ce199fe
         notificationText = snapshot['notificationText'],
   createdAt = (snapshot['createdAt'] as Timestamp).toDate();
 
