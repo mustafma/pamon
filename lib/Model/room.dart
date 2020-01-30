@@ -5,7 +5,7 @@ class Room {
   String roomId;
   String departmentID;
   String roomName;
-  //int totalNotifications = 0;//getTotalNumberOfNotifications();
+  int totalNotifications = 0;//getTotalNumberOfNotifications();
   List<dynamic> beds = new List<Bed>();
   Room({this.roomId, this.roomName, this.beds});
 
@@ -34,8 +34,11 @@ class Room {
   int getTotalNumberOfNotifications()
   {
     var sum = 0;
+    List<dynamic> notifications;
     for(Bed bed in beds)
     {
+      notifications = bed.notifications;
+
       sum = sum + bed.totalActiveNotifications;
     }
     return sum;

@@ -98,6 +98,7 @@ class _NotificationCard extends State<NotificationCard> {
       allowChangeInstrStatus = true;
     else
       allowChangeInstrStatus = false;
+    calculatePassedTime();
     super.initState();
   }
 

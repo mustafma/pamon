@@ -122,6 +122,7 @@ class CrudMethods {
               for (int j = 0; j < notifications.length; j++) {
                 if(notifications[j]['notificationId'] == instructionId)
                   {
+                    // change notification status to executed
                     notifications.removeAt(j);
                     beds[i]["notifications"] = notifications;
                     beds[i]["totalActiveNotifications"] = beds[i]["totalActiveNotifications"] - 1;
