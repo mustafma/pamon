@@ -37,18 +37,32 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       value: 3,
       child: ListTile(
         trailing: Icon(
-          // icon: Icon(
+          Icons.control_point_duplicate,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('ניהול משתמשים'),
+      ),
+    ),
+
+    new PopupMenuItem<int>(
+      value: 4,
+      child: ListTile(
+        trailing: Icon(
+          Icons.contact_phone,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('צור קשר'),
+      ),
+    ),
+        new PopupMenuItem<int>(
+      value: 5,
+      child: ListTile(
+        trailing: Icon(
           Icons.exit_to_app,
           color: Color.fromRGBO(64, 75, 96, 9),
-          // ),
         ),
         title: Text('יציאה'),
-        //  onTap: ()  async {
-        //   await _handleSignout();
-
-        // },
       ),
-      //child: Text('יציאה'),
     ),
   ];
 
@@ -72,7 +86,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                   case 3:
                     _handleSignout(context);
                     break;
-                         case 2:
+                  case 2:
                     _handleSettings(context);
                     break;
                 }
@@ -92,8 +106,7 @@ Future _handleSignout(BuildContext context) async {
   //return LoginWidget();
 }
 
-void _handleSettings(BuildContext context)  {
- 
+void _handleSettings(BuildContext context) {
   Navigator.pushNamed(context, '/Settings');
   //return LoginWidget();
 }

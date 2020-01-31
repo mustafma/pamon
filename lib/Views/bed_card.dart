@@ -302,6 +302,7 @@ class _BedCardState extends State<BedCard> {
         MaterialPageRoute(
             builder: (context) => ListViewInstructions(
                   bedInstructions: widget.bed.notifications,
+                  roomId:widget.roomId
                 )));
   }
 
@@ -358,7 +359,33 @@ class _BedCardState extends State<BedCard> {
     }
   }
 
+
+
+bool getCurrentBedStatus(Status status)
+{
+   bool res = false;
+   switch(status)
+   {
+     case Status.fasting:
+          res = widget.bed.fasting;
+          break;
+      case Status.forCT:
+         res = widget.bed.forCT;
+          break;
+      case Status.isInficted:
+         res = widget.bed.isInfected;
+          break;
+      case Status.withKatter:
+         res = widget.bed.withCut;
+          break;    
+     case Status.none:
+       res = false;
+       break;
+   }
+   return res;
+}
   void alertDialog(BuildContext context, String message, Status status) {
+    bool isSwitched = getCurrentBedStatus(status);
     var alert = new Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
@@ -373,22 +400,23 @@ class _BedCardState extends State<BedCard> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold)),
           actions: <Widget>[
-            new FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                handleIconStatusSelection(status, true);
+            new Switch(
+              value: isSwitched,
+              onChanged: (value) {
+                setState(() {
+                  isSwitched = value;
+                });
               },
-              child: new Text("כן",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             new FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                handleIconStatusSelection(status, false);
+                handleIconStatusSelection(status, isSwitched);
               },
-              child: new Text("לא",
+              child: new Text("סגור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            )
+            ),
+           
           ],
         ));
     showDialog(

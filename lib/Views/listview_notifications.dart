@@ -7,7 +7,8 @@ import 'notification_card.dart';
 
 class ListViewInstructions extends StatefulWidget {
   List<dynamic> bedInstructions;
-  ListViewInstructions({Key key, @required this.bedInstructions});
+  final String roomId;
+  ListViewInstructions({Key key, @required this.bedInstructions, this.roomId});
 
   _ListViewInstructionsState createState() => _ListViewInstructionsState();
 }
@@ -32,9 +33,27 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
                 itemBuilder: (context, index) {
                   NotificationCard notificationCard = NotificationCard(
                     bedInstruction: _listViewData[index],
+                    roomId: widget.roomId,
                   );
                   return notificationCard;
-                })));
+                })),
+                 bottomNavigationBar: BottomAppBar(
+            color: Color.fromRGBO(64, 75, 96, 9),
+            child: new Container(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                      alignment: Alignment.center,
+                      child: Text("Powered  By Adamtec",
+                          style: TextStyle(
+                              color: Colors.white38,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18)))
+                ],
+              ),
+            )));
   }
 
   @override

@@ -1,13 +1,14 @@
 import 'dart:async';
-
+import 'package:hello_world/services/crud.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/bed.dart';
 
 class NotificationCard extends StatefulWidget {
   final BedInstruction bedInstruction;
-
-  NotificationCard({Key key, @required this.bedInstruction});
+  final roomId;
+ CrudMethods crudObj = new CrudMethods();
+  NotificationCard({Key key, @required this.bedInstruction,@required this.roomId});
   _NotificationCard createState() => _NotificationCard();
 }
 
@@ -162,6 +163,7 @@ class _NotificationCard extends State<NotificationCard> {
         });
   }
 
-  void
-      setInstructionAsSeen() {} // To  be implemented when implementing server side Crud method.
+  void setInstructionAsSeen() {
+    widget.crudObj.removeInstruction(widget.roomId, widget.bedInstruction.parentBedId, widget.bedInstruction.notificationId);
+  } // To  be implemented when implementing server side Crud method.
 }
