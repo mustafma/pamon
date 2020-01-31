@@ -83,7 +83,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
               onSelected: (selection) {
                 switch (selection) {
-                  case 3:
+                  case 5:
                     _handleSignout(context);
                     break;
                   case 2:
