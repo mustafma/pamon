@@ -68,6 +68,8 @@ class CrudMethods {
                 notifications.removeAt(i);
               }
 
+              beds[i]["notifications"] = notifications;
+
               break;
             }
           }
@@ -79,13 +81,13 @@ class CrudMethods {
     }
   }
 
-  Future<void> addInstruction(roomId, bedId,instructionType, instructionText ) {
+  Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
     if (isLoggedIn()) {
-
-      BedInstruction newInstruction = new BedInstruction(instructionText, instructionType, bedId);
+      BedInstruction newInstruction =
+          new BedInstruction(instructionText, instructionType, bedId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
 
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
@@ -94,12 +96,13 @@ class CrudMethods {
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
               List notifications =
-              List.from(postSnapshot.data['beds'][i]['notifications']);
+                  List.from(postSnapshot.data['beds'][i]['notifications']);
 
               dynamic instructionMap = newInstruction.toMap();
               notifications.add(instructionMap);
               beds[i]["notifications"] = notifications;
-              beds[i]["totalActiveNotifications"] = beds[i]["totalActiveNotifications"] + 1;
+              beds[i]["totalActiveNotifications"] =
+                  beds[i]["totalActiveNotifications"] + 1;
               break;
             }
           }
@@ -109,31 +112,31 @@ class CrudMethods {
         print("Success");
       });
 
-
-       Firestore.instance.collection("instruction").add(newInstruction.toMap());
+      Firestore.instance.collection("instruction").add(newInstruction.toMap());
     }
   }
 
-  Future<void> removeInstruction(roomId, bedId, instructionId ) {
+  Future<void> removeInstruction(roomId, bedId, instructionId) {
     if (isLoggedIn()) {
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
           List beds = List.from(postSnapshot.data['beds']);
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              List notifications =  List.from(postSnapshot.data['beds'][i]['notifications']);
+              List notifications =
+                  List.from(postSnapshot.data['beds'][i]['notifications']);
               for (int j = 0; j < notifications.length; j++) {
-                if(notifications[j]['notificationId'] == instructionId)
-                  {
-                    // change notification status to executed
-                    notifications.removeAt(j);
-                    beds[i]["notifications"] = notifications;
-                    beds[i]["totalActiveNotifications"] = beds[i]["totalActiveNotifications"] - 1;
-                    break;
-                  }
+                if (notifications[j]['notificationId'] == instructionId) {
+                  // change notification status to executed
+                  notifications.removeAt(j);
+                  beds[i]["notifications"] = notifications;
+                  beds[i]["totalActiveNotifications"] =
+                      beds[i]["totalActiveNotifications"] - 1;
+                  break;
+                }
               }
               break;
             }
@@ -146,7 +149,7 @@ class CrudMethods {
     }
   }
 
-  Future<void> removeBed(roomId, bedId)  {
+  Future<void> removeBed(roomId, bedId) {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 

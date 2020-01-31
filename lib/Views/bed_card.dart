@@ -32,6 +32,7 @@ class _BedCardState extends State<BedCard> {
   Color icon3Color = Colors.white;
   Color icon4Color = Colors.white;
   Color icon5Color = Colors.white;
+  IconData bedIconBystatus = Icons.airline_seat_individual_suite;
 
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
@@ -159,7 +160,7 @@ class _BedCardState extends State<BedCard> {
       return new PopupMenuButton(
         color: Theme.of(context).popupMenuTheme.color,
         icon: Icon(
-          Icons.airline_seat_individual_suite,
+          bedIconBystatus,
           color: Colors.white,
         ),
         // enabled: popMenueBtnEnaled1,
@@ -256,10 +257,21 @@ class _BedCardState extends State<BedCard> {
       switch (choice) {
         case 1:
           widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
+          setState(() {
+            bedIconBystatus = Icons.airline_seat_legroom_reduced;
+          });
+
           break;
         case 2:
-
+          setState(() {
+            bedIconBystatus = Icons.airline_seat_recline_normal;
+          });
+          break;
         case 3:
+          setState(() {
+            bedIconBystatus = Icons.airline_seat_flat_angled;
+          });
+          break;
           break;
       }
   }
@@ -302,8 +314,8 @@ class _BedCardState extends State<BedCard> {
         MaterialPageRoute(
             builder: (context) => ListViewInstructions(
                   bedInstructions: widget.bed.notifications,
-                  roomId:widget.roomId,
-                  bedId:  widget.bed.bedId,
+                  roomId: widget.roomId,
+                  bedId: widget.bed.bedId,
                 )));
   }
 
@@ -360,31 +372,28 @@ class _BedCardState extends State<BedCard> {
     }
   }
 
-
-
-bool getCurrentBedStatus(Status status)
-{
-   bool res = false;
-   switch(status)
-   {
-     case Status.fasting:
-          res = widget.bed.fasting;
-          break;
+  bool getCurrentBedStatus(Status status) {
+    bool res = false;
+    switch (status) {
+      case Status.fasting:
+        res = widget.bed.fasting;
+        break;
       case Status.forCT:
-         res = widget.bed.forCT;
-          break;
+        res = widget.bed.forCT;
+        break;
       case Status.isInficted:
-         res = widget.bed.isInfected;
-          break;
+        res = widget.bed.isInfected;
+        break;
       case Status.withKatter:
-         res = widget.bed.withCut;
-          break;    
-     case Status.none:
-       res = false;
-       break;
-   }
-   return res;
-}
+        res = widget.bed.withCut;
+        break;
+      case Status.none:
+        res = false;
+        break;
+    }
+    return res;
+  }
+
   void alertDialog(BuildContext context, String message, Status status) {
     bool isSwitched = getCurrentBedStatus(status);
     var alert = new Directionality(
@@ -417,7 +426,6 @@ bool getCurrentBedStatus(Status status)
               child: new Text("סגור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-           
           ],
         ));
     showDialog(
