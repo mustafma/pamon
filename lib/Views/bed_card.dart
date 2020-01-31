@@ -302,7 +302,8 @@ class _BedCardState extends State<BedCard> {
         MaterialPageRoute(
             builder: (context) => ListViewInstructions(
                   bedInstructions: widget.bed.notifications,
-                  roomId:widget.roomId
+                  roomId:widget.roomId,
+                  bedId:  widget.bed.bedId,
                 )));
   }
 
