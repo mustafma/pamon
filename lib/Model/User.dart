@@ -46,4 +46,9 @@ class User {
       return UserType.Nurse;
   }
   }
+
+  UserType getUserType()
+  {
+    return _userType;
+  }
 }

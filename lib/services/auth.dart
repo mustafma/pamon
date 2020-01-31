@@ -74,6 +74,21 @@ class AuthService {
         'platform': Platform.operatingSystem
       });
     }
-    _fcm.subscribeToTopic('instructions');
+    User user = User.getInstance();
+
+    switch(user.getUserType()){
+
+      case UserType.Doctor:
+        _fcm.subscribeToTopic('instructions_remove');
+        break;
+      case UserType.Nurse:
+      case UserType.NurseShiftManager:
+        _fcm.subscribeToTopic('instructions_add');
+        break;
+      case UserType.DepartmentManager:
+
+        break;
+    }
+
   }
 }
