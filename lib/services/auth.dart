@@ -66,7 +66,7 @@ class AuthService {
       var tokens = Firestore.instance
           .collection('users')
           .document(uid)
-          .collection('token')
+          .collection('tokens')
           .document(fcmToken);
       await tokens.setData({
         'token': fcmToken,
@@ -74,5 +74,6 @@ class AuthService {
         'platform': Platform.operatingSystem
       });
     }
+    _fcm.subscribeToTopic('instructions');
   }
 }
