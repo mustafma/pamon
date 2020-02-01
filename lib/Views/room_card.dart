@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hello_world/Model/bed.dart';
+import 'package:hello_world/Model/enumTypes.dart';
 import 'package:hello_world/Model/room.dart';
 import 'package:hello_world/Views/listview_beds.dart';
 
@@ -15,12 +15,13 @@ class _RoomCardState extends State<RoomCard> {
   int count = 0;
   Color iconTalk1Color = Colors.white;
   Color iconTalk2Color = Colors.grey;
-  Color cardColor ;
+  Color iconCateterColor = Colors.white;
+  Color cardColor;
 
   void _updateNotificationcounter() {
     var totalNotifications = widget.room.getTotalNumberOfNotifications();
     totalNotifications += 1;
-    count =totalNotifications;
+    count = totalNotifications;
   }
 
   @override
@@ -34,11 +35,12 @@ class _RoomCardState extends State<RoomCard> {
             child: Column(
               children: <Widget>[
                 Container(
-                    decoration: BoxDecoration(color: Theme.of(context).cardColor),
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).cardColor),
                     child: ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-     
+
                       title: Align(
                         alignment: Alignment(0, -0.75),
                         child: Text(
@@ -50,49 +52,60 @@ class _RoomCardState extends State<RoomCard> {
                         ),
                       ),
                       subtitle: buildSubTrial(),
-                     // trailing: buildTrial(),
+                      // trailing: buildTrial(),
                       onTap: () => onTapBrowseToBeds(context),
                     )),
                 Container(
                   decoration: BoxDecoration(
-                    
-                    color: (widget.room.getTotalNumberOfNotifications() == 0)?Theme.of(context).cardColor:Colors.red,
-                    border: new Border(top:new BorderSide(width: 3.0,color: Colors.orange)))
-                    ,
+                      color: (widget.room.getTotalNumberOfNotifications() == 0)
+                          ? Theme.of(context).cardColor
+                          : Colors.red,
+                      border: new Border(
+                          top: new BorderSide(
+                              width: 3.0, color: Colors.orange))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                    
                       IconButton(
                         icon: Icon(Icons.explore),
                         iconSize: 30,
-                        color: iconTalk1Color,
+                        color: widget.room.getTotalNumberOfBedsWithCateter(
+                                    BedStatus.Inficted) >
+                                0
+                            ? Colors.yellow
+                            : Colors.white,
                         onPressed: () => {},
                       ),
                       IconButton(
                         icon: Icon(Icons.explore),
                         iconSize: 30,
-                        color: iconTalk1Color,
+                        color: widget.room.getTotalNumberOfBedsWithCateter(
+                                    BedStatus.Fasting) >
+                                0
+                            ? Colors.yellow
+                            : Colors.white,
                         onPressed: () => {},
                       ),
                       IconButton(
                         icon: Icon(Icons.explore),
                         iconSize: 30,
-                        color: iconTalk1Color,
+                        color: widget.room.getTotalNumberOfBedsWithCateter(
+                                    BedStatus.CT) >
+                                0
+                            ? Colors.yellow
+                            : Colors.white,
                         onPressed: () => {},
                       ),
-                            IconButton(
+                      IconButton(
                         icon: Icon(Icons.explore),
                         iconSize: 30,
-                        color: iconTalk1Color,
+                        color: widget.room.getTotalNumberOfBedsWithCateter(
+                                    BedStatus.Cateter) >
+                                0
+                            ? Colors.yellow
+                            : Colors.white, //iconCateterColor,
                         onPressed: () => {},
                       ),
-                            IconButton(
-                        icon: Icon(Icons.explore),
-                        iconSize: 30,
-                        color: iconTalk1Color,
-                        onPressed: () => {},
-                      )
                     ],
                   ),
                 )
@@ -126,7 +139,7 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildSubTrial() {
-    if ( widget.room.getTotalNumberOfNotifications() == 0)
+    if (widget.room.getTotalNumberOfNotifications() == 0)
       return new Align(
           alignment: Alignment(0, -2.8),
           child: new Text(
@@ -140,7 +153,8 @@ class _RoomCardState extends State<RoomCard> {
     else {
       String text2 = "הוראות שלא בוצעו ";
 
-      String text3 = text2 +  widget.room.getTotalNumberOfNotifications().toString();
+      String text3 =
+          text2 + widget.room.getTotalNumberOfNotifications().toString();
 
       return new Align(
           alignment: Alignment(0, -2.8),
@@ -161,10 +175,9 @@ class _RoomCardState extends State<RoomCard> {
       context,
       MaterialPageRoute(
           builder: (context) => ListViewBeds(
-                beds: widget.room.beds,
-                roomId: widget.room.roomId,
-                parentAction: _updateNotificationcounter,
-              )),
+              beds: widget.room.beds,
+              roomId: widget.room.roomId,
+              parentAction: _updateNotificationcounter)),
     );
   }
 

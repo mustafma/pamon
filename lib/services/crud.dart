@@ -174,46 +174,6 @@ class CrudMethods {
     }
   }
 
-  /* Future<void> moveBed(fromRoomId,toRoomId,bedId) async{
-    if(isLoggedIn())
-    {
-      //var roomRef = Firestore.instance.collection("rooms").document(roomId);
-
-      DocumentReference fromRoomRef = Firestore.instance.collection("rooms").document(fromRoomId);
-      DocumentReference toRoomRef = Firestore.instance.collection("rooms").document(toRoomId);
-
-      Firestore.instance.runTransaction((Transaction tx) async {
-        DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
-        DocumentSnapshot toPostSnapshot = await tx.get(toRoomRef);
-        if (fromPostSnapshot.exists) {
-          List<dynamic> beds = fromPostSnapshot.data['beds'];
-
-          dynamic movingBed;
-          for (int i=0;i<beds.length;i++) {
-            if (beds[i]['bedId'] == bedId) {
-              movingBed = beds[i];
-              List<dynamic> toBeds = toPostSnapshot.data['beds'];
-              toBeds.add(movingBed);
-              //beds.removeAt(i);
-              await tx.update(fromRoomRef, <String, dynamic>{'beds': beds});
-              await tx.update(toRoomRef, <String, dynamic>{'beds': toBeds});
-
-
-              break;
-            }
-          }
-
-
-
-          //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
-
-        }
-      }).then((doc) {
-        print("Success");
-      });
-    }
-  }*/
-
   Future<void> moveBed(fromRoomId, toRoomId, bedId) {
     FutureOr<dynamic> _toMap;
     if (isLoggedIn()) {

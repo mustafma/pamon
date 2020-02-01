@@ -10,7 +10,10 @@ class ListViewBeds extends StatefulWidget {
   String roomId;
   final parentAction;
   ListViewBeds(
-      {Key key, @required this.beds, this.parentAction, @required this.roomId});
+      {Key key,
+      @required this.beds,
+      this.parentAction,
+      @required this.roomId});
 
   //ListViewBeds({@required this.beds});
   _ListViewBedsState createState() => _ListViewBedsState();
@@ -25,6 +28,8 @@ class _ListViewBedsState extends State<ListViewBeds> {
   void _updateRoomCounter() {
     widget.parentAction();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

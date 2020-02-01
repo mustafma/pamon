@@ -126,6 +126,7 @@ class _BedCardState extends State<BedCard> {
                       color: widget.bed.withCut ? Colors.yellow : Colors.white,
                       onPressed: () => alertDialog(
                           context, "החולה עם קטטר", Status.withKatter),
+                          
                     ),
                     IconButton(
                       icon: Icon(Icons.explore),
@@ -396,6 +397,7 @@ class _BedCardState extends State<BedCard> {
 
   void alertDialog(BuildContext context, String message, Status status) {
     bool isSwitched = getCurrentBedStatus(status);
+   
     var alert = new Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
@@ -433,5 +435,8 @@ class _BedCardState extends State<BedCard> {
         builder: (BuildContext c) {
           return alert;
         });
+     
   }
+
 }
+
