@@ -11,7 +11,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _userCached;
   static Session sessionObj;
-
+  final FirebaseMessaging _fcm = FirebaseMessaging();
   // sign in anony.
   Future signInAnon() async {
     try {
@@ -40,7 +40,7 @@ class AuthService {
       CrudMethods crudObj = new CrudMethods();
       setUserInfo(_userCached.uid, _userCached.displayName,
           await crudObj.getUserRole(_userCached.uid)); // Set UserInfor
-          AuthService.regiterTokenOfLoggedInDevise(_userCached.uid);
+          regiterTokenOfLoggedInDevise(_userCached.uid);
       return _userCached;
     } catch (e) {
       throw new AuthException(e.code, e.message);
@@ -48,6 +48,7 @@ class AuthService {
   }
 
   void signOut() async {
+
     await _auth.signOut();
   }
 
@@ -59,8 +60,7 @@ class AuthService {
     user.setUserType(user.stringToUserTypeConvert(typeAsString));
   }
 
-  static Future<void> regiterTokenOfLoggedInDevise(uid) async {
-    final FirebaseMessaging _fcm = FirebaseMessaging();
+  Future<void> regiterTokenOfLoggedInDevise(uid) async {
     String fcmToken = await _fcm.getToken();
     if (fcmToken != null) {
       var tokens = Firestore.instance
