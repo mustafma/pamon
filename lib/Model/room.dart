@@ -56,6 +56,24 @@ class Room {
         case BedStatus.Inficted:
           if (bed.isInfected) sum = sum + 1;
           break;
+        case BedStatus.SocialAid:
+          if (bed.isInfected) sum = sum + 1;
+          break;
+        case BedStatus.PhysoAid:
+          if (bed.isInfected) sum = sum + 1;
+          break;
+        case BedStatus.Invasiv:
+          if (bed.isInfected) sum = sum + 1;
+          break;
+        case BedStatus.O2:
+          if (bed.isInfected) sum = sum + 1;
+          break;
+        case BedStatus.DiatentAid:
+          if (bed.isInfected) sum = sum + 1;
+          break;
+        case BedStatus.Petsa:
+          if (bed.isInfected) sum = sum + 1;
+          break;
       }
     }
     return sum;

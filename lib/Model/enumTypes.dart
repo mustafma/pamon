@@ -1,2 +1,13 @@
-enum InstructionType { IVP, XX, YY }
-enum BedStatus { CT, Cateter, Fasting, Inficted }
+enum InstructionType { IV,PO }
+enum BedStatus { 
+  CT, 
+  Cateter, 
+  Fasting, 
+  Inficted,
+  SocialAid,
+  PhysoAid,
+  DiatentAid,
+  O2,
+  Petsa,
+  Invasiv 
+  }
