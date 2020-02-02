@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:hello_world/Model/PopupMenuEntries.dart';
 import 'package:hello_world/Model/User.dart';
 import 'package:hello_world/Model/bed.dart';
 import 'package:hello_world/Model/enumTypes.dart';
@@ -36,35 +37,25 @@ class _BedCardState extends State<BedCard> {
 
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
-      value: InstructionType.IVP,
+      value: InstructionType.IV,
       child: ListTile(
         trailing: Icon(
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('הוראה סוג א'),
+        title: Text('מתן עירוי תרופה/ נוזל I.V'),
       ),
     ),
     new PopupMenuItem<InstructionType>(
-      value: InstructionType.XX,
+      value: InstructionType.PO,
       child: ListTile(
         trailing: Icon(
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('הוראה סוג ב'),
+        title: Text('מתו תרופה מיוחדת P.O'),
       ),
-    ),
-    new PopupMenuItem<InstructionType>(
-      value: InstructionType.YY,
-      child: ListTile(
-        trailing: Icon(
-          Icons.filter_3,
-          color: Color.fromRGBO(64, 75, 96, 9),
-        ),
-        title: Text('הוראה סוג ג'),
-      ),
-    ),
+    )
   ];
 
   List<PopupMenuEntry<int>> _listOfBedStatuses = [
@@ -118,38 +109,28 @@ class _BedCardState extends State<BedCard> {
                     border: new Border(
                         top: new BorderSide(width: 3.0, color: Colors.orange))),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.explore),
-                      iconSize: 30,
-                      color: widget.bed.withCut ? Colors.yellow : Colors.white,
-                      onPressed: () => alertDialog(
-                          context, "החולה עם קטטר", Status.withKatter),
-                          
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: generateListOfIcons()),
+                    new Spacer(),
+                    Container(
+                      // margin: EdgeInsets.only(left: 310),
+
+                      child: PopupMenuButton(
+                        color: Theme.of(context).popupMenuTheme.color,
+                        icon: Icon(
+                          Icons.list,
+                          color: Colors.white,
+                        ),
+                        // enabled: popMenueBtnEnaled1,
+                        onSelected: (value) => handleIconStatusSelection2(value),
+                        itemBuilder: (BuildContext context) {
+                          return PamonMenus.BedStatuses;
+                        },
+                      ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.explore),
-                      iconSize: 30,
-                      color: widget.bed.forCT ? Colors.yellow : Colors.white,
-                      onPressed: () =>
-                          alertDialog(context, "החולה יעבור CT", Status.forCT),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.explore),
-                      iconSize: 30,
-                      color: widget.bed.fasting ? Colors.yellow : Colors.white,
-                      onPressed: () => alertDialog(
-                          context, "החולה צריך להיות בצום ", Status.fasting),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.explore),
-                      iconSize: 30,
-                      color:
-                          widget.bed.isInfected ? Colors.yellow : Colors.white,
-                      onPressed: () => alertDialog(
-                          context, "החולה עם זיהום ", Status.isInficted),
-                    )
                   ],
                 ),
               )
@@ -320,6 +301,44 @@ class _BedCardState extends State<BedCard> {
                 )));
   }
 
+  void handleIconStatusSelection2(BedStatus status) {
+    bool highlight = true;
+    switch (status) {
+      case BedStatus.Cateter:
+        widget.bed.withCut = true;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "withCut", highlight);
+        break;
+      case BedStatus.CT:
+        widget.bed.forCT = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "forCT", highlight);
+        break;
+      case BedStatus.Inficted:
+        widget.bed.isInfected = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "isInficted", highlight);
+        break;
+      case BedStatus.Fasting:
+        widget.bed.fasting = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "fasting", highlight);
+        break;
+      case BedStatus.PhysoAid:
+        break;
+      case BedStatus.SocialAid:
+        break;
+      case BedStatus.Petsa:
+        break;
+      case BedStatus.DiatentAid:
+        break;
+      case BedStatus.O2:
+        break;
+      case BedStatus.Invasiv:
+        break;
+    }
+  }
+
   void handleIconStatusSelection(Status status, bool highlight) {
     switch (status) {
       case Status.withKatter:
@@ -397,7 +416,7 @@ class _BedCardState extends State<BedCard> {
 
   void alertDialog(BuildContext context, String message, Status status) {
     bool isSwitched = getCurrentBedStatus(status);
-   
+
     var alert = new Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
@@ -435,8 +454,60 @@ class _BedCardState extends State<BedCard> {
         builder: (BuildContext c) {
           return alert;
         });
-     
   }
 
-}
+  List<Widget> generateListOfIcons() {
+    List<Widget> genList = new List<Widget>();
 
+    List<BedStatus> bedStatuses = widget.bed.listOfIcons();
+      IconData calcIcon;
+      for(var stat in bedStatuses)
+      {
+
+        switch(stat){
+            case BedStatus.Cateter :
+              calcIcon = Icons.explore;
+            break;
+             case BedStatus.CT :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.DiatentAid :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.Fasting :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.Inficted :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.Invasiv :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.O2 :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.Petsa :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.PhysoAid :
+             calcIcon = Icons.explore;
+            break;
+             case BedStatus.SocialAid :
+             calcIcon = Icons.explore;
+            break;
+       
+
+
+        }
+      }
+
+
+    genList.add(new IconButton(
+      icon: Icon(calcIcon),
+      iconSize: 30,
+      color: widget.bed.withCut ? Colors.yellow : Colors.white,
+      onPressed: () => alertDialog(context, "החולה עם קטטר", Status.withKatter),
+    ));
+    return genList;
+  }
+}

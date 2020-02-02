@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hello_world/Model/enumTypes.dart';
 
 class Bed {
   String bedId;
@@ -22,6 +23,21 @@ class Bed {
         fasting = snapshot['fasting'] ?? false,
         totalActiveNotifications = snapshot['totalActiveNotifications'],
         notifications = snapshot['notifications'].map((map) => new BedInstruction.fromMap(map, map['notificationId'])).toList();
+
+
+
+List<BedStatus> listOfIcons()
+{
+List<BedStatus> bedStatuses =  new List<BedStatus>();
+
+ if(withCut) bedStatuses.add(BedStatus.Cateter);
+ if(forCT) bedStatuses.add(BedStatus.CT);
+
+return bedStatuses;
+
+}
+
+
 }
 
 
