@@ -48,7 +48,22 @@ class AuthService {
   }
 
   void signOut() async {
+    User user = User.getInstance();
 
+    switch(user.getUserType()){
+
+      case UserType.Doctor:
+        _fcm.unsubscribeFromTopic('removeInstruction_topic');
+        _fcm.unsubscribeFromTopic('addInstruction_topic');
+        break;
+      case UserType.Nurse:
+      case UserType.NurseShiftManager:
+        _fcm.unsubscribeFromTopic('addInstruction_topic');
+        break;
+      case UserType.DepartmentManager:
+
+      break;
+  }
     await _auth.signOut();
   }
 
@@ -79,11 +94,11 @@ class AuthService {
     switch(user.getUserType()){
 
       case UserType.Doctor:
-        _fcm.subscribeToTopic('instructions_remove');
+        _fcm.subscribeToTopic('removeInstruction_topic');
         break;
       case UserType.Nurse:
       case UserType.NurseShiftManager:
-        _fcm.subscribeToTopic('instructions_add');
+        _fcm.subscribeToTopic('addInstruction_topic');
         break;
       case UserType.DepartmentManager:
 
