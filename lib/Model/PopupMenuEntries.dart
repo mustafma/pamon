@@ -42,7 +42,7 @@ import 'package:hello_world/Model/enumTypes.dart';
         Icons.filter_2,
         color: Color.fromRGBO(64, 75, 96, 9),
       ),
-      title: Text('זקוק לעזרה סוציאלית'),
+      title: Text('זקוק להערכה סוציאלית'),
     ),
   ),
   new PopupMenuItem<BedStatus>(

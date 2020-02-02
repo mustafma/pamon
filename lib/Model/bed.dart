@@ -32,6 +32,7 @@ List<BedStatus> bedStatuses =  new List<BedStatus>();
 
  if(withCut) bedStatuses.add(BedStatus.Cateter);
  if(forCT) bedStatuses.add(BedStatus.CT);
+ if(fasting) bedStatuses.add(BedStatus.Fasting);
 
 return bedStatuses;
 

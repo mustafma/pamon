@@ -125,7 +125,8 @@ class _BedCardState extends State<BedCard> {
                           color: Colors.white,
                         ),
                         // enabled: popMenueBtnEnaled1,
-                        onSelected: (value) => handleIconStatusSelection2(value),
+                        onSelected: (value) =>
+                            handleIconStatusSelection2(value),
                         itemBuilder: (BuildContext context) {
                           return PamonMenus.BedStatuses;
                         },
@@ -460,54 +461,49 @@ class _BedCardState extends State<BedCard> {
     List<Widget> genList = new List<Widget>();
 
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
-      IconData calcIcon;
-      for(var stat in bedStatuses)
-      {
-
-        switch(stat){
-            case BedStatus.Cateter :
-              calcIcon = Icons.explore;
-            break;
-             case BedStatus.CT :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.DiatentAid :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.Fasting :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.Inficted :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.Invasiv :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.O2 :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.Petsa :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.PhysoAid :
-             calcIcon = Icons.explore;
-            break;
-             case BedStatus.SocialAid :
-             calcIcon = Icons.explore;
-            break;
-       
-
-
-        }
+    IconData calcIcon;
+    for (var stat in bedStatuses) {
+      switch (stat) {
+        case BedStatus.Cateter:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.CT:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.DiatentAid:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Fasting:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Inficted:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Invasiv:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.O2:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Petsa:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.PhysoAid:
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.SocialAid:
+          calcIcon = Icons.explore;
+          break;
       }
+      genList.add(new IconButton(
+        icon: Icon(calcIcon),
+        iconSize: 30,
+        color: widget.bed.withCut ? Colors.yellow : Colors.white,
+        onPressed: () =>
+            alertDialog(context, "החולה עם קטטר", Status.withKatter),
+      ));
+    }
 
-
-    genList.add(new IconButton(
-      icon: Icon(calcIcon),
-      iconSize: 30,
-      color: widget.bed.withCut ? Colors.yellow : Colors.white,
-      onPressed: () => alertDialog(context, "החולה עם קטטר", Status.withKatter),
-    ));
     return genList;
   }
 }
