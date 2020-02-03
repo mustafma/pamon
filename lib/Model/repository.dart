@@ -30,8 +30,6 @@ class Repository {
 
     Bed bed1 = new Bed();
     bed1.roomId = 1;
-    bed1.bedNumber = 1;
-    bed1.totalActiveNotifications = 2;
     bed1.name = "מיטה 1";
 
 
@@ -39,14 +37,10 @@ class Repository {
 
     Bed bed2 = new Bed();
     bed2.roomId = 1;
-    bed2.bedNumber = 2;
-    bed2.totalActiveNotifications = 0;
     bed2.name = "מיטה 2";
 
     Bed bed3 = new Bed();
     bed3.roomId = 1;
-    bed3.bedNumber = 3;
-    bed3.totalActiveNotifications = 1;
     bed3.name = "מיטה 3";
 
 
@@ -65,24 +59,18 @@ class Repository {
 
     Bed bed11 = new Bed();
     bed11.roomId = 1;
-    bed11.bedNumber = 1;
-    bed11.totalActiveNotifications = 0;
     bed11.name = "מיטה 1";
 
     Bed bed22 = new Bed();
     bed22.roomId = 1;
-    bed22.bedNumber = 2;
-    bed22.totalActiveNotifications = 0;
     bed22.name = "מיטה 2";
 
     Bed bed33 = new Bed();
     bed33.roomId = 1;
-    bed33.bedNumber = 3;
-    bed33.totalActiveNotifications = 0;
     bed33.name = "מיטה 3";
 
 
-    BedInstruction bedInstruction1 = new BedInstruction("notificationText", "notificationType", "parentBedId");
+    BedInstruction bedInstruction1 = new BedInstruction("notificationText", "notificationType", "parentBedId","active");
     bedInstruction1.notificationId = "1";
     bedInstruction1.notificationType = 0;
     bedInstruction1.notificationText = "הוראה סוג A";

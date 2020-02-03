@@ -44,34 +44,34 @@ class Room {
     for (Bed bed in beds) {
       switch (bedStat) {
         case BedStatus.Cateter:
-          if (bed.withCut) sum = sum + 1;
+          if (bed.Cateter) sum = sum + 1;
           break;
         case BedStatus.CT:
-          if (bed.forCT) sum = sum + 1;
+          if (bed.CT) sum = sum + 1;
           break;
         case BedStatus.Fasting:
-          if (bed.fasting) sum = sum + 1;
+          if (bed.Fasting) sum = sum + 1;
           break;
-        case BedStatus.Inficted:
-          if (bed.isInfected) sum = sum + 1;
+        case BedStatus.Infected:
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.SocialAid:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.PhysoAid:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.Invasiv:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.O2:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.DiatentAid:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.Petsa:
-          if (bed.isInfected) sum = sum + 1;
+          if (bed.Infected) sum = sum + 1;
           break;
       }
     }

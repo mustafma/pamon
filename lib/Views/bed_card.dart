@@ -75,7 +75,7 @@ class _BedCardState extends State<BedCard> {
 
   @override
   Widget build(BuildContext context) {
-    count = this.widget.bed.totalActiveNotifications;
+    count = this.widget.bed.getNumberOfActiveNotifications();
     if (count > 0)
       cardColor = Colors.red;
     else
@@ -158,7 +158,7 @@ class _BedCardState extends State<BedCard> {
 
   Widget buildTrial() {
     if (allowedaddingInstruction) {
-      if (widget.bed.totalActiveNotifications == 0)
+      if (widget.bed.getNumberOfActiveNotifications() == 0)
         return new PopupMenuButton(
           color: Theme.of(context).popupMenuTheme.color,
           icon: Icon(
@@ -174,7 +174,7 @@ class _BedCardState extends State<BedCard> {
       else
         return Badge(
             badgeColor: Colors.orange,
-            badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
+            badgeContent: Text(widget.bed.getNumberOfActiveNotifications().toString(),
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 15,
@@ -194,7 +194,7 @@ class _BedCardState extends State<BedCard> {
     } else {
       return Badge(
         badgeColor: Colors.orange,
-        badgeContent: Text(widget.bed.totalActiveNotifications.toString(),
+        badgeContent: Text(widget.bed.getNumberOfActiveNotifications().toString(),
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
@@ -204,7 +204,7 @@ class _BedCardState extends State<BedCard> {
   }
 
   Widget buildSubTrial() {
-    if (widget.bed.totalActiveNotifications == 0) {
+    if (widget.bed.getNumberOfActiveNotifications() == 0) {
       return new Center(
           child: new Text(
         "אין הוראות חדשות",
@@ -217,7 +217,7 @@ class _BedCardState extends State<BedCard> {
     } else {
       String text2 = "הוראות שלא בוצעו ";
 
-      String text3 = text2 + widget.bed.totalActiveNotifications.toString();
+      String text3 = text2 + widget.bed.getNumberOfActiveNotifications().toString();
       return new Center(
           child: new Text(
         text3,
@@ -267,8 +267,9 @@ class _BedCardState extends State<BedCard> {
 
     widget.parentRoomAction();
     setState(() {
+      /*
       widget.bed.totalActiveNotifications =
-          widget.bed.totalActiveNotifications + 1;
+          widget.bed.totalActiveNotifications + 1;*/
       cardColor = Colors.red;
     });
   }
@@ -306,22 +307,22 @@ class _BedCardState extends State<BedCard> {
     bool highlight = true;
     switch (status) {
       case BedStatus.Cateter:
-        widget.bed.withCut = true;
+        widget.bed.Cateter = true;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
       case BedStatus.CT:
-        widget.bed.forCT = highlight;
+        widget.bed.CT = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
-      case BedStatus.Inficted:
-        widget.bed.isInfected = highlight;
+      case BedStatus.Infected:
+        widget.bed.Infected = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case BedStatus.Fasting:
-        widget.bed.fasting = highlight;
+        widget.bed.Fasting = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
@@ -350,7 +351,7 @@ class _BedCardState extends State<BedCard> {
             icon1Color = Colors.white;
           }
         });
-        widget.bed.withCut = highlight;
+        widget.bed.Cateter = highlight;
         //widget.crudObj.moveBed("002",widget.roomId, widget.bed.bedId);
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "withCut", highlight);
@@ -362,7 +363,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon2Color = Theme.of(context).iconTheme.color;
         });
-        widget.bed.forCT = highlight;
+        widget.bed.CT = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
@@ -373,7 +374,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon4Color = Theme.of(context).iconTheme.color;
         });
-        widget.bed.isInfected = highlight;
+        widget.bed.Infected = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
@@ -384,7 +385,7 @@ class _BedCardState extends State<BedCard> {
           else
             icon3Color = Theme.of(context).iconTheme.color;
         });
-        widget.bed.fasting = highlight;
+        widget.bed.Fasting = highlight;
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
@@ -397,16 +398,16 @@ class _BedCardState extends State<BedCard> {
     bool res = false;
     switch (status) {
       case Status.fasting:
-        res = widget.bed.fasting;
+        res = widget.bed.Fasting;
         break;
       case Status.forCT:
-        res = widget.bed.forCT;
+        res = widget.bed.CT;
         break;
       case Status.isInficted:
-        res = widget.bed.isInfected;
+        res = widget.bed.Infected;
         break;
       case Status.withKatter:
-        res = widget.bed.withCut;
+        res = widget.bed.Cateter;
         break;
       case Status.none:
         res = false;
@@ -476,7 +477,7 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Fasting:
           calcIcon = Icons.explore;
           break;
-        case BedStatus.Inficted:
+        case BedStatus.Infected:
           calcIcon = Icons.explore;
           break;
         case BedStatus.Invasiv:
@@ -498,7 +499,7 @@ class _BedCardState extends State<BedCard> {
       genList.add(new IconButton(
         icon: Icon(calcIcon),
         iconSize: 30,
-        color: widget.bed.withCut ? Colors.yellow : Colors.white,
+        color: widget.bed.Cateter ? Colors.yellow : Colors.white,
         onPressed: () =>
             alertDialog(context, "החולה עם קטטר", Status.withKatter),
       ));

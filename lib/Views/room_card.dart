@@ -70,7 +70,7 @@ class _RoomCardState extends State<RoomCard> {
                         icon: Icon(Icons.explore),
                         iconSize: 30,
                         color: widget.room.getTotalNumberOfBedsWithCateter(
-                                    BedStatus.Inficted) >
+                                    BedStatus.Infected) >
                                 0
                             ? Colors.yellow
                             : Colors.white,

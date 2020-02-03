@@ -3,7 +3,7 @@ enum BedStatus {
   CT, 
   Cateter, 
   Fasting, 
-  Inficted,
+  Infected,
   SocialAid,
   PhysoAid,
   DiatentAid,

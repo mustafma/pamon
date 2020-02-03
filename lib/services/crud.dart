@@ -84,7 +84,7 @@ class CrudMethods {
   Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
     if (isLoggedIn()) {
       BedInstruction newInstruction =
-          new BedInstruction(instructionText, instructionType, bedId);
+          new BedInstruction(instructionText, instructionType, bedId,"active");
 
       DocumentReference roomRef =
           Firestore.instance.collection("rooms").document(roomId);
@@ -101,8 +101,6 @@ class CrudMethods {
               dynamic instructionMap = newInstruction.toMap();
               notifications.add(instructionMap);
               beds[i]["notifications"] = notifications;
-              beds[i]["totalActiveNotifications"] =
-                  beds[i]["totalActiveNotifications"] + 1;
               break;
             }
           }
@@ -131,10 +129,8 @@ class CrudMethods {
               for (int j = 0; j < notifications.length; j++) {
                 if (notifications[j]['notificationId'] == instructionId) {
                   // change notification status to executed
-                  notifications.removeAt(j);
+                  notifications[j]['notificationStatus'] = "executed";
                   beds[i]["notifications"] = notifications;
-                  beds[i]["totalActiveNotifications"] =
-                      beds[i]["totalActiveNotifications"] - 1;
                   break;
                 }
               }
