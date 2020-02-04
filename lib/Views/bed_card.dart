@@ -364,7 +364,7 @@ class _BedCardState extends State<BedCard> {
 
   void handleIconStatusSelection(BedStatus status, bool highlight) {
     widget.crudObj.updateBedStatus(
-        widget.roomId, widget.bed.bedId, status.toString(), highlight);
+        widget.roomId, widget.bed.bedId, (status.toString()).split(".")[1], highlight);
   }
 
   bool getCurrentBedStatus(BedStatus status) {
