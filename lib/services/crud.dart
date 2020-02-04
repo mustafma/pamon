@@ -61,6 +61,13 @@ class CrudMethods {
               beds[i]["forCT"] = false;
               beds[i]["isInficted"] = false;
               beds[i]["withCut"] = false;
+              beds[i]["SocialAid"] = false;
+              beds[i]["PhysoAid"] = false;
+              beds[i]["DiatentAid"] = false;
+              beds[i]["O2"] = false;
+              beds[i]["Petsa"] = false;
+              beds[i]["Invasive"] = false;
+
               beds[i]["totalActiveNotifications"] = 0;
               List notifications =
                   List.from(postSnapshot.data['beds'][i]['notifications']);
@@ -84,7 +91,7 @@ class CrudMethods {
   Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
     if (isLoggedIn()) {
       BedInstruction newInstruction =
-          new BedInstruction(instructionText, instructionType, bedId,"active");
+          new BedInstruction(instructionText, instructionType, bedId, "active");
 
       DocumentReference roomRef =
           Firestore.instance.collection("rooms").document(roomId);

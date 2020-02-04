@@ -9,5 +9,5 @@ enum BedStatus {
   DiatentAid,
   O2,
   Petsa,
-  Invasiv 
+  Invasive 
   }

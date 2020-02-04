@@ -56,13 +56,13 @@ import 'package:BridgeTeam/Model/enumTypes.dart';
     ),
   ),
   new PopupMenuItem<BedStatus>(
-    value: BedStatus.Invasiv,
+    value: BedStatus.Invasive,
     child: ListTile(
       trailing: Icon(
         Icons.filter_2,
         color: Color.fromRGBO(64, 75, 96, 9),
       ),
-      title: Text('מונשם Invasive'),
+      title: Text(' Invasive מונשם'),
     ),
   ),
   new PopupMenuItem<BedStatus>(
@@ -72,7 +72,7 @@ import 'package:BridgeTeam/Model/enumTypes.dart';
         Icons.filter_2,
         color: Color.fromRGBO(64, 75, 96, 9),
       ),
-      title: Text('זקוק לחמצן BiPAP או CPAP'),
+      title: Text('BiPAP/CPAP זקוק לחמצן'),
     ),
   ),
   new PopupMenuItem<BedStatus>(

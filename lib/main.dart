@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Views/ui_login.dart';
 import 'package:BridgeTeam/locator.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';
@@ -17,6 +18,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: [
+           Locale('he', 'IL'),
+        ],
+        locale:  Locale('he', 'IL'),
         routes: {
           '/SignOut': (context) => LoginWidget(),
           '/Settings': (context) => SettingsWindow(),

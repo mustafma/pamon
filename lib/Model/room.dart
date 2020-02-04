@@ -61,7 +61,7 @@ class Room {
         case BedStatus.PhysoAid:
           if (bed.Infected) sum = sum + 1;
           break;
-        case BedStatus.Invasiv:
+        case BedStatus.Invasive:
           if (bed.Infected) sum = sum + 1;
           break;
         case BedStatus.O2:

@@ -27,7 +27,6 @@ class _BedCardState extends State<BedCard> {
   int count = 0;
   bool allowedForBedStatus = false;
   bool allowedaddingInstruction = false;
-
   Color icon1Color = Colors.white;
   Color icon2Color = Colors.white;
   Color icon3Color = Colors.white;
@@ -43,7 +42,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('מתן עירוי תרופה/ נוזל I.V'),
+        title: Text('I.V מתן עירוי תרופה/נוזל'),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -53,7 +52,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('מתו תרופה מיוחדת P.O'),
+        title: Text('P.O מתו תרופה מיוחדת'),
       ),
     )
   ];
@@ -109,10 +108,10 @@ class _BedCardState extends State<BedCard> {
                     border: new Border(
                         top: new BorderSide(width: 3.0, color: Colors.orange))),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: generateListOfIcons()),
                     new Spacer(),
                     Container(
@@ -126,7 +125,7 @@ class _BedCardState extends State<BedCard> {
                         ),
                         // enabled: popMenueBtnEnaled1,
                         onSelected: (value) =>
-                            handleIconStatusSelection2(value),
+                            handleIconStatusSelection2(value, context),
                         itemBuilder: (BuildContext context) {
                           return PamonMenus.BedStatuses;
                         },
@@ -174,7 +173,8 @@ class _BedCardState extends State<BedCard> {
       else
         return Badge(
             badgeColor: Colors.orange,
-            badgeContent: Text(widget.bed.getNumberOfActiveNotifications().toString(),
+            badgeContent: Text(
+                widget.bed.getNumberOfActiveNotifications().toString(),
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 15,
@@ -194,7 +194,8 @@ class _BedCardState extends State<BedCard> {
     } else {
       return Badge(
         badgeColor: Colors.orange,
-        badgeContent: Text(widget.bed.getNumberOfActiveNotifications().toString(),
+        badgeContent: Text(
+            widget.bed.getNumberOfActiveNotifications().toString(),
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
@@ -217,7 +218,8 @@ class _BedCardState extends State<BedCard> {
     } else {
       String text2 = "הוראות שלא בוצעו ";
 
-      String text3 = text2 + widget.bed.getNumberOfActiveNotifications().toString();
+      String text3 =
+          text2 + widget.bed.getNumberOfActiveNotifications().toString();
       return new Center(
           child: new Text(
         text3,
@@ -303,11 +305,12 @@ class _BedCardState extends State<BedCard> {
                 )));
   }
 
-  void handleIconStatusSelection2(BedStatus status) {
+  void handleIconStatusSelection2(BedStatus status, BuildContext context) {
     bool highlight = true;
     switch (status) {
       case BedStatus.Cateter:
         widget.bed.Cateter = true;
+        _selectDate(context);
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "withCut", highlight);
         break;
@@ -327,96 +330,83 @@ class _BedCardState extends State<BedCard> {
             widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
       case BedStatus.PhysoAid:
+        widget.bed.PhysoAid = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "PhysoAid", highlight);
         break;
       case BedStatus.SocialAid:
+        widget.bed.SocialAid = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "SocialAid", highlight);
         break;
       case BedStatus.Petsa:
+        widget.bed.Petsa = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "Petsa", highlight);
         break;
       case BedStatus.DiatentAid:
+        widget.bed.DiatentAid = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "DiatentAid", highlight);
         break;
       case BedStatus.O2:
+        widget.bed.O2 = highlight;
+        widget.crudObj
+            .updateBedStatus(widget.roomId, widget.bed.bedId, "O2", highlight);
         break;
-      case BedStatus.Invasiv:
+      case BedStatus.Invasive:
+        widget.bed.Invasive = highlight;
+        widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, "Invasive", highlight);
         break;
     }
   }
 
-  void handleIconStatusSelection(Status status, bool highlight) {
-    switch (status) {
-      case Status.withKatter:
-        setState(() {
-          if (highlight) {
-            icon1Color = Colors.yellow;
-          } else {
-            icon1Color = Colors.white;
-          }
-        });
-        widget.bed.Cateter = highlight;
-        //widget.crudObj.moveBed("002",widget.roomId, widget.bed.bedId);
+  void handleIconStatusSelection(BedStatus status, bool highlight) {
+
         widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "withCut", highlight);
-        break;
-      case Status.forCT:
-        setState(() {
-          if (highlight)
-            icon2Color = Colors.yellow;
-          else
-            icon2Color = Theme.of(context).iconTheme.color;
-        });
-        widget.bed.CT = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "forCT", highlight);
-        break;
-      case Status.isInficted:
-        setState(() {
-          if (highlight)
-            icon4Color = Colors.yellow;
-          else
-            icon4Color = Theme.of(context).iconTheme.color;
-        });
-        widget.bed.Infected = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "isInficted", highlight);
-        break;
-      case Status.fasting:
-        setState(() {
-          if (highlight)
-            icon3Color = Colors.yellow;
-          else
-            icon3Color = Theme.of(context).iconTheme.color;
-        });
-        widget.bed.Fasting = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "fasting", highlight);
-        break;
-      case Status.none:
-        break;
-    }
+            widget.roomId, widget.bed.bedId, status.toString(), highlight);
+      
   }
 
-  bool getCurrentBedStatus(Status status) {
+  bool getCurrentBedStatus(BedStatus status) {
     bool res = false;
     switch (status) {
-      case Status.fasting:
+      case BedStatus.Fasting:
         res = widget.bed.Fasting;
         break;
-      case Status.forCT:
+      case BedStatus.CT:
         res = widget.bed.CT;
         break;
-      case Status.isInficted:
+      case BedStatus.Infected:
         res = widget.bed.Infected;
         break;
-      case Status.withKatter:
+      case BedStatus.Cateter:
         res = widget.bed.Cateter;
         break;
-      case Status.none:
-        res = false;
+      case BedStatus.DiatentAid:
+        res = widget.bed.DiatentAid;
+        break;
+      case BedStatus.Invasive:
+        res = widget.bed.Invasive;
+        break;
+      case BedStatus.O2:
+        res = widget.bed.O2;
+        break;
+      case BedStatus.Petsa:
+        res = widget.bed.Petsa;
+        break;
+      case BedStatus.PhysoAid:
+        res = widget.bed.PhysoAid;
+        break;
+      case BedStatus.SocialAid:
+        res = widget.bed.SocialAid;
         break;
     }
     return res;
   }
 
-  void alertDialog(BuildContext context, String message, Status status) {
+  void alertDialog(BuildContext context, String message, BedStatus status) {
     bool isSwitched = getCurrentBedStatus(status);
 
     var alert = new Directionality(
@@ -460,12 +450,15 @@ class _BedCardState extends State<BedCard> {
 
   List<Widget> generateListOfIcons() {
     List<Widget> genList = new List<Widget>();
+    String message;
 
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
     IconData calcIcon;
     for (var stat in bedStatuses) {
       switch (stat) {
         case BedStatus.Cateter:
+           String cuttDate  = (widget.bed.CatDate ).day.toString() + "/"  + (widget.bed.CatDate ).month.toString()+ "/" +(widget.bed.CatDate).year.toString();
+          message = "החולה עם קטטר מתאריך "+cuttDate  ;
           calcIcon = Icons.explore;
           break;
         case BedStatus.CT:
@@ -480,7 +473,7 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Infected:
           calcIcon = Icons.explore;
           break;
-        case BedStatus.Invasiv:
+        case BedStatus.Invasive:
           calcIcon = Icons.explore;
           break;
         case BedStatus.O2:
@@ -499,12 +492,23 @@ class _BedCardState extends State<BedCard> {
       genList.add(new IconButton(
         icon: Icon(calcIcon),
         iconSize: 30,
-        color: widget.bed.Cateter ? Colors.yellow : Colors.white,
-        onPressed: () =>
-            alertDialog(context, "החולה עם קטטר", Status.withKatter),
+        color: Colors.yellow,
+        onPressed: () => alertDialog(context, message, stat),
       ));
     }
 
     return genList;
+  }
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: widget.bed.CatDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != widget.bed.CatDate)
+      setState(() {
+        widget.bed.CatDate = picked;
+      });
   }
 }
