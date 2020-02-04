@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/Model/repository.dart';
-import 'package:hello_world/Model/room.dart';
-import 'package:hello_world/Views/room_card.dart';
+import 'package:BridgeTeam/Model/repository.dart';
+import 'package:BridgeTeam/Model/room.dart';
+import 'package:BridgeTeam/Views/room_card.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'appBar.dart';

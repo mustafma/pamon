@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/Model/bed.dart';
-import 'package:hello_world/Model/repository.dart';
+import 'package:BridgeTeam/Model/bed.dart';
+import 'package:BridgeTeam/Model/repository.dart';
 
 import 'appBar.dart';
 import 'notification_card.dart';

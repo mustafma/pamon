@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
-import 'package:hello_world/Model/PopupMenuEntries.dart';
-import 'package:hello_world/Model/User.dart';
-import 'package:hello_world/Model/bed.dart';
-import 'package:hello_world/Model/enumTypes.dart';
-import 'package:hello_world/services/crud.dart';
+import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
+import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/bed.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
+import 'package:BridgeTeam/services/crud.dart';
 
 import 'listview_notifications.dart';
 

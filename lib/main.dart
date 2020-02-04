@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/Views/ui_login.dart';
-import 'package:hello_world/locator.dart';
+import 'package:BridgeTeam/Views/ui_login.dart';
+import 'package:BridgeTeam/locator.dart';
 
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';

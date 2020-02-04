@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hello_world/Model/enumTypes.dart';
-import 'package:hello_world/Model/room.dart';
-import 'package:hello_world/Views/listview_beds.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
+import 'package:BridgeTeam/Model/room.dart';
+import 'package:BridgeTeam/Views/listview_beds.dart';
 
 class RoomCard extends StatefulWidget {
   final Room room;

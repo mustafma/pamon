@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hello_world/Model/session.dart';
-import 'package:hello_world/Views/listview_rooms.dart';
-import 'package:hello_world/Views/ui_login.dart';
-import 'package:hello_world/services/auth.dart';
-import 'package:hello_world/services/crud.dart';
+import 'package:BridgeTeam/Model/session.dart';
+import 'package:BridgeTeam/Views/listview_rooms.dart';
+import 'package:BridgeTeam/Views/ui_login.dart';
+import 'package:BridgeTeam/services/auth.dart';
+import 'package:BridgeTeam/services/crud.dart';
 
 class LandingPage extends StatelessWidget {
   static Session sessionObj;

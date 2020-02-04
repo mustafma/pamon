@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hello_world/Model/enumTypes.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
 
 class Bed {
   String bedId;

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hello_world/Model/bed.dart';
+import 'package:BridgeTeam/Model/bed.dart';
 
 import 'enumTypes.dart';
 

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hello_world/Model/bed.dart';
-import 'package:hello_world/locator.dart';
-import 'package:hello_world/services/auth.dart';
+import 'package:BridgeTeam/Model/bed.dart';
+import 'package:BridgeTeam/locator.dart';
+import 'package:BridgeTeam/services/auth.dart';
 
 class CrudMethods {
   bool isLoggedIn() {

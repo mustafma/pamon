@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:hello_world/services/crud.dart';
+import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/Model/User.dart';
-import 'package:hello_world/Model/bed.dart';
+import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/bed.dart';
 
 class NotificationCard extends StatefulWidget {
   final BedInstruction bedInstruction;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/Model/enumTypes.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
 
 
  class PamonMenus {

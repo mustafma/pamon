@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/Views/listview_rooms.dart';
-import 'package:hello_world/services/auth.dart';
+import 'package:BridgeTeam/Views/listview_rooms.dart';
+import 'package:BridgeTeam/services/auth.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key key, this.title}) : super(key: key);

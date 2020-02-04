@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:hello_world/Model/User.dart';
-import 'package:hello_world/Model/session.dart';
-import 'package:hello_world/services/crud.dart';
+import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/session.dart';
+import 'package:BridgeTeam/services/crud.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
