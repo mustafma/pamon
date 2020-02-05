@@ -45,10 +45,12 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
                             {
                               item = bed['notifications']
                                   .map((map) => new BedInstruction.fromMap(
-                                      map, map['notificationId']))
-                                  .toList()
+                                      map, map['notificationId'])).toList()
+
+
                             }
                         });
+                    item.removeWhere((elem) => elem.notificationStatus == 'executed');
 
                     //map((doc) => Bed.fromMap(doc.data, doc.documentID.toString())).toList();
 

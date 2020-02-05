@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:BridgeTeam/Model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:BridgeTeam/Model/bed.dart';
@@ -113,14 +114,17 @@ class CrudMethods {
         }
       }).then((_) {
         print("Success");
-      });
 
-      Firestore.instance.collection("instructions").add(newInstruction.toMap());
+        Message message = new Message(newInstruction.notificationId, bedId, bedId, newInstruction.notificationType, newInstruction.notificationText,
+            roomId, roomId, "uid", "departmentId", "ADD_INSTRUCTION", new DateTime.now().toString());
+        Firestore.instance.collection("messages").add(message.toMap());
+      });
     }
   }
 
   Future<void> removeInstruction(roomId, bedId, instructionId) {
     if (isLoggedIn()) {
+      dynamic removedInstruction;
       DocumentReference roomRef =
           Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
@@ -130,11 +134,12 @@ class CrudMethods {
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
               List notifications =
-                  List.from(postSnapshot.data['beds'][i]['notifications']);
+                  List.from(beds[i]['notifications']);
               for (int j = 0; j < notifications.length; j++) {
                 if (notifications[j]['notificationId'] == instructionId) {
                   // change notification status to executed
                   notifications[j]['notificationStatus'] = "executed";
+                  removedInstruction = notifications[j];
                   beds[i]["notifications"] = notifications;
                   break;
                 }
@@ -143,9 +148,13 @@ class CrudMethods {
             }
           }
           await tx.update(roomRef, <String, dynamic>{'beds': beds});
+          Message message = new Message(instructionId, bedId, bedId, removedInstruction['notificationType'], removedInstruction['notificationText'],
+              roomId, roomId, "uid", "departmentId", "EXECUTED_INSTRUCTION", new DateTime.now().toString());
+          Firestore.instance.collection("messages").add(message.toMap());
         }
       }).then((_) {
         print("Success");
+
       });
     }
   }

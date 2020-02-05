@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum UserType { Doctor, Nurse, NurseShiftManager, DepartmentManager }
+enum UserType { Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
 
 class User {
   @protected

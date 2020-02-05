@@ -1,0 +1,45 @@
+
+class Message {
+  String notificationId;
+  String bedId;
+  String bedName;
+  int notificationType;
+  String notificationText;
+  String roomId;
+  String roomName;
+  String uid;
+  String departmentId;
+  String operation;
+  String createdAt;
+
+  Message(notificationId, bedId, bedName, notificationType,notificationText,roomId,roomName, uid, departmentId, operation, createdAt) {
+    this.notificationId = notificationId;
+    this.bedId = bedId;
+    this.bedName = bedName;
+    this.notificationType = notificationType;
+    this.notificationText = notificationText;
+    this.roomId = roomId;
+    this.roomName = roomName;
+    this.uid = uid;
+    this.departmentId = departmentId;
+    this.operation = operation;
+    this.createdAt = createdAt;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+    'notificationId' : this.notificationId,
+    'bedId' : this.bedId,
+    'bedName' : this.bedName,
+    'notificationType' : this.notificationType,
+    'notificationText' : this.notificationText,
+    'roomId' : this.roomId,
+    'roomName' : this.roomName,
+    'uid' : this.uid,
+    'departmentId' : this.departmentId,
+    'operation' : this.operation,
+    'createdAt' : this.createdAt
+    };
+  }
+
+}
