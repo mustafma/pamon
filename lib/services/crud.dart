@@ -67,12 +67,10 @@ class CrudMethods {
               beds[i]["O2"] = false;
               beds[i]["Petsa"] = false;
               beds[i]["Invasive"] = false;
-
-              beds[i]["totalActiveNotifications"] = 0;
               List notifications =
                   List.from(postSnapshot.data['beds'][i]['notifications']);
               for (int i = 0; i < notifications.length; i++) {
-                notifications.removeAt(i);
+                notifications[i]['notificationStatus'] = "executed";
               }
 
               beds[i]["notifications"] = notifications;
@@ -117,7 +115,7 @@ class CrudMethods {
         print("Success");
       });
 
-      Firestore.instance.collection("instruction").add(newInstruction.toMap());
+      Firestore.instance.collection("instructions").add(newInstruction.toMap());
     }
   }
 
