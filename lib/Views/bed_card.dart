@@ -6,6 +6,7 @@ import 'package:BridgeTeam/Model/bed.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
 
+import 'Dialogs/GeneralDialogs.dart';
 import 'listview_notifications.dart';
 
 class BedCard extends StatefulWidget {
@@ -33,7 +34,7 @@ class _BedCardState extends State<BedCard> {
   Color icon4Color = Colors.white;
   Color icon5Color = Colors.white;
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
-     String _selectedRoomNumber;
+  String _selectedRoomNumber;
   List<String> rooms = ['612', '613', '614', '615'];
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
@@ -78,11 +79,24 @@ class _BedCardState extends State<BedCard> {
                   child: ListTile(
                     leading: buildLeading(),
                     title: Center(
-                      child: Text(widget.bed.name,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
+                      
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          if(widget.bed.dismissed)
+                          new Icon(
+                            Icons.exit_to_app,
+                            color: Colors.green,
+                          ),
+                          new Padding(padding: EdgeInsets.all(10.0)),
+                          Text(widget.bed.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
                     subtitle: buildSubTrial(),
                     trailing: buildTrial(),
@@ -228,14 +242,23 @@ class _BedCardState extends State<BedCard> {
         User.getInstance().loggedInUserType == UserType.NurseShiftManager)
       switch (choice) {
         case BedAction.Clean:
-          widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
+          showDialog(
+              context: context,
+              builder: (context) {
+                return new CustomDialog(
+                  text: "לנקות מיטה",
+                  handleYesButton:
+                      widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId),
+                  handleNoButton: () => {},
+                );
+              });
+
           //setState(() {
           // bedIconBystatus = Icons.airline_seat_legroom_reduced;
           //});
 
           break;
         case BedAction.Move:
-         
           showDialog(
               context: context,
               builder: (context) {
@@ -252,9 +275,18 @@ class _BedCardState extends State<BedCard> {
           // });
           break;
         case BedAction.Release:
-          //setState(() {
-          //   bedIconBystatus = Icons.airline_seat_flat_angled;
-          // });
+          showDialog(
+              context: context,
+              builder: (context) {
+                return new CustomDialog(
+                  text: "החולה לשחרור",
+                  handleYesButton: widget.crudObj.updateBedStatus(
+                      widget.roomId, widget.bed.bedId, "dismissed", true),
+                  handleNoButton: widget.crudObj.updateBedStatus(
+                      widget.roomId, widget.bed.bedId, "dismissed", false),
+                );
+              });
+          ;
           break;
       }
   }
@@ -570,9 +602,7 @@ class _BedCardState extends State<BedCard> {
       });
   }
 
-
   Widget moveBed(BuildContext context) {
-
     return new Directionality(
         textDirection: TextDirection.rtl,
         //return Container(
@@ -598,10 +628,10 @@ class _BedCardState extends State<BedCard> {
                     new DropdownButton<String>(
                       iconSize: 30,
                       value: _selectedRoomNumber,
-                      onChanged: (String newValue) =>{
+                      onChanged: (String newValue) {
                         setState(() {
                           _selectedRoomNumber = newValue;
-                        })
+                        });
 
                         // });
                       },
@@ -609,7 +639,6 @@ class _BedCardState extends State<BedCard> {
                         return new DropdownMenuItem<String>(
                           value: roomNum,
                           child: new Text(roomNum),
-                          
                         );
                       }).toList(),
                     ),
