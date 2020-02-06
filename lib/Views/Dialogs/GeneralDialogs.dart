@@ -1,9 +1,11 @@
+import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatefulWidget {
   final String  text;
   final handleYesButton;
   final handleNoButton;
+   CrudMethods crudObj = new CrudMethods();
   CustomDialog({@required this.text , this.handleYesButton , this.handleNoButton});
   _CustomDialog createState() => _CustomDialog();
 }
