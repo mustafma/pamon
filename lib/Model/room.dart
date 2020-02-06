@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:BridgeTeam/Model/bed.dart';
 
 import 'enumTypes.dart';
@@ -33,8 +32,13 @@ class Room {
     List<dynamic> notifications;
     for (Bed bed in beds) {
       notifications = bed.notifications;
+      List<BedInstruction> instructions = List.from(notifications);
+      for(int j =0;j<instructions.length;j++)
+        {
+          if(instructions[j].notificationStatus =='active')
+            sum++;
+        }
 
-      sum = sum + notifications.length;
     }
     return sum;
   }

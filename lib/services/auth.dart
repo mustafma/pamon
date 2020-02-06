@@ -63,6 +63,9 @@ class AuthService {
       case UserType.DepartmentManager:
 
       break;
+      case UserType.Other:
+        // TODO: Handle this case.
+        break;
   }
     await _auth.signOut();
   }
@@ -102,6 +105,8 @@ class AuthService {
         break;
       case UserType.DepartmentManager:
 
+        break;
+      case UserType.Other:
         break;
     }
 
