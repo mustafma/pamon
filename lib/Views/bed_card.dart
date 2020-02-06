@@ -33,7 +33,8 @@ class _BedCardState extends State<BedCard> {
   Color icon4Color = Colors.white;
   Color icon5Color = Colors.white;
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
-
+     String _selectedRoomNumber;
+  List<String> rooms = ['612', '613', '614', '615'];
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
       value: InstructionType.IV,
@@ -55,21 +56,6 @@ class _BedCardState extends State<BedCard> {
         title: Text('P.O מתו תרופה מיוחדת'),
       ),
     )
-  ];
-
-  List<PopupMenuEntry<int>> _listOfBedStatuses = [
-    new PopupMenuItem<int>(
-      value: 1,
-      child: Text('מיטה פנוייה'),
-    ),
-    new PopupMenuItem<int>(
-      value: 2,
-      child: Text('מיטה לשחרור'),
-    ),
-    new PopupMenuItem<int>(
-      value: 3,
-      child: Text('מיטה עם זיהום'),
-    ),
   ];
 
   @override
@@ -101,6 +87,7 @@ class _BedCardState extends State<BedCard> {
                     subtitle: buildSubTrial(),
                     trailing: buildTrial(),
                     onTap: () => onTapBrowseToBedInstructions(context),
+                    onLongPress: () => moveBed(context),
                   )),
               Container(
                 decoration: BoxDecoration(
@@ -146,9 +133,9 @@ class _BedCardState extends State<BedCard> {
           color: Colors.white,
         ),
         // enabled: popMenueBtnEnaled1,
-        onSelected: (value) => _selectBedStatus(value),
+        onSelected: (value) => _selectBedStatus(value, context),
         itemBuilder: (BuildContext context) {
-          return _listOfBedStatuses;
+          return PamonMenus.BedActions;
         },
       );
     }
@@ -236,27 +223,38 @@ class _BedCardState extends State<BedCard> {
     addInstruction(choice);
   }
 
-  void _selectBedStatus(int choice) {
+  void _selectBedStatus(BedAction choice, BuildContext context) {
     if (User.getInstance().loggedInUserType == UserType.Nurse ||
         User.getInstance().loggedInUserType == UserType.NurseShiftManager)
       switch (choice) {
-        case 1:
+        case BedAction.Clean:
           widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId);
-          setState(() {
-            bedIconBystatus = Icons.airline_seat_legroom_reduced;
-          });
+          //setState(() {
+          // bedIconBystatus = Icons.airline_seat_legroom_reduced;
+          //});
 
           break;
-        case 2:
-          setState(() {
-            bedIconBystatus = Icons.airline_seat_recline_normal;
-          });
+        case BedAction.Move:
+         
+          showDialog(
+              context: context,
+              builder: (context) {
+                return moveBed(context);
+              });
+
+          //setState(() {
+          //  bedIconBystatus = Icons.airline_seat_recline_normal;
+          //});
           break;
-        case 3:
-          setState(() {
-            bedIconBystatus = Icons.airline_seat_flat_angled;
-          });
+        case BedAction.Swap:
+          //setState(() {
+          //   bedIconBystatus = Icons.airline_seat_flat_angled;
+          // });
           break;
+        case BedAction.Release:
+          //setState(() {
+          //   bedIconBystatus = Icons.airline_seat_flat_angled;
+          // });
           break;
       }
   }
@@ -313,6 +311,8 @@ class _BedCardState extends State<BedCard> {
         _selectDate(context);
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "withCut", highlight);
+        widget.crudObj.updateBedDateField(
+            widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
         break;
       case BedStatus.CT:
         widget.bed.CT = highlight;
@@ -363,8 +363,13 @@ class _BedCardState extends State<BedCard> {
   }
 
   void handleIconStatusSelection(BedStatus status, bool highlight) {
-    widget.crudObj.updateBedStatus(
-        widget.roomId, widget.bed.bedId, (status.toString()).split(".")[1], highlight);
+    String fieldName = (status.toString()).split(".")[1];
+    if (status == BedStatus.Cateter) fieldName = "withCut";
+    if (status == BedStatus.Infected) fieldName = "isInficted";
+    if (status == BedStatus.Fasting) fieldName = "fasting";
+
+    widget.crudObj
+        .updateBedStatus(widget.roomId, widget.bed.bedId, fieldName, highlight);
   }
 
   bool getCurrentBedStatus(BedStatus status) {
@@ -404,49 +409,48 @@ class _BedCardState extends State<BedCard> {
     return res;
   }
 
-  String getMessageToShow(BedStatus status)
-  {
+  String getMessageToShow(BedStatus status) {
     String message;
-     switch (status) {
-        case BedStatus.Cateter:
-          String cuttDate = (widget.bed.CatDate).day.toString() +
-              "/" +
-              (widget.bed.CatDate).month.toString() +
-              "/" +
-              (widget.bed.CatDate).year.toString();
-          message = "החולה עם קטטר מתאריך " + cuttDate;
-          break;
-        case BedStatus.CT:
-          message = "CT החולה מתוכנן לו";
-          break;
-        case BedStatus.DiatentAid:
-          message = "החולה זקוק להתערבות דיאטנית";
-          break;
-        case BedStatus.Fasting:
-          message = "החולה בצום";
-          break;
-        case BedStatus.Infected:
-          message = "החולה עם זיהום";
-          break;
-        case BedStatus.Invasive:
-          message = " החולה מונשם Invasive";
-          break;
-        case BedStatus.O2:
-          message = "החולה זקוק לחמצן";
-          break;
-        case BedStatus.Petsa:
-          message = "החולה עם פצע לחץ";
-          break;
-        case BedStatus.PhysoAid:
-          message = "החולה זקוק לפיזוטרפיה";
-          break;
-        case BedStatus.SocialAid:
-          message = "החולה זקוק לעזרה סוציאלית";
-          break;
-     }
-     return message;
-
+    switch (status) {
+      case BedStatus.Cateter:
+        String cuttDate = (widget.bed.CatDate).day.toString() +
+            "/" +
+            (widget.bed.CatDate).month.toString() +
+            "/" +
+            (widget.bed.CatDate).year.toString();
+        message = "החולה עם קטטר מתאריך " + cuttDate;
+        break;
+      case BedStatus.CT:
+        message = "CT החולה מתוכנן לו";
+        break;
+      case BedStatus.DiatentAid:
+        message = "החולה זקוק להתערבות דיאטנית";
+        break;
+      case BedStatus.Fasting:
+        message = "החולה בצום";
+        break;
+      case BedStatus.Infected:
+        message = "החולה עם זיהום";
+        break;
+      case BedStatus.Invasive:
+        message = " החולה מונשם Invasive";
+        break;
+      case BedStatus.O2:
+        message = "החולה זקוק לחמצן";
+        break;
+      case BedStatus.Petsa:
+        message = "החולה עם פצע לחץ";
+        break;
+      case BedStatus.PhysoAid:
+        message = "החולה זקוק לפיזוטרפיה";
+        break;
+      case BedStatus.SocialAid:
+        message = "החולה זקוק לעזרה סוציאלית";
+        break;
+    }
+    return message;
   }
+
   void alertDialog(BuildContext context, String message, BedStatus status) {
     bool isSwitched = getCurrentBedStatus(status);
 
@@ -564,5 +568,74 @@ class _BedCardState extends State<BedCard> {
       setState(() {
         widget.bed.CatDate = picked;
       });
+  }
+
+
+  Widget moveBed(BuildContext context) {
+
+    return new Directionality(
+        textDirection: TextDirection.rtl,
+        //return Container(
+        child: AlertDialog(
+          title: new Text("העבר מיטה " + widget.bed.name,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          content: Container(
+            width: 200,
+            height: 70,
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    new Text("אל חדר",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                    new Padding(padding: EdgeInsets.all(16.0)),
+                    new DropdownButton<String>(
+                      iconSize: 30,
+                      value: _selectedRoomNumber,
+                      onChanged: (String newValue) =>{
+                        setState(() {
+                          _selectedRoomNumber = newValue;
+                        })
+
+                        // });
+                      },
+                      items: rooms.map((String roomNum) {
+                        return new DropdownMenuItem<String>(
+                          value: roomNum,
+                          child: new Text(roomNum),
+                          
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                //handleIconStatusSelection(status, isSwitched);
+              },
+              child: new Text("אישור",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+            new FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                //handleIconStatusSelection(status, isSwitched);
+              },
+              child: new Text("ביטול",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ),
+          ],
+        ));
   }
 }

@@ -11,3 +11,11 @@ enum BedStatus {
   Petsa,
   Invasive 
   }
+
+
+enum BedAction { 
+    Move,
+    Swap,
+    Clean,
+    Release
+  }

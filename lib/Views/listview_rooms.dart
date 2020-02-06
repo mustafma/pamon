@@ -56,7 +56,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
 
   //final List<String> _listViewData = ["Room 1", "Room 2", "Room 3", "Room 4"];
 
-  Repository repository = new Repository();
+  
   var _firestoreRef = Firestore.instance.collection('rooms');
 
   @override
