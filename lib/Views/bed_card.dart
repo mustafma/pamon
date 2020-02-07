@@ -280,13 +280,13 @@ class _BedCardState extends State<BedCard> {
               builder: (context) {
                 return new CustomDialog(
                   text: "החולה לשחרור",
-                  handleYesButton: widget.crudObj.updateBedStatus(
-                      widget.roomId, widget.bed.bedId, "dismissed", true),
+                  handleYesButton:()=>{widget.crudObj.updateBedStatus(
+                      widget.roomId, widget.bed.bedId, "dismissed", true)
+                  },
                   handleNoButton: widget.crudObj.updateBedStatus(
                       widget.roomId, widget.bed.bedId, "dismissed", false),
                 );
               });
-          ;
           break;
       }
   }
@@ -597,9 +597,10 @@ class _BedCardState extends State<BedCard> {
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
     if (picked != null && picked != widget.bed.CatDate)
-      setState(() {
-        widget.bed.CatDate = picked;
-      });
+     // setState(() {
+        widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", picked);
+        //widget.bed.CatDate = picked;
+     // });
   }
 
   Widget moveBed(BuildContext context) {

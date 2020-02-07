@@ -46,16 +46,19 @@ class _CustomDialog extends State<CustomDialog> {
           actions: <Widget>[
             new FlatButton(
               onPressed: () {
-                Navigator.of(context).pop();
+
                 widget.handleYesButton();
+                Navigator.of(context).pop();
+                
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             new FlatButton(
               onPressed: () {
-                Navigator.of(context).pop();
                 widget.handleNoButton();
+                Navigator.of(context).pop();
+                
               },
               child: new Text("ביטול",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

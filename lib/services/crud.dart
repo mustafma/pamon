@@ -36,7 +36,7 @@ class CrudMethods {
           var beds = postSnapshot.data['beds'];
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              beds[i][field] = (value as Timestamp);
+              beds[i][field] = Timestamp.fromDate(value);
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
