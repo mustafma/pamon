@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:BridgeTeam/Model/repository.dart';
 import 'package:BridgeTeam/Model/room.dart';
 import 'package:BridgeTeam/Views/room_card.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -88,6 +87,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
                       itemBuilder: (BuildContext context, int index) {
                         RoomCard roomCard = RoomCard(
                           room: item[index],
+                          rooms:item
                         );
                         return roomCard;
                       },

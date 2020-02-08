@@ -9,11 +9,13 @@ class ListViewBeds extends StatefulWidget {
   List<dynamic> beds;
   String roomId;
   final parentAction;
+  List rooms = [];
   ListViewBeds(
       {Key key,
       @required this.beds,
       this.parentAction,
-      @required this.roomId});
+      @required this.roomId,
+      this.rooms});
 
   //ListViewBeds({@required this.beds});
   _ListViewBedsState createState() => _ListViewBedsState();
@@ -23,7 +25,9 @@ class _ListViewBedsState extends State<ListViewBeds> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var _firestoreRef = Firestore.instance.collection('rooms');
 
-  List<dynamic> _listViewData;
+
+
+
 
   void _updateRoomCounter() {
     widget.parentAction();
@@ -59,6 +63,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
                           BedCard bedCard = BedCard(
                             bed: item[index],
                             roomId: widget.roomId,
+                            rooms:widget.rooms,
                             parentRoomAction: (_updateRoomCounter),
                             // cardColor:   ((item[index] as Bed).totalActiveNotifications > 0 ) ? Colors.red : Color.fromRGBO(64, 75, 96, 9),
                           );
@@ -85,10 +90,6 @@ class _ListViewBedsState extends State<ListViewBeds> {
               ),
             )));
 
-    @override
-    void initState() {
-      _listViewData = this.widget.beds;
-      super.initState();
-    }
+
   }
 }

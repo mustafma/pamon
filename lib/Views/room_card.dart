@@ -6,7 +6,8 @@ import 'package:BridgeTeam/Views/listview_beds.dart';
 
 class RoomCard extends StatefulWidget {
   final Room room;
-  RoomCard({@required this.room});
+  List rooms = [];
+  RoomCard({@required this.room , this.rooms});
 
   _RoomCardState createState() => _RoomCardState();
 }
@@ -177,6 +178,7 @@ class _RoomCardState extends State<RoomCard> {
           builder: (context) => ListViewBeds(
               beds: widget.room.beds,
               roomId: widget.room.roomId,
+              rooms:widget.rooms,
               parentAction: _updateNotificationcounter)),
     );
   }

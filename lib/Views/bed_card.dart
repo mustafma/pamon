@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Model/room.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
@@ -13,8 +14,9 @@ class BedCard extends StatefulWidget {
   final Bed bed;
   String roomId;
   final parentRoomAction;
+  final List rooms;
   CrudMethods crudObj = new CrudMethods();
-  BedCard({Key key, @required this.bed, this.parentRoomAction, this.roomId});
+  BedCard({Key key, @required this.bed, this.parentRoomAction, this.roomId, this.rooms});
   _BedCardState createState() => _BedCardState();
 }
 
@@ -35,7 +37,7 @@ class _BedCardState extends State<BedCard> {
   Color icon5Color = Colors.white;
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
   String _selectedRoomNumber;
-  List<String> rooms = ['612', '613', '614', '615'];
+  //List rooms =  widget.rooms;
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
       value: InstructionType.IV,
@@ -636,10 +638,10 @@ class _BedCardState extends State<BedCard> {
 
                         // });
                       },
-                      items: rooms.map((String roomNum) {
+                      items: widget.rooms.map((var room) {
                         return new DropdownMenuItem<String>(
-                          value: roomNum,
-                          child: new Text(roomNum),
+                          value: (room as Room).roomId,
+                          child: new Text( (room as Room).roomName),
                         );
                       }).toList(),
                     ),
