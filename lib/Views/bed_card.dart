@@ -337,16 +337,16 @@ class _BedCardState extends State<BedCard> {
                 )));
   }
 
-  void handleIconStatusSelection2(BedStatus status, BuildContext context) {
+  void handleIconStatusSelection2(BedStatus status, BuildContext context) async {
     bool highlight = true;
     switch (status) {
       case BedStatus.Cateter:
-        widget.bed.Cateter = true;
-        _selectDate(context);
+         widget.bed.Cateter = true;
+        await _selectDate(context);
         widget.crudObj.updateBedStatus(
             widget.roomId, widget.bed.bedId, "withCut", highlight);
-        widget.crudObj.updateBedDateField(
-            widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
+       // widget.crudObj.updateBedDateField(
+         //   widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
         break;
       case BedStatus.CT:
         widget.bed.CT = highlight;
@@ -593,14 +593,19 @@ class _BedCardState extends State<BedCard> {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+   showDatePicker(
         context: context,
         initialDate: widget.bed.CatDate,
         firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != widget.bed.CatDate)
+        lastDate: DateTime(2101)
+        ).then((date){
+          widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", date);
+             print("Success");
+        });
+    
+   // if (picked != null )
      // setState(() {
-        widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", picked);
+     //   widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", picked);
         //widget.bed.CatDate = picked;
      // });
   }

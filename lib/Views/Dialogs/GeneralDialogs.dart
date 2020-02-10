@@ -2,17 +2,17 @@ import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatefulWidget {
-  final String  text;
+  final String text;
   final handleYesButton;
   final handleNoButton;
-   CrudMethods crudObj = new CrudMethods();
-  CustomDialog({@required this.text , this.handleYesButton , this.handleNoButton});
+  CrudMethods crudObj = new CrudMethods();
+  CustomDialog(
+      {@required this.text, this.handleYesButton, this.handleNoButton});
   _CustomDialog createState() => _CustomDialog();
 }
 
 class _CustomDialog extends State<CustomDialog> {
-
- @override
+  @override
   Widget build(BuildContext context) {
     return new Directionality(
         textDirection: TextDirection.rtl,
@@ -30,14 +30,12 @@ class _CustomDialog extends State<CustomDialog> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    new Text(
-                      widget.text,
+                    new Text(widget.text,
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
                     new Padding(padding: EdgeInsets.all(16.0)),
-
                   ],
                 )
               ],
@@ -45,19 +43,19 @@ class _CustomDialog extends State<CustomDialog> {
           ),
           actions: <Widget>[
             new FlatButton(
-              onPressed: () {
-
-                widget.handleYesButton();
+              onPressed: () async {
                 Navigator.of(context).pop();
-                
+                widget.handleYesButton();
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             new FlatButton(
               onPressed: () {
-                widget.handleNoButton();
                 Navigator.of(context).pop();
+                
+
+                widget.handleNoButton();
                 
               },
               child: new Text("ביטול",

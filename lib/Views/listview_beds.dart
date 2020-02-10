@@ -4,6 +4,7 @@ import 'package:BridgeTeam/Model/bed.dart';
 import 'package:BridgeTeam/Views/bed_card.dart';
 
 import 'appBar.dart';
+import 'bottomAppBar.dart';
 
 class ListViewBeds extends StatefulWidget {
   List<dynamic> beds;
@@ -25,15 +26,9 @@ class _ListViewBedsState extends State<ListViewBeds> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var _firestoreRef = Firestore.instance.collection('rooms');
 
-
-
-
-
   void _updateRoomCounter() {
     widget.parentAction();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +58,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
                           BedCard bedCard = BedCard(
                             bed: item[index],
                             roomId: widget.roomId,
-                            rooms:widget.rooms,
+                            rooms: widget.rooms,
                             parentRoomAction: (_updateRoomCounter),
                             // cardColor:   ((item[index] as Bed).totalActiveNotifications > 0 ) ? Colors.red : Color.fromRGBO(64, 75, 96, 9),
                           );
@@ -72,24 +67,6 @@ class _ListViewBedsState extends State<ListViewBeds> {
                         });
                   }
                 })),
-        bottomNavigationBar: BottomAppBar(
-            color: Color.fromRGBO(64, 75, 96, 9),
-            child: new Container(
-              height: 40,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                      alignment: Alignment.center,
-                      child: Text("Powered  By Adamtec",
-                          style: TextStyle(
-                              color: Colors.white38,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18)))
-                ],
-              ),
-            )));
-
-
+        bottomNavigationBar: BaseBottomBar());
   }
 }
