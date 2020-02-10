@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class BaseBottomBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor = Colors.blue;
 
- // final BottomBar bottomBar;
+  // final BottomBar bottomBar;
 
   BaseBottomBar({Key key}) : super(key: key);
 
@@ -27,34 +27,60 @@ class BaseBottomBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               IconButton(
                 icon: Icon(Icons.exit_to_app),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            elevation: 16,
+                            child: Container(
+                              height: 100.0,
+                              width: 150.0,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(" ?איך עברה עליך המשמרת",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        IconButton(
+                                          icon: Icon(Icons.explore),
+                                          color: Colors.red,
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.explore),
+                                          color: Colors.green,
+                                          onPressed: () {},
+                                        ),
+                                            IconButton(
+                                          icon: Icon(Icons.explore),
+                                          color: Colors.yellow,
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    )
+                                  ]),
+                            ));
+                      });
+                },
               )
             ],
           ),
         ));
   }
-
-
- Widget  alertDialog(BuildContext context) {
-
-//var parser = EmojiParser();
-//var sad = Emoji('😥' , 'sad');
-//var happy  = Emoji('😃' , 'happy');
-//var angry  = Emoji('😡' , 'angry');
-
-//var heart  = Emoji('heart', '❤️');
-
-
-    return new Row(
-      children: <Widget>[
- 
-      ]
-    );
-      
-  }
-
-
-
 
   @override
   // TODO: implement preferredSize
