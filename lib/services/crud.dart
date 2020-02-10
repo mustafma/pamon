@@ -93,6 +93,7 @@ class CrudMethods {
               beds[i]["O2"] = false;
               beds[i]["Petsa"] = false;
               beds[i]["Invasive"] = false;
+              beds[i]["dismissed"] = false;
               List notifications =
                   List.from(postSnapshot.data['beds'][i]['notifications']);
               for (int i = 0; i < notifications.length; i++) {
