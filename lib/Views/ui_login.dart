@@ -36,19 +36,20 @@ class _LoginWidget extends State<LoginWidget> {
   FormType _formType = FormType.login;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pamon"),
+        title:  Center(child:Text("Bridge")),
       ),
       body: Center(
         child: Container(
-          color: Colors.white,
+          color: Color.fromRGBO(58, 66, 86, 1.0),
+          
           child: Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.all(15.0),
               child: Form(
                 key: formKey,
                 child: Column(
@@ -63,41 +64,49 @@ class _LoginWidget extends State<LoginWidget> {
 
   List<Widget> buildInputs() {
     return <Widget>[
-      SizedBox(
-        height: 155.0,
-        child: Image.asset(
-          "assets/images/loginlogo.png",
-          fit: BoxFit.contain,
-        ),
-      ),
-      SizedBox(height: 45.0),
+ 
+      //SizedBox(height: 45.0),
       TextFormField(
+      
         obscureText: false,
         style: style,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Email",
+             filled: true,
+      fillColor: Color.fromRGBO(64, 75, 96, 9),
+        
+          //hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
+            contentPadding: EdgeInsets.fromLTRB(10.0, 15.0, 20.0, 15.0),
+            hintText: "אימייל",
+             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+                OutlineInputBorder(
+                   borderSide: new BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(5.0) 
+                  
+                  ) ),
         keyboardType: TextInputType.emailAddress,
         validator: EmailFieldValidator.validate,
         onSaved: (String value) => _email = value,
       ),
-      SizedBox(height: 25.0),
+
+      SizedBox(height: 10.0),
       TextFormField(
         obscureText: true,
         style: style,
         decoration: InputDecoration(
+                    filled: true,
+      fillColor: Color.fromRGBO(64, 75, 96, 9),
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: "Password",
+           //  hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
+            hintText: "סיסמה",
+            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
         validator: PasswordFieldValidator.validate,
         onSaved: (String value) => _password = value,
       ),
-      SizedBox(
-        height: 35.0,
-      ),
+
+    SizedBox(height: 10.0),
     ];
   }
 
@@ -105,21 +114,21 @@ class _LoginWidget extends State<LoginWidget> {
     if (_formType == FormType.login) {
       return <Widget>[
         Material(
-          elevation: 5.0,
+         // elevation: 5.0,
           borderRadius: BorderRadius.circular(30.0),
-          color: Color(0xff01A0C7),
+          color: Colors.orange,
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             onPressed: () => validateAndSubmit(context),
-            child: Text("Login",
+            child: Text("כניסה",
                 textAlign: TextAlign.center,
                 style: style.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold)),
           ),
         ),
         FlatButton(
-          child: Text('Create an account', style: TextStyle(fontSize: 20.0)),
+          child: Text('חשבון חדש', style: TextStyle(fontSize: 15.0 , color: Colors.white)),
           onPressed: moveToRegister,
         ),
         SizedBox(
@@ -129,14 +138,14 @@ class _LoginWidget extends State<LoginWidget> {
     } else {
       return <Widget>[
         Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Color(0xff01A0C7),
+        //  elevation: 5.0,
+            borderRadius: BorderRadius.circular(30.0),
+          color: Colors.orange,
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             onPressed: () => validateAndSubmit(context),
-            child: Text("Create an account'",
+            child: Text("צור חשבון",
                 textAlign: TextAlign.center,
                 style: style.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold)),
@@ -144,7 +153,7 @@ class _LoginWidget extends State<LoginWidget> {
         ),
         FlatButton(
           child:
-              Text('Have an account? Login', style: TextStyle(fontSize: 20.0)),
+              Text('כניסה ?', style: TextStyle(fontSize: 20.0  , color: Colors.white)),
           onPressed: moveToLogin,
         ),
         SizedBox(
