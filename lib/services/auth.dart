@@ -34,7 +34,7 @@ class AuthService {
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: email.trim(), password: password.trim());
 
       _userCached = result.user;
       CrudMethods crudObj = new CrudMethods();
