@@ -7,7 +7,7 @@ import 'package:BridgeTeam/Views/listview_beds.dart';
 class RoomCard extends StatefulWidget {
   final Room room;
   List rooms = [];
-  RoomCard({@required this.room , this.rooms});
+  RoomCard({@required this.room, this.rooms});
 
   _RoomCardState createState() => _RoomCardState();
 }
@@ -27,8 +27,11 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
+
+    String doctorName = "דר מהנד אבו אלהיגא";
+    String nurseName = "עולא עולא";
     return Container(
-        height: 147,
+        height: 160,
         child: Card(
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -64,52 +67,26 @@ class _RoomCardState extends State<RoomCard> {
                       border: new Border(
                           top: new BorderSide(
                               width: 3.0, color: Colors.orange))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.explore),
-                        iconSize: 30,
-                        color: widget.room.getTotalNumberOfBedsWithCateter(
-                                    BedStatus.Infected) >
-                                0
-                            ? Colors.yellow
-                            : Colors.white,
-                        onPressed: () => {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.explore),
-                        iconSize: 30,
-                        color: widget.room.getTotalNumberOfBedsWithCateter(
-                                    BedStatus.Fasting) >
-                                0
-                            ? Colors.yellow
-                            : Colors.white,
-                        onPressed: () => {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.explore),
-                        iconSize: 30,
-                        color: widget.room.getTotalNumberOfBedsWithCateter(
-                                    BedStatus.CT) >
-                                0
-                            ? Colors.yellow
-                            : Colors.white,
-                        onPressed: () => {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.explore),
-                        iconSize: 30,
-                        color: widget.room.getTotalNumberOfBedsWithCateter(
-                                    BedStatus.Cateter) >
-                                0
-                            ? Colors.yellow
-                            : Colors.white, //iconCateterColor,
-                        onPressed: () => {},
-                      ),
-                    ],
-                  ),
-                )
+                ),
+                Container(
+                    child: Column(
+                  children: [
+                    Container(
+                      child: Text(" רופא/ה אחראי:" + doctorName,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Container(
+                      child: Text("אח/אחות אחראי:" + nurseName,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    )
+                  ],
+                ))
               ],
             )));
   }
@@ -178,7 +155,7 @@ class _RoomCardState extends State<RoomCard> {
           builder: (context) => ListViewBeds(
               beds: widget.room.beds,
               roomId: widget.room.roomId,
-              rooms:widget.rooms,
+              rooms: widget.rooms,
               parentAction: _updateNotificationcounter)),
     );
   }
