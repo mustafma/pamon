@@ -100,16 +100,8 @@ static List<PopupMenuEntry<BedAction>> _listBedActions = [
       title: Text('נקה מיטה'),
     ),
   ),
-  new PopupMenuItem<BedAction>(
-    value: BedAction.Swap,
-    child: ListTile(
-      trailing: Icon(
-        Icons.swap_vert,
-        color: Color.fromRGBO(64, 75, 96, 9),
-      ),
-      title: Text('החלף מיטות'),
-    ),
-  ), 
+
+ 
   new PopupMenuItem<BedAction>(
     value: BedAction.Move,
     child: ListTile(
