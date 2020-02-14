@@ -697,7 +697,7 @@ class _BedCardState extends State<BedCard> {
               onPressed: () {
                 Navigator.of(context).pop();
                 handleMoveBed(
-                    widget.bed.roomId, widget.bed.roomId, widget.bed.bedId);
+                    widget.bed.roomId, _selectedRoomNumber, _selectedBedNumber);
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
