@@ -245,6 +245,7 @@ class _BedCardState extends State<BedCard> {
       switch (choice) {
         case BedAction.Clean:
           showDialog(
+            barrierDismissible: false,
               context: context,
               builder: (context) {
                 return new CustomDialog(
