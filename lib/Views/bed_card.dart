@@ -490,7 +490,9 @@ class _BedCardState extends State<BedCard> {
 
     var alert = new Directionality(
         textDirection: TextDirection.rtl,
+        
         child: AlertDialog(
+          
           title: new Text("הודעה",
               style: TextStyle(
                   color: Colors.black,
@@ -521,6 +523,7 @@ class _BedCardState extends State<BedCard> {
           ],
         ));
     showDialog(
+      barrierDismissible: false,
         context: context,
         builder: (BuildContext c) {
           return alert;
