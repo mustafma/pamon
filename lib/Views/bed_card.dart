@@ -15,7 +15,6 @@ class BedCard extends StatefulWidget {
   String roomId;
   final parentRoomAction;
   final List rooms;
- 
 
   CrudMethods crudObj = new CrudMethods();
   BedCard(
@@ -35,11 +34,17 @@ class BedCard extends StatefulWidget {
         });
         return beds;
   }
+
+
+
 }
 
 enum Status { none, withKatter, forCT, isInficted, fasting }
 
 class _BedCardState extends State<BedCard> {
+     var _selectedRoomNumber;
+  var _selectedBedNumber ;
+
   bool popMenueBtnEnaled = false;
   bool popMenueBtnEnaled1 = false;
   Color iconTalk1Color = Colors.white;
@@ -49,8 +54,7 @@ class _BedCardState extends State<BedCard> {
   bool allowedaddingInstruction = false;
 
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
-  String _selectedRoomNumber;
-  String _selectedBedNumber;
+
   //List rooms =  widget.rooms;
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
@@ -74,6 +78,7 @@ class _BedCardState extends State<BedCard> {
       ),
     )
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -326,6 +331,7 @@ class _BedCardState extends State<BedCard> {
       allowedForBedStatus = true;
     }
 
+   // _selectedBedNumber = widget.bed;
     super.initState();
   }
 
@@ -641,19 +647,20 @@ class _BedCardState extends State<BedCard> {
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold)),
                         new Padding(padding: EdgeInsets.all(16.0)),
-                        new DropdownButton<String>(
+                        new DropdownButton<Room>(
                           iconSize: 30,
-                          value: _selectedRoomNumber!=null?_selectedRoomNumber:null,
-                          onChanged: (String newValue) {
+                          value:_selectedRoomNumber,
+                          onChanged: (Room newValue) {
                             setState(() {
+                              
                               _selectedRoomNumber = newValue;
-                            });
+                           });
 
                             // });
                           },
                           items: widget.rooms.map((var room) {
-                            return new DropdownMenuItem<String>(
-                              value: (room as Room).roomId,
+                            return new DropdownMenuItem<Room>(
+                              value: (room as Room),
                               child: new Text((room as Room).roomName),
                             );
                           }).toList(),
@@ -668,20 +675,22 @@ class _BedCardState extends State<BedCard> {
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold)),
                         new Padding(padding: EdgeInsets.all(16.0)),
-                        new DropdownButton<String>(
+                        new DropdownButton<Bed>(
                           iconSize: 30,
-                          value: _selectedBedNumber !=null ?_selectedBedNumber :null ,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _selectedBedNumber = newValue;
+                          value: (_selectedBedNumber),
+                      
+                          isDense: true,
+                          onChanged: (Bed newValue) {
+                           setState(() {
+                             _selectedBedNumber = newValue;
                             });
 
                             // });
                           },
                           items: widget.getRoomBeds().map((var bed) {
-                            return new DropdownMenuItem<String>(
-                              value: (bed as Bed).bedId,
-                              child: new Text((bed as Bed).bedId + "חדר "),
+                            return new DropdownMenuItem<Bed>(
+                              value: bed,
+                              child: new Text((bed).bedId + "חדר "),
                             );
                           }).toList(),
                         ),
@@ -697,7 +706,7 @@ class _BedCardState extends State<BedCard> {
               onPressed: () {
                 Navigator.of(context).pop();
                 handleMoveBed(
-                    widget.bed.roomId, _selectedRoomNumber, _selectedBedNumber);
+                    widget.roomId, _selectedRoomNumber.roomId,_selectedBedNumber.bedId);
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
