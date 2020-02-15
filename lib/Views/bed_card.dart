@@ -1,4 +1,5 @@
 import 'package:BridgeTeam/Model/room.dart';
+import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
@@ -15,31 +16,23 @@ class BedCard extends StatefulWidget {
   String roomId;
   final parentRoomAction;
   final List rooms;
- 
-
   CrudMethods crudObj = new CrudMethods();
   BedCard(
+
+
       {Key key,
       @required this.bed,
       this.parentRoomAction,
       this.roomId,
       this.rooms});
   _BedCardState createState() => _BedCardState();
-
-  List  getRoomBeds() {
-    List beds;
-    rooms.forEach((room) =>
-        {
-          if ((room as Room).roomId == roomId) 
-            beds = (room as Room).beds
-        });
-        return beds;
-  }
 }
 
 enum Status { none, withKatter, forCT, isInficted, fasting }
 
 class _BedCardState extends State<BedCard> {
+
+
   bool popMenueBtnEnaled = false;
   bool popMenueBtnEnaled1 = false;
   Color iconTalk1Color = Colors.white;
@@ -49,8 +42,7 @@ class _BedCardState extends State<BedCard> {
   bool allowedaddingInstruction = false;
 
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
-  String _selectedRoomNumber;
-  String _selectedBedNumber;
+
   //List rooms =  widget.rooms;
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
@@ -116,7 +108,7 @@ class _BedCardState extends State<BedCard> {
                     subtitle: buildSubTrial(),
                     trailing: buildTrial(),
                     onTap: () => onTapBrowseToBedInstructions(context),
-                    onLongPress: () => moveBed(context),
+                    //onLongPress: () => moveBed(context),
                   )),
               Container(
                 decoration: BoxDecoration(
@@ -274,7 +266,7 @@ class _BedCardState extends State<BedCard> {
           showDialog(
               context: context,
               builder: (context) {
-                return moveBed(context);
+                return new MoveBedDialog(bed: widget.bed,rooms: widget.rooms,roomId:widget.roomId);
               });
           break;
         case BedAction.Swap:
@@ -326,6 +318,9 @@ class _BedCardState extends State<BedCard> {
       allowedForBedStatus = true;
     }
 
+
+  
+    // _selectedBedNumber = widget.bed;
     super.initState();
   }
 
@@ -617,104 +612,7 @@ class _BedCardState extends State<BedCard> {
     // });
   }
 
-  Widget moveBed(BuildContext context) {
-    return new Directionality(
-        textDirection: TextDirection.rtl,
-        child: AlertDialog(
-          title: new Text("העבר מיטה " + widget.bed.name,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
-          content: Container(
-            width: 400,
-            height: 150,
-            child: Column(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        new Text("אל חדר",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
-                        new Padding(padding: EdgeInsets.all(16.0)),
-                        new DropdownButton<String>(
-                          iconSize: 30,
-                          value: _selectedRoomNumber!=null?_selectedRoomNumber:null,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _selectedRoomNumber = newValue;
-                            });
 
-                            // });
-                          },
-                          items: widget.rooms.map((var room) {
-                            return new DropdownMenuItem<String>(
-                              value: (room as Room).roomId,
-                              child: new Text((room as Room).roomName),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        new Text("אל מיטה",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
-                        new Padding(padding: EdgeInsets.all(16.0)),
-                        new DropdownButton<String>(
-                          iconSize: 30,
-                          value: _selectedBedNumber !=null ?_selectedBedNumber :null ,
-                          onChanged: (String newValue) {
-                            setState(() {
-                              _selectedBedNumber = newValue;
-                            });
 
-                            // });
-                          },
-                          items: widget.getRoomBeds().map((var bed) {
-                            return new DropdownMenuItem<String>(
-                              value: (bed as Bed).bedId,
-                              child: new Text((bed as Bed).bedId + "חדר "),
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            new FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                handleMoveBed(
-                    widget.bed.roomId, _selectedRoomNumber, _selectedBedNumber);
-              },
-              child: new Text("אישור",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            new FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                //handleIconStatusSelection(status, isSwitched);
-              },
-              child: new Text("ביטול",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ));
-  }
 
-  void handleMoveBed(fromRoomId, toRoomId, bedId) {
-    widget.crudObj.moveBed(fromRoomId, toRoomId, bedId);
-  }
 }
