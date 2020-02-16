@@ -9,6 +9,7 @@ import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
 
 import 'Dialogs/GeneralDialogs.dart';
+import 'Dialogs/bedStatusesDialog.dart';
 import 'listview_notifications.dart';
 
 class BedCard extends StatefulWidget {
@@ -125,19 +126,23 @@ class _BedCardState extends State<BedCard> {
                     Container(
                       // margin: EdgeInsets.only(left: 310),
 
-                      child: PopupMenuButton(
-                        color: Theme.of(context).popupMenuTheme.color,
-                        icon: Icon(
-                          Icons.list,
-                          color: Colors.white,
-                        ),
-                        // enabled: popMenueBtnEnaled1,
-                        onSelected: (value) =>
-                            handleIconStatusSelection2(value, context),
-                        itemBuilder: (BuildContext context) {
-                          return PamonMenus.BedStatuses;
-                        },
-                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.list),
+                        onPressed:() => {
+                          showDialog(
+              context: context,
+              builder: (context) {
+                return new BedStatusDialog(bed: widget.bed, roomId: widget.roomId,);
+              })
+                           
+                        }
+                            
+
+                        
+                            
+
+                      )
+                      
                     ),
                   ],
                 ),
@@ -336,65 +341,7 @@ class _BedCardState extends State<BedCard> {
                 )));
   }
 
-  void handleIconStatusSelection2(
-      BedStatus status, BuildContext context) async {
-    bool highlight = true;
-    switch (status) {
-      case BedStatus.Cateter:
-        widget.bed.Cateter = true;
-        await _selectDate(context);
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "withCut", highlight);
-        // widget.crudObj.updateBedDateField(
-        //   widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
-        break;
-      case BedStatus.CT:
-        widget.bed.CT = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "forCT", highlight);
-        break;
-      case BedStatus.Infected:
-        widget.bed.Infected = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "isInficted", highlight);
-        break;
-      case BedStatus.Fasting:
-        widget.bed.Fasting = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "fasting", highlight);
-        break;
-      case BedStatus.PhysoAid:
-        widget.bed.PhysoAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "PhysoAid", highlight);
-        break;
-      case BedStatus.SocialAid:
-        widget.bed.SocialAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "SocialAid", highlight);
-        break;
-      case BedStatus.Petsa:
-        widget.bed.Petsa = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "Petsa", highlight);
-        break;
-      case BedStatus.DiatentAid:
-        widget.bed.DiatentAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "DiatentAid", highlight);
-        break;
-      case BedStatus.O2:
-        widget.bed.O2 = highlight;
-        widget.crudObj
-            .updateBedStatus(widget.roomId, widget.bed.bedId, "O2", highlight);
-        break;
-      case BedStatus.Invasive:
-        widget.bed.Invasive = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "Invasive", highlight);
-        break;
-    }
-  }
+ 
 
   void handleIconStatusSelection(BedStatus status, bool highlight) {
     String fieldName = (status.toString()).split(".")[1];
@@ -593,25 +540,7 @@ class _BedCardState extends State<BedCard> {
     return genList;
   }
 
-  Future<Null> _selectDate(BuildContext context) async {
-    showDatePicker(
-            context: context,
-            initialDate: widget.bed.CatDate,
-            firstDate: DateTime(2015, 8),
-            lastDate: DateTime(2101))
-        .then((date) {
-      widget.crudObj
-          .updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", date);
-      print("Success");
-    });
-
-    // if (picked != null )
-    // setState(() {
-    //   widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", picked);
-    //widget.bed.CatDate = picked;
-    // });
-  }
-
+ 
 
 
 
