@@ -254,6 +254,65 @@ class CrudMethods {
     }
   }
 
+  Future<void> replaceBed(fromRoomId, toRoomId, firstBedId, secondBedId) {
+    FutureOr<dynamic> _toMap;
+    if (isLoggedIn()) {
+      DocumentReference fromRoomRef =
+      Firestore.instance.collection("rooms").document(fromRoomId);
+      DocumentReference toRoomRef =
+      Firestore.instance.collection("rooms").document(toRoomId);
+
+      final TransactionHandler createTransaction = (Transaction tx) async {
+        final DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
+        final DocumentSnapshot toPostSnapshot = await tx.get(toRoomRef);
+
+        List beds = List.from(fromPostSnapshot.data['beds']);
+
+        dynamic firstmovingBed;
+        dynamic secondmovingBed;
+        dynamic tempBed;
+        List toBeds = [];
+
+        for (int i = 0; i < beds.length; i++) {
+          if (beds[i]['bedId'] == firstBedId) {
+            firstmovingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+
+            toBeds = List.from(toPostSnapshot.data['beds']);
+            for (int j = 0; j < toBeds.length; i++) {
+              secondmovingBed = toPostSnapshot.data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+              tempBed = secondmovingBed;
+              firstmovingBed['bedId'] = tempBed['bedId'];
+              firstmovingBed['bedName'] = tempBed['bedName'];
+
+              secondmovingBed['bedId'] = firstBedId;
+              firstmovingBed['bedName'] = firstBedId;
+
+              beds.removeAt(i);
+              beds.add(secondmovingBed);
+              
+              toBeds.removeAt(j);
+              toBeds.add(firstmovingBed);
+              break;
+            }
+
+
+          }
+        }
+        await tx.update(fromRoomRef, <String, dynamic>{'beds': beds});
+        await tx.update(toRoomRef, <String, dynamic>{'beds': toBeds});
+
+        return;
+      };
+
+      return Firestore.instance
+          .runTransaction(createTransaction)
+          .then(_toMap)
+          .catchError((e) {
+        print('error runningbtransaction: $e');
+        return null;
+      });
+    }
+  }
   Future<String> getUserRole(uid) async {
     if (isLoggedIn()) {
       var usersRef = Firestore.instance.collection("users");
