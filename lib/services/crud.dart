@@ -49,7 +49,7 @@ class CrudMethods {
   }
 
 
-  Future<void> updateBedStatus(roomId, bedId, flag, status) {
+  Future<void> updateBedStatus(roomId, bedId, flag, status) async {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
@@ -61,7 +61,16 @@ class CrudMethods {
           var beds = postSnapshot.data['beds'];
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              beds[i][flag] = status;
+              
+           List<String> list =  (flag as String).split(";");
+           
+            list.forEach((x) => {
+              if ( x != null  && x != "")
+              beds[i][x] = status
+
+            });
+
+              
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});

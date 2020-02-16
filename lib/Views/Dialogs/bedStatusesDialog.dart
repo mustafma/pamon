@@ -23,6 +23,7 @@ class BedStatusDialog extends StatefulWidget {
 
 class _BedStatusDialog extends State<BedStatusDialog> {
   List<StatusTypeValue> statusTypesValues = new List<StatusTypeValue>();
+   String flagsForUpdate = "";
 
   @override
   Widget build(BuildContext context) {
@@ -181,8 +182,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
           ),
           actions: <Widget>[
             new FlatButton(
-              onPressed: () async {
-                await handleIconStatusSelection2(context);
+              onPressed: () {
+                handleIconStatusSelection2(context);
 
                 Navigator.of(context).pop();
               },
@@ -193,66 +194,80 @@ class _BedStatusDialog extends State<BedStatusDialog> {
         ));
   }
 
-  void doWork(BedStatus status, bool highlight , BuildContext context) async {
+  void  doWork(BedStatus status, bool highlight, BuildContext context) async {
+   
     switch (status) {
       case BedStatus.Cateter:
-        widget.bed.Cateter = true;
+        //widget.bed.Cateter = true;
         await _selectDate(context);
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "withCut", highlight);
+
+        flagsForUpdate =flagsForUpdate +"withCut;";
+       // await widget.crudObj.updateBedStatus(
+         //   widget.roomId, widget.bed.bedId, "withCut", highlight);
         // widget.crudObj.updateBedDateField(
         //   widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
         break;
       case BedStatus.CT:
-        widget.bed.CT = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "forCT", highlight);
+        //widget.bed.CT = highlight;
+        flagsForUpdate=flagsForUpdate +"forCT;";
+        //await widget.crudObj.updateBedStatus(
+         //   widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
       case BedStatus.Infected:
-        widget.bed.Infected = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "isInficted", highlight);
+        //widget.bed.Infected = highlight;
+        flagsForUpdate =flagsForUpdate +"isInficted;";
+       // await widget.crudObj.updateBedStatus(
+        //    widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case BedStatus.Fasting:
-        widget.bed.Fasting = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "fasting", highlight);
+        //widget.bed.Fasting = highlight;
+        flagsForUpdate =flagsForUpdate +"fasting;";
+        //await widget.crudObj.updateBedStatus(
+          //  widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
       case BedStatus.PhysoAid:
-        widget.bed.PhysoAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "PhysoAid", highlight);
+       // widget.bed.PhysoAid = highlight;
+        flagsForUpdate +="PhysoAid;";
+        //await widget.crudObj.updateBedStatus(
+         //   widget.roomId, widget.bed.bedId, "PhysoAid", highlight);
         break;
       case BedStatus.SocialAid:
-        widget.bed.SocialAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "SocialAid", highlight);
+       // widget.bed.SocialAid = highlight;
+         flagsForUpdate =flagsForUpdate +"SocialAid;";
+        //await widget.crudObj.updateBedStatus(
+         //   widget.roomId, widget.bed.bedId, "SocialAid", highlight);
         break;
       case BedStatus.Petsa:
-        widget.bed.Petsa = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "Petsa", highlight);
+        //widget.bed.Petsa = highlight;
+        flagsForUpdate =flagsForUpdate +"Petsa;";
+        //await widget.crudObj.updateBedStatus(
+          //  widget.roomId, widget.bed.bedId, "Petsa", highlight);
         break;
       case BedStatus.DiatentAid:
-        widget.bed.DiatentAid = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "DiatentAid", highlight);
+        //widget.bed.DiatentAid = highlight;
+          flagsForUpdate +="DiatentAid;";
+        //await widget.crudObj.updateBedStatus(
+         //   widget.roomId, widget.bed.bedId, "DiatentAid", highlight);
         break;
       case BedStatus.O2:
-        widget.bed.O2 = highlight;
-        widget.crudObj
-            .updateBedStatus(widget.roomId, widget.bed.bedId, "O2", highlight);
+        //widget.bed.O2 = highlight;
+         flagsForUpdate =flagsForUpdate +"O2;";
+        //await widget.crudObj
+        //    .updateBedStatus(widget.roomId, widget.bed.bedId, "O2", highlight);
         break;
       case BedStatus.Invasive:
-        widget.bed.Invasive = highlight;
-        widget.crudObj.updateBedStatus(
-            widget.roomId, widget.bed.bedId, "Invasive", highlight);
+        //widget.bed.Invasive = highlight;
+         flagsForUpdate =flagsForUpdate +"Invasive;";
+      
         break;
     }
+       widget.crudObj.updateBedStatus(
+            widget.roomId, widget.bed.bedId, flagsForUpdate, highlight);
   }
 
-  Future handleIconStatusSelection2(BuildContext context) async {
-    statusTypesValues.forEach((x) => {  doWork(x.status, x.value,context)});
+  void handleIconStatusSelection2(BuildContext context) {
+    statusTypesValues
+        .forEach((x)  => { doWork(x.status, x.value, context)});
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -262,8 +277,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
             firstDate: DateTime(2015, 8),
             lastDate: DateTime(2101))
         .then((date) {
-      widget.crudObj
-          .updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", date==null?DateTime.now():date);
+      widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId,
+          "CatDate", date == null ? DateTime.now() : date);
       print("Success");
     });
   }
