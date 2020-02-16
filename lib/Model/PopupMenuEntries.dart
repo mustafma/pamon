@@ -109,7 +109,7 @@ static List<PopupMenuEntry<BedAction>> _listBedActions = [
         Icons.move_to_inbox,
         color: Color.fromRGBO(64, 75, 96, 9),
       ),
-      title: Text('העבר מיטות'),
+      title: Text('החלף מיטות'),
     ),
   ),
   new PopupMenuItem<BedAction>(
