@@ -63,6 +63,12 @@ class AuthService {
       case UserType.DepartmentManager:
 
       break;
+           case UserType.NurseRoomsupervisor:
+
+      break;
+           case UserType.RoomDoctorSuperviosor:
+
+      break;
       case UserType.Other:
         // TODO: Handle this case.
         break;
@@ -104,6 +110,14 @@ class AuthService {
         _fcm.subscribeToTopic('addInstruction_topic');
         break;
       case UserType.DepartmentManager:
+
+        break;
+
+         case UserType.RoomDoctorSuperviosor:
+
+        break;
+
+         case UserType.NurseRoomsupervisor:
 
         break;
       case UserType.Other:

@@ -1,6 +1,9 @@
+import 'dart:async';
+
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:BridgeTeam/Model/enumTypes.dart';
+
 import 'package:BridgeTeam/Model/room.dart';
 import 'package:BridgeTeam/Views/listview_beds.dart';
 
@@ -14,10 +17,13 @@ class RoomCard extends StatefulWidget {
 
 class _RoomCardState extends State<RoomCard> {
   int count = 0;
-  Color iconTalk1Color = Colors.white;
-  Color iconTalk2Color = Colors.grey;
+  Color iconTalkColor = Colors.grey;
+  Color iconTalkColor2 = Colors.grey;
   Color iconCateterColor = Colors.white;
   Color cardColor;
+  Timer timer;
+  bool talk10AMvisible = false;
+  bool talk15AMvisible = false;
 
   void _updateNotificationcounter() {
     var totalNotifications = widget.room.getTotalNumberOfNotifications();
@@ -27,11 +33,10 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
-
     String doctorName = "דר מהנד אבו אלהיגא";
     String nurseName = "עולא עולא";
     return Container(
-        height: 160,
+        height: 188,
         child: Card(
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -84,7 +89,35 @@ class _RoomCardState extends State<RoomCard> {
                               color: Colors.white,
                               fontSize: 15,
                               fontWeight: FontWeight.bold)),
-                    )
+                    ),
+                    Container(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Center(
+                            child: Visibility(
+                                visible: talk10AMvisible,
+                                child: IconButton(
+                                    icon: Icon(Icons.people),
+                                    iconSize: 30,
+                                    tooltip:
+                                        "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                            (widget.room).roomName,
+                                    color: iconTalkColor,
+                                    onPressed: () => handleTalk1()))),
+                        Center(
+                            child: Visibility(
+                                visible: talk15AMvisible,
+                                child: IconButton(
+                                    icon: Icon(Icons.people),
+                                    iconSize: 30,
+                                    tooltip:
+                                        "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                            (widget.room).roomName,
+                                    color: iconTalkColor2,
+                                    onPressed: () => handleTalk2()))),
+                      ],
+                    )),
                   ],
                 ))
               ],
@@ -106,7 +139,7 @@ class _RoomCardState extends State<RoomCard> {
           // alignment: Alignment(10.0, 10.0),
           icon: Icon(Icons.exit_to_app),
           iconSize: 30,
-          color: iconTalk1Color,
+          color: iconTalkColor,
           onPressed: () => handleTalk1(),
         ),
 
@@ -166,12 +199,104 @@ class _RoomCardState extends State<RoomCard> {
     if (count > 0) cardColor = Colors.red;
     // else
     //  cardColor = Colors.green.withOpacity(0.7);
+
+    timer =
+        Timer.periodic(Duration(seconds: 60), (Timer t) => onTimeElapsed());
+
+
+
     super.initState();
   }
 
   handleTalk1() {
     setState(() {
-      iconTalk1Color = Colors.yellow;
+      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor || User.getInstance().loggedInUserType == UserType.Nurse ) {
+        if (widget.room.docAcceptedTalk1) iconTalkColor = Colors.green;
+        // set nurseAcceptedTalk to true
+
+      }
+
+      if (User.getInstance().loggedInUserType ==
+          UserType.RoomDoctorSuperviosor ||  User.getInstance().loggedInUserType == UserType.Doctor ) {
+        if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
+        // set docAcceptedTalk to true
+      }
     });
+  }
+
+
+
+    handleTalk2() {
+    setState(() {
+      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor || User.getInstance().loggedInUserType == UserType.Nurse ) {
+        if (widget.room.docAcceptedTalk2) iconTalkColor2 = Colors.green;
+        // set nurseAcceptedTalk to true
+
+      }
+
+      if (User.getInstance().loggedInUserType ==
+          UserType.RoomDoctorSuperviosor ||  User.getInstance().loggedInUserType == UserType.Doctor ) {
+         if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
+        // set docAcceptedTalk to true
+      }
+    });
+  }
+
+
+
+  void onTimeElapsed() {
+    var date = DateTime.now();
+    var hour = date.hour;
+    if ((hour < 4)) {
+      if (widget.room.timeforUpdate1 ||
+          widget.room.nurseAcceptedTalk1 ||
+          widget.room.docAcceptedTalk1) {
+        //set all to false in room  and prepare fo r10 AM fot talk
+      }
+
+
+      if (widget.room.timeforUpdate2 ||
+          widget.room.nurseAcceptedTalk2 ||
+          widget.room.docAcceptedTalk2) {
+        //set all to false in room  and prepare fo r10 AM fot talk
+      }
+
+    }
+
+    if (hour == 4) {
+      if (User.getInstance().loggedInUserType ==UserType.Nurse || User.getInstance().loggedInUserType ==UserType.Doctor ||  User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+          User.getInstance().loggedInUserType ==
+              UserType.RoomDoctorSuperviosor) {
+        if (!talk10AMvisible) {
+          setState(() {
+            talk10AMvisible = true;
+          });
+        }
+      }
+      if (!widget.room.timeforUpdate1) {
+        // set timeforUpdate to true  and nurseAcceptedTalk and  docAcceptedTalk to false to start enabling talk functionality
+      }
+    }
+
+
+
+
+
+    if (hour == 15) {
+      if (User.getInstance().loggedInUserType ==UserType.Nurse || User.getInstance().loggedInUserType ==UserType.Doctor ||  User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+          User.getInstance().loggedInUserType ==
+              UserType.RoomDoctorSuperviosor) {
+        if (!talk15AMvisible) {
+          setState(() {
+            talk15AMvisible = true;
+          });
+        }
+      }
+      if (!widget.room.timeforUpdate2) {
+        // set timeforUpdate to true  and nurseAcceptedTalk and  docAcceptedTalk to false to start enabling talk functionality
+      }
+    }
+
+
   }
 }

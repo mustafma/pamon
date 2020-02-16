@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum UserType { Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
+enum UserType { RoomDoctorSuperviosor  , NurseRoomsupervisor,  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
 
 class User {
   @protected
@@ -42,6 +42,13 @@ class User {
     case "nrs":
       return UserType.NurseShiftManager;
     case "drm":
+    return UserType.DepartmentManager;
+
+        case "drrs":
+    return UserType.NurseRoomsupervisor;
+
+        case "nrrs":
+    return UserType.NurseRoomsupervisor;
     default:
       return UserType.Nurse;
   }

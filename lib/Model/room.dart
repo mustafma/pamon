@@ -6,6 +6,14 @@ class Room {
   String roomId;
   String departmentID;
   String roomName;
+  bool timeforUpdate1;
+   bool docAcceptedTalk1;
+    bool nurseAcceptedTalk1;
+
+      bool timeforUpdate2;
+   bool docAcceptedTalk2;
+    bool nurseAcceptedTalk2;
+
   List<dynamic> beds = new List<Bed>();
   Room({this.roomId, this.roomName, this.beds});
 
@@ -13,6 +21,16 @@ class Room {
       : roomId = id,
         roomName = snapshot['name'] ?? '',
         departmentID = snapshot['departmntId'] ?? '',
+        timeforUpdate1 = snapshot['timeforUpdate1'] ?? false,
+        docAcceptedTalk1 = snapshot['docAcceptedTalk1'] ?? false,
+        nurseAcceptedTalk1 = snapshot['nurseAcceptedTalk1'] ?? false,
+
+
+        timeforUpdate2 = snapshot['timeforUpdate2'] ?? false,
+        docAcceptedTalk2 = snapshot['docAcceptedTalk2'] ?? false,
+        nurseAcceptedTalk2 = snapshot['nurseAcceptedTalk2'] ?? false,
+
+
         beds = snapshot['beds']
             .map((map) => new Bed.fromMap(map, map['bedId']))
             .toList();
