@@ -247,7 +247,7 @@ class _RoomCardState extends State<RoomCard> {
   void onTimeElapsed() {
     var date = DateTime.now();
     var hour = date.hour;
-    if ((hour < 4)) {
+    if ((hour < 10)) {
       if (widget.room.timeforUpdate1 ||
           widget.room.nurseAcceptedTalk1 ||
           widget.room.docAcceptedTalk1) {
@@ -263,7 +263,7 @@ class _RoomCardState extends State<RoomCard> {
 
     }
 
-    if (hour == 4) {
+    if (hour == 10) {
       if (User.getInstance().loggedInUserType ==UserType.Nurse || User.getInstance().loggedInUserType ==UserType.Doctor ||  User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
           User.getInstance().loggedInUserType ==
               UserType.RoomDoctorSuperviosor) {

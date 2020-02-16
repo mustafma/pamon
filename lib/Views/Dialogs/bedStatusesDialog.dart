@@ -263,7 +263,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
             lastDate: DateTime(2101))
         .then((date) {
       widget.crudObj
-          .updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", date);
+          .updateBedDateField(widget.roomId, widget.bed.bedId, "CatDate", date==null?DateTime.now():date);
       print("Success");
     });
   }
