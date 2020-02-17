@@ -41,8 +41,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                         fontWeight: FontWeight.bold)),
               )),
           content: Container(
-            width: 300,
-            height: 450,
+            width: 400,
+            height: 385,
             child: Column(
               children: <Widget>[
                 Column(
@@ -56,11 +56,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('קטטר שתן',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -72,11 +72,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('פצע לחץ דרגה',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -88,11 +88,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('זקוק לפיזוטרפיה',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -104,11 +104,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('זקוק להערכה סוציאלית',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -120,11 +120,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('זקוק להתערבות של דיאטנית',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -136,11 +136,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
-                      Text(' Invasive מונשם',
+                      new Padding(padding: EdgeInsets.all(1.0)),
+                      Text('מונשם Invasive ',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -152,11 +152,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
-                      Text('BiPAP/CPAP זקוק לחמצן',
+                      new Padding(padding: EdgeInsets.all(1.0)),
+                      Text('זקוק לחמצן BiPAP/CPAP ',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                     new Row(children: <Widget>[
@@ -168,11 +168,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                             obj.value = newValue;
                             statusTypesValues.add(obj);
                           }),
-                      new Padding(padding: EdgeInsets.all(10.0)),
+                      new Padding(padding: EdgeInsets.all(1.0)),
                       Text('צום',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 15,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold)),
                     ]),
                   ],
@@ -274,7 +274,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
     showDatePicker(
             context: context,
             initialDate: widget.bed.CatDate,
-            firstDate: DateTime(2015, 8),
+            firstDate: DateTime(2012, 8),
             lastDate: DateTime(2101))
         .then((date) {
       widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId,

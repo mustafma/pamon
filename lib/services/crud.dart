@@ -48,7 +48,6 @@ class CrudMethods {
     }
   }
 
-
   Future<void> updateBedStatus(roomId, bedId, flag, status) async {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
@@ -61,16 +60,10 @@ class CrudMethods {
           var beds = postSnapshot.data['beds'];
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              
-           List<String> list =  (flag as String).split(";");
-           
-            list.forEach((x) => {
-              if ( x != null  && x != "")
-              beds[i][x] = status
+              List<String> list = (flag as String).split(";");
 
-            });
-
-              
+              list.forEach(
+                  (x) => {if (x != null && x != "") beds[i][x] = status});
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
@@ -150,8 +143,18 @@ class CrudMethods {
       }).then((_) {
         print("Success");
 
-        Message message = new Message(newInstruction.notificationId, bedId, bedId, newInstruction.notificationType, newInstruction.notificationText,
-            roomId, roomId, "uid", "departmentId", "ADD_INSTRUCTION", new DateTime.now().toString());
+        Message message = new Message(
+            newInstruction.notificationId,
+            bedId,
+            bedId,
+            newInstruction.notificationType,
+            newInstruction.notificationText,
+            roomId,
+            roomId,
+            "uid",
+            "departmentId",
+            "ADD_INSTRUCTION",
+            new DateTime.now().toString());
         Firestore.instance.collection("messages").add(message.toMap());
       });
     }
@@ -168,8 +171,7 @@ class CrudMethods {
           List beds = List.from(postSnapshot.data['beds']);
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              List notifications =
-                  List.from(beds[i]['notifications']);
+              List notifications = List.from(beds[i]['notifications']);
               for (int j = 0; j < notifications.length; j++) {
                 if (notifications[j]['notificationId'] == instructionId) {
                   // change notification status to executed
@@ -183,13 +185,22 @@ class CrudMethods {
             }
           }
           await tx.update(roomRef, <String, dynamic>{'beds': beds});
-          Message message = new Message(instructionId, bedId, bedId, removedInstruction['notificationType'], removedInstruction['notificationText'],
-              roomId, roomId, "uid", "departmentId", "EXECUTED_INSTRUCTION", new DateTime.now().toString());
+          Message message = new Message(
+              instructionId,
+              bedId,
+              bedId,
+              removedInstruction['notificationType'],
+              removedInstruction['notificationText'],
+              roomId,
+              roomId,
+              "uid",
+              "departmentId",
+              "EXECUTED_INSTRUCTION",
+              new DateTime.now().toString());
           Firestore.instance.collection("messages").add(message.toMap());
         }
       }).then((_) {
         print("Success");
-
       });
     }
   }
@@ -267,9 +278,9 @@ class CrudMethods {
     FutureOr<dynamic> _toMap;
     if (isLoggedIn()) {
       DocumentReference fromRoomRef =
-      Firestore.instance.collection("rooms").document(fromRoomId);
+          Firestore.instance.collection("rooms").document(fromRoomId);
       DocumentReference toRoomRef =
-      Firestore.instance.collection("rooms").document(toRoomId);
+          Firestore.instance.collection("rooms").document(toRoomId);
 
       final TransactionHandler createTransaction = (Transaction tx) async {
         final DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
@@ -284,11 +295,13 @@ class CrudMethods {
 
         for (int i = 0; i < beds.length; i++) {
           if (beds[i]['bedId'] == firstBedId) {
-            firstmovingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+            firstmovingBed = fromPostSnapshot.data['beds'][
+                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             for (int j = 0; j < toBeds.length; i++) {
-              secondmovingBed = toPostSnapshot.data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+              secondmovingBed = toPostSnapshot.data['beds'][
+                  j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
               tempBed = secondmovingBed;
               firstmovingBed['bedId'] = tempBed['bedId'];
               firstmovingBed['bedName'] = tempBed['bedName'];
@@ -298,13 +311,11 @@ class CrudMethods {
 
               beds.removeAt(i);
               beds.add(secondmovingBed);
-              
+
               toBeds.removeAt(j);
               toBeds.add(firstmovingBed);
               break;
             }
-
-
           }
         }
         await tx.update(fromRoomRef, <String, dynamic>{'beds': beds});
@@ -322,6 +333,7 @@ class CrudMethods {
       });
     }
   }
+
   Future<String> getUserRole(uid) async {
     if (isLoggedIn()) {
       var usersRef = Firestore.instance.collection("users");
