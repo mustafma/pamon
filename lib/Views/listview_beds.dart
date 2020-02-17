@@ -52,6 +52,8 @@ class _ListViewBedsState extends State<ListViewBeds> {
                         Bed.fromMap(bed,
                             bed['bedId']))); //map((doc) => Bed.fromMap(doc.data, doc.documentID.toString())).toList();
 
+                    item.sort((a,b)=> ((a as Bed).bedId).compareTo((b as Bed).bedId));
+
                     return ListView.builder(
                         itemCount: item.length,
                         itemBuilder: (context, index) {
