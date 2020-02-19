@@ -87,7 +87,7 @@ class _LoginWidget extends State<LoginWidget> {
       fillColor: Color.fromRGBO(200, 201, 202, 1.0),//Color.fromRGBO(64, 75, 96, 9),
         
           //hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
-            contentPadding: EdgeInsets.fromLTRB(250.0, 15.0, 20.0, 15.0),
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "אימייל",
              hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
             border:
@@ -108,7 +108,7 @@ class _LoginWidget extends State<LoginWidget> {
         decoration: InputDecoration(
                     filled: true,
       fillColor: Color.fromRGBO(200, 201, 202, 1.0), //Color.fromRGBO(64, 75, 96, 9),
-            contentPadding: EdgeInsets.fromLTRB(250.0, 15.0, 20.0, 15.0),
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
            //  hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
             hintText: "סיסמה",
             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
