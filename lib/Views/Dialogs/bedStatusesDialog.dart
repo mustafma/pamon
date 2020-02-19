@@ -24,6 +24,8 @@ class BedStatusDialog extends StatefulWidget {
 class _BedStatusDialog extends State<BedStatusDialog> {
   List<StatusTypeValue> statusTypesValues = new List<StatusTypeValue>();
   String flagsForUpdate = "";
+  DateTime selectedDate = DateTime.now();
+  bool  cateterOptionSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +53,13 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                       Switch(
                           value: false,
                           onChanged: (bool newValue) {
+                            cateterOptionSelected = newValue;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Cateter;
                             obj.value = newValue;
                             statusTypesValues.add(obj);
+                            if(newValue) _selectDate(context);
+
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
                       Text('קטטר שתן',
@@ -197,9 +202,6 @@ class _BedStatusDialog extends State<BedStatusDialog> {
   void doWork(BedStatus status, bool highlight, BuildContext context) async {
     switch (status) {
       case BedStatus.Cateter:
-        //widget.bed.Cateter = true;
-        await _selectDate(context);
-
         flagsForUpdate = flagsForUpdate + "withCut;";
         // await widget.crudObj.updateBedStatus(
         //   widget.roomId, widget.bed.bedId, "withCut", highlight);
@@ -268,19 +270,25 @@ class _BedStatusDialog extends State<BedStatusDialog> {
 
       widget.crudObj.updateBedStatus(
           widget.roomId, widget.bed.bedId, flagsForUpdate, true);
+
+      if(cateterOptionSelected)
+            widget.crudObj.updateBedDateField(
+           widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
+      
     }
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    showDatePicker(
-            context: context,
-            initialDate: widget.bed.CatDate,
-            firstDate: DateTime(2012, 8),
-            lastDate: DateTime(2101))
-        .then((date) {
-      widget.crudObj.updateBedDateField(widget.roomId, widget.bed.bedId,
-          "CatDate", date == null ? DateTime.now() : date);
-      print("Success");
-    });
+    final DateTime picked = await showDatePicker(
+        context: context,
+       
+        firstDate: DateTime(2015, 8),
+        initialDate: selectedDate,
+        lastDate: DateTime(2101));
+         
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
   }
 }
