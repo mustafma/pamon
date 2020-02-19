@@ -30,6 +30,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
         appBar: BaseAppBar(
           title: Text('רשימת ההוראות', style: TextStyle(
             color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
+            backButtonVisible: true,
           appBar: AppBar(),
         ),
         body: Center(

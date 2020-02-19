@@ -68,6 +68,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
         appBar: BaseAppBar(
           title: Text('רשימת חדרים' ,style: TextStyle(
             color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
+            backButtonVisible: false,
           appBar: AppBar(),
         ),
         body: Center(

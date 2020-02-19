@@ -38,6 +38,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
         appBar: BaseAppBar(
           title: Text('רשימת מיטות', style: TextStyle(
             color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
+            backButtonVisible: true,
           appBar: AppBar(),
         ),
         body: Center(

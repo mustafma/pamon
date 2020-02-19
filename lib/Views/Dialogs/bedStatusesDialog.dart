@@ -27,7 +27,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
         //return Container(
         child: AlertDialog(
           title: new Container(
-              color: Color.fromRGBO(64, 75, 96, 9),
+              color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
               child: Center(
                 child: Text("בחר סוג התראה",
                     style: TextStyle(

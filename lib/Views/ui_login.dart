@@ -42,11 +42,23 @@ class _LoginWidget extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Center(child:Text("Bridge")),
+        backgroundColor: Color.fromRGBO(97, 138, 179, 9) ,
+        title:  Center(child:Text("Bridge" , style: TextStyle(
+                    color: Colors.orange,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold))),
+        leading: new Visibility(
+            
+            visible: false,
+            child: IconButton(
+          
+          icon: new Icon(Icons.keyboard_return , color: Colors.white,),
+          onPressed: () => Navigator.of(context).pop(),
+        ),) ,  
       ),
       body: Center(
         child: Container(
-          color: Color.fromRGBO(58, 66, 86, 1.0),
+          color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(58, 66, 86, 1.0),
           
           child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -72,10 +84,10 @@ class _LoginWidget extends State<LoginWidget> {
         style: style,
         decoration: InputDecoration(
              filled: true,
-      fillColor: Color.fromRGBO(64, 75, 96, 9),
+      fillColor: Color.fromRGBO(200, 201, 202, 1.0),//Color.fromRGBO(64, 75, 96, 9),
         
           //hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
-            contentPadding: EdgeInsets.fromLTRB(10.0, 15.0, 20.0, 15.0),
+            contentPadding: EdgeInsets.fromLTRB(250.0, 15.0, 20.0, 15.0),
             hintText: "אימייל",
              hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
             border:
@@ -95,8 +107,8 @@ class _LoginWidget extends State<LoginWidget> {
         style: style,
         decoration: InputDecoration(
                     filled: true,
-      fillColor: Color.fromRGBO(64, 75, 96, 9),
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      fillColor: Color.fromRGBO(200, 201, 202, 1.0), //Color.fromRGBO(64, 75, 96, 9),
+            contentPadding: EdgeInsets.fromLTRB(250.0, 15.0, 20.0, 15.0),
            //  hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
             hintText: "סיסמה",
             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
