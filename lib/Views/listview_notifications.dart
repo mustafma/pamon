@@ -25,10 +25,11 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+        backgroundColor: Color.fromRGBO(200, 201, 202, 1.0),//Color.fromRGBO(58, 66, 86, 1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('רשימת ההוראות', textDirection: TextDirection.rtl),
+          title: Text('רשימת ההוראות', style: TextStyle(
+            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
           appBar: AppBar(),
         ),
         body: Center(
@@ -67,7 +68,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
                   }
                 })),
         bottomNavigationBar: BottomAppBar(
-            color: Color.fromRGBO(64, 75, 96, 9),
+            color: Color.fromRGBO(97, 138, 179, 9),//Color.fromRGBO(64, 75, 96, 9),
             child: new Container(
               height: 40,
               child: Row(

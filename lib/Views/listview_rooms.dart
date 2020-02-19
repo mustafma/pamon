@@ -66,7 +66,8 @@ class _ListViewRoomsState extends State<ListViewRooms> {
         backgroundColor: Theme.of(context).primaryColor, //Color.fromRGBO(58, 66, 86, 1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('רשימת חדרים'),
+          title: Text('רשימת חדרים' ,style: TextStyle(
+            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
           appBar: AppBar(),
         ),
         body: Center(

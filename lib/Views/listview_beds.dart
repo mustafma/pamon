@@ -36,7 +36,8 @@ class _ListViewBedsState extends State<ListViewBeds> {
         backgroundColor: Theme.of(context).primaryColor,
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('רשימת מיטות'),
+          title: Text('רשימת מיטות', style: TextStyle(
+            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
           appBar: AppBar(),
         ),
         body: Center(

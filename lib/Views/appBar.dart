@@ -15,7 +15,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: ListTile(
         trailing: Icon(
           Icons.person,
-          color: Color.fromRGBO(64, 75, 96, 9),
+           color: Color.fromRGBO(134, 165, 195, 9),
+         // color: Color.fromRGBO(64, 75, 96, 9),
         ),
         title: Text('פרופיל'),
       ),
@@ -73,7 +74,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
           elevation: 0.1,
           title: Center(child: title),
-          backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
+          backgroundColor:   Color.fromRGBO(97, 138, 179, 9) , //Color.fromRGBO(58, 66, 86, 1.0),
           actions: <Widget>[
             new PopupMenuButton(
               initialValue: 1,
