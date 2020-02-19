@@ -4,15 +4,6 @@ import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class StatusTypeValue {
-  BedStatus bedStatus;
-  bool value;
-
-  BedStatus get status {
-    return bedStatus;
-  }
-}
-
 class BedStatusDialog extends StatefulWidget {
   final String roomId;
   final Bed bed;
@@ -25,12 +16,9 @@ class _BedStatusDialog extends State<BedStatusDialog> {
   List<StatusTypeValue> statusTypesValues = new List<StatusTypeValue>();
   String flagsForUpdate = "";
   DateTime selectedDate = DateTime.now();
-  bool  cateterOptionSelected = false;
+  bool cateterOptionSelected = false;
 
-
-bool cateterChecked = false;
-
-
+  bool cateterChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +50,9 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Cateter;
                             obj.value = newValue;
+                            obj.dbFieldName = "withCut";
                             statusTypesValues.add(obj);
-                            if(newValue) _selectDate(context);
-
+                            if (newValue) _selectDate(context);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
                       Text('קטטר שתן',
@@ -80,6 +68,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Petsa;
                             obj.value = newValue;
+                            obj.dbFieldName = "Petsa";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -96,6 +85,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.PhysoAid;
                             obj.value = newValue;
+                            obj.dbFieldName = "PhysoAid";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -112,6 +102,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.SocialAid;
                             obj.value = newValue;
+                            obj.dbFieldName = "SocialAid";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -128,6 +119,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.DiatentAid;
                             obj.value = newValue;
+                            obj.dbFieldName = "DiatentAid";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -144,6 +136,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Invasive;
                             obj.value = newValue;
+                            obj.dbFieldName = "Invasive";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -160,6 +153,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.O2;
                             obj.value = newValue;
+                            obj.dbFieldName = "O2";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -176,6 +170,7 @@ bool cateterChecked = false;
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Fasting;
                             obj.value = newValue;
+                            obj.dbFieldName = "fasting";
                             statusTypesValues.add(obj);
                           }),
                       new Padding(padding: EdgeInsets.all(1.0)),
@@ -203,64 +198,24 @@ bool cateterChecked = false;
         ));
   }
 
-  void doWork(BedStatus status, bool highlight, BuildContext context) async {
-    switch (status) {
-      case BedStatus.Cateter:
-        flagsForUpdate = flagsForUpdate + "withCut;";
-        break;
-      case BedStatus.CT:
-        flagsForUpdate = flagsForUpdate + "forCT;";
-        break;
-      case BedStatus.Infected:
-        flagsForUpdate = flagsForUpdate + "isInficted;";
-        break;
-      case BedStatus.Fasting:
-        flagsForUpdate = flagsForUpdate + "fasting;";
-        break;
-      case BedStatus.PhysoAid:;
-        flagsForUpdate += "PhysoAid;";
-        break;
-      case BedStatus.SocialAid:
-        flagsForUpdate = flagsForUpdate + "SocialAid;";
-        break;
-      case BedStatus.Petsa:
-        flagsForUpdate = flagsForUpdate + "Petsa;";
-        break;
-      case BedStatus.DiatentAid:
-        flagsForUpdate += "DiatentAid;";
-        break;
-      case BedStatus.O2:
-        flagsForUpdate = flagsForUpdate + "O2;";
-        break;
-      case BedStatus.Invasive:
-        flagsForUpdate = flagsForUpdate + "Invasive;";
-
-        break;
-    }
-  }
-
   void handleIconStatusSelection2(BuildContext context) {
     if (statusTypesValues != null && statusTypesValues.length > 0) {
-      statusTypesValues.forEach((x) => {doWork(x.status, x.value, context)});
+      widget.crudObj
+          .updateListOfBedStatuses(widget.roomId, widget.bed.bedId, statusTypesValues);
 
-      widget.crudObj.updateBedStatus(
-          widget.roomId, widget.bed.bedId, flagsForUpdate, true);
-
-      if(cateterOptionSelected)
-            widget.crudObj.updateBedDateField(
-           widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
-      
+      if (cateterOptionSelected)
+        widget.crudObj.updateBedDateField(
+            widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
     }
   }
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
-       
         firstDate: DateTime(2015, 8),
         initialDate: selectedDate,
         lastDate: DateTime(2101));
-         
+
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;

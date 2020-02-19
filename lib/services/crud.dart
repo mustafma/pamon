@@ -74,6 +74,40 @@ class CrudMethods {
     }
   }
 
+
+Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOfbedStatuses) async {
+    if (isLoggedIn()) {
+      //var roomRef = Firestore.instance.collection("rooms").document(roomId);
+
+      DocumentReference roomRef =
+          Firestore.instance.collection("rooms").document(roomId);
+      Firestore.instance.runTransaction((Transaction tx) async {
+        DocumentSnapshot postSnapshot = await tx.get(roomRef);
+        if (postSnapshot.exists) {
+          var beds = postSnapshot.data['beds'];
+          for (int i = 0; i < beds.length; i++) {
+            if (beds[i]['bedId'] == bedId) {
+              listOfbedStatuses.forEach(
+                  (x) => {if (x != null) beds[i][x.dbFieldName] = x.value});
+            }
+          }
+          //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
+          await tx.update(roomRef, <String, dynamic>{'beds': beds});
+        }
+      }).then((_) {
+        print("Success");
+      });
+    }
+  }
+
+
+
+
+
+
+
+
+
   Future<void> cleanBed(roomId, bedId) {
     if (isLoggedIn()) {
       DocumentReference roomRef =
