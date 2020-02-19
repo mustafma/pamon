@@ -33,7 +33,9 @@ class Room {
 
         beds = snapshot['beds']
             .map((map) => new Bed.fromMap(map, map['bedId']))
-            .toList();
+            .toList();//.sort((a,b) =>  (a as Bed).bedId.compareTo((b as Bed).bedId) );
+
+       
 
   //map(((doc) =>doc.get().then(Bed.fromMap(doc.value, doc.value.documentID.toString())))).toList() ?? null;
 

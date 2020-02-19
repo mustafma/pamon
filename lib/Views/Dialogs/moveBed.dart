@@ -131,7 +131,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
   }
 
   void handleMoveBed(fromRoomId, toRoomId, bedId) {
-    widget.crudObj.moveBed(fromRoomId, toRoomId, bedId);
+    widget.crudObj.replaceBed(fromRoomId, toRoomId, widget.bed.bedId,bedId);
   }
 
 
