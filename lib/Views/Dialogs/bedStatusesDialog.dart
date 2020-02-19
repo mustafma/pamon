@@ -27,6 +27,11 @@ class _BedStatusDialog extends State<BedStatusDialog> {
   DateTime selectedDate = DateTime.now();
   bool  cateterOptionSelected = false;
 
+
+bool cateterChecked = false;
+
+
+
   @override
   Widget build(BuildContext context) {
     return new Directionality(
@@ -51,7 +56,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                   children: <Widget>[
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.Cateter,
                           onChanged: (bool newValue) {
                             cateterOptionSelected = newValue;
                             var obj = new StatusTypeValue();
@@ -70,7 +75,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.Petsa,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Petsa;
@@ -86,7 +91,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.PhysoAid,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.PhysoAid;
@@ -102,7 +107,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.SocialAid,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.SocialAid;
@@ -118,7 +123,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.DiatentAid,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.DiatentAid;
@@ -134,7 +139,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.Invasive,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Invasive;
@@ -150,7 +155,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.O2,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.O2;
@@ -166,7 +171,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                     ]),
                     new Row(children: <Widget>[
                       Switch(
-                          value: false,
+                          value: widget.bed.Fasting,
                           onChanged: (bool newValue) {
                             var obj = new StatusTypeValue();
                             obj.bedStatus = BedStatus.Fasting;
@@ -189,7 +194,6 @@ class _BedStatusDialog extends State<BedStatusDialog> {
             new FlatButton(
               onPressed: () {
                 handleIconStatusSelection2(context);
-
                 Navigator.of(context).pop();
               },
               child: new Text("סגור",
@@ -203,61 +207,32 @@ class _BedStatusDialog extends State<BedStatusDialog> {
     switch (status) {
       case BedStatus.Cateter:
         flagsForUpdate = flagsForUpdate + "withCut;";
-        // await widget.crudObj.updateBedStatus(
-        //   widget.roomId, widget.bed.bedId, "withCut", highlight);
-        // widget.crudObj.updateBedDateField(
-        //   widget.roomId, widget.bed.bedId, "CatDate", widget.bed.CatDate);
         break;
       case BedStatus.CT:
-        //widget.bed.CT = highlight;
         flagsForUpdate = flagsForUpdate + "forCT;";
-        //await widget.crudObj.updateBedStatus(
-        //   widget.roomId, widget.bed.bedId, "forCT", highlight);
         break;
       case BedStatus.Infected:
-        //widget.bed.Infected = highlight;
         flagsForUpdate = flagsForUpdate + "isInficted;";
-        // await widget.crudObj.updateBedStatus(
-        //    widget.roomId, widget.bed.bedId, "isInficted", highlight);
         break;
       case BedStatus.Fasting:
-        //widget.bed.Fasting = highlight;
         flagsForUpdate = flagsForUpdate + "fasting;";
-        //await widget.crudObj.updateBedStatus(
-        //  widget.roomId, widget.bed.bedId, "fasting", highlight);
         break;
-      case BedStatus.PhysoAid:
-        // widget.bed.PhysoAid = highlight;
+      case BedStatus.PhysoAid:;
         flagsForUpdate += "PhysoAid;";
-        //await widget.crudObj.updateBedStatus(
-        //   widget.roomId, widget.bed.bedId, "PhysoAid", highlight);
         break;
       case BedStatus.SocialAid:
-        // widget.bed.SocialAid = highlight;
         flagsForUpdate = flagsForUpdate + "SocialAid;";
-        //await widget.crudObj.updateBedStatus(
-        //   widget.roomId, widget.bed.bedId, "SocialAid", highlight);
         break;
       case BedStatus.Petsa:
-        //widget.bed.Petsa = highlight;
         flagsForUpdate = flagsForUpdate + "Petsa;";
-        //await widget.crudObj.updateBedStatus(
-        //  widget.roomId, widget.bed.bedId, "Petsa", highlight);
         break;
       case BedStatus.DiatentAid:
-        //widget.bed.DiatentAid = highlight;
         flagsForUpdate += "DiatentAid;";
-        //await widget.crudObj.updateBedStatus(
-        //   widget.roomId, widget.bed.bedId, "DiatentAid", highlight);
         break;
       case BedStatus.O2:
-        //widget.bed.O2 = highlight;
         flagsForUpdate = flagsForUpdate + "O2;";
-        //await widget.crudObj
-        //    .updateBedStatus(widget.roomId, widget.bed.bedId, "O2", highlight);
         break;
       case BedStatus.Invasive:
-        //widget.bed.Invasive = highlight;
         flagsForUpdate = flagsForUpdate + "Invasive;";
 
         break;

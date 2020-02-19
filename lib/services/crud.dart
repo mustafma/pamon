@@ -39,7 +39,6 @@ class CrudMethods {
               beds[i][field] = Timestamp.fromDate(value);
             }
           }
-          //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
           await tx.update(roomRef, <String, dynamic>{'beds': beds});
         }
       }).then((_) {
