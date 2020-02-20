@@ -30,8 +30,10 @@ class MyApp extends StatelessWidget {
           '/Settings': (context) => SettingsWindow(),
         },
         theme: new ThemeData(
-            primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
-            cardColor: Color.fromRGBO(64, 75, 96, 9),
+          //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
+           // cardColor: Color.fromRGBO(64, 75, 96, 9),
+             primaryColor: Color.fromRGBO(200, 201, 202, 1.0),
+            cardColor: Color.fromRGBO(134, 165, 195, 9),
             popupMenuTheme: new PopupMenuThemeData(
               color: Colors.white,
             ),

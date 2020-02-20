@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 
+
+
 class Bed {
   String bedId;
   int roomId;
@@ -103,5 +105,17 @@ class BedInstruction {
       'createdAt': this.createdAt,
       'parentBedId': this.parentBedId
     };
+  }
+}
+
+
+
+class StatusTypeValue {
+  BedStatus bedStatus;
+  bool value;
+  String dbFieldName;
+
+  BedStatus get status {
+    return bedStatus;
   }
 }

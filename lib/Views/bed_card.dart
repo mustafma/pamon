@@ -130,6 +130,7 @@ class _BedCardState extends State<BedCard> {
                         icon: Icon(Icons.list),
                         onPressed:() => {
                           showDialog(
+                            barrierDismissible: false,
               context: context,
               builder: (context) {
                 return new BedStatusDialog(bed: widget.bed, roomId: widget.roomId,);

@@ -39,7 +39,7 @@ class _NotificationCard extends State<NotificationCard> {
   Widget build(BuildContext context) {
     return Card(
         //
-        color: Color.fromRGBO(64, 75, 96, 9),
+        color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
         child: ListTile(
           // leading: buildLeading(),
           title: Center(
