@@ -23,15 +23,13 @@ class _ListViewRoomsState extends State<ListViewRooms> {
 
   void getMessage() {
     _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async
-        {
-          print('on message $message');
+        onMessage: (Map<String, dynamic> message) async {
+      print('on message $message');
 
-
-
-          showDialog(context: context,
-          builder: (context) => AlertDialog(
-            content: ListTile(
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: ListTile(
             title: Text(message['notification']['title']),
             subtitle: Text(message['notification']['body']),
           ),
@@ -56,22 +54,33 @@ class _ListViewRoomsState extends State<ListViewRooms> {
 
   //final List<String> _listViewData = ["Room 1", "Room 2", "Room 3", "Room 4"];
 
-  
   var _firestoreRef = Firestore.instance.collection('rooms');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Theme.of(context).primaryColor, //Color.fromRGBO(58, 66, 86, 1.0),
-        key: _scaffoldKey,
-        appBar: BaseAppBar(
-          title: Text('רשימת חדרים' ,style: TextStyle(
-            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
-            backButtonVisible: false,
-          appBar: AppBar(),
-        ),
-        body: Center(
+      resizeToAvoidBottomPadding: false,
+      backgroundColor:
+          Theme.of(context).primaryColor, //Color.fromRGBO(58, 66, 86, 1.0),
+      key: _scaffoldKey,
+      appBar: BaseAppBar(
+        title: Text('רשימת חדרים',
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20)),
+        backButtonVisible: false,
+        appBar: AppBar(),
+      ),
+      body: new Container(
+        decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+                colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.bottomRight,
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp)),
+        child: Center(
             child: StreamBuilder(
                 stream: _firestoreRef.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -88,17 +97,17 @@ class _ListViewRoomsState extends State<ListViewRooms> {
                     return ListView.builder(
                       itemCount: item.length,
                       itemBuilder: (BuildContext context, int index) {
-                        RoomCard roomCard = RoomCard(
-                          room: item[index],
-                          rooms:item
-                        );
+                        RoomCard roomCard =
+                            RoomCard(room: item[index], rooms: item);
                         return roomCard;
                       },
                     );
                   }
                 })),
-        bottomNavigationBar: BaseBottomBar( ),
-            );
+      ),
+
+      bottomNavigationBar: BaseBottomBar(),
+    );
   }
 
   @override

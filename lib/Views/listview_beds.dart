@@ -37,11 +37,20 @@ class _ListViewBedsState extends State<ListViewBeds> {
         key: _scaffoldKey,
         appBar: BaseAppBar(
           title: Text('רשימת מיטות', style: TextStyle(
-            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20)),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
             backButtonVisible: true,
           appBar: AppBar(),
         ),
-        body: Center(
+        body: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+                colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.bottomRight,
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp)),
+
+                child:Center(
             child: StreamBuilder(
                 stream: _firestoreRef.document(widget.roomId).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -71,6 +80,15 @@ class _ListViewBedsState extends State<ListViewBeds> {
                         });
                   }
                 })),
+
+        ),
+        
+        
+        
+        
+        
+        
+        
         bottomNavigationBar: BaseBottomBar());
   }
 }

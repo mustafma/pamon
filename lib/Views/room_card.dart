@@ -1,4 +1,5 @@
 import 'dart:async';
+//import 'dart:js';
 
 import 'package:BridgeTeam/Model/User.dart';
 import 'package:flutter/material.dart';
@@ -41,11 +42,28 @@ class _RoomCardState extends State<RoomCard> {
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             //color: cardColor,
-            child: Column(
+
+
+
+            child: Container(
+              decoration: new BoxDecoration(
+                        gradient: new LinearGradient(
+                            colors: [
+                              const Color(0xFF144464),
+                              const Color(0xFF546C7D)
+                            ],
+                            begin: FractionalOffset.topLeft,
+                            end: FractionalOffset.bottomRight,
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp)),
+
+                            child:Column(
               children: <Widget>[
                 Container(
-                    decoration:
-                        BoxDecoration(color: Theme.of(context).cardColor),
+            
+
+                    // decoration:
+                    //BoxDecoration(color: Theme.of(context).cardColor),
                     child: ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -65,63 +83,91 @@ class _RoomCardState extends State<RoomCard> {
                       onTap: () => onTapBrowseToBeds(context),
                     )),
                 Container(
-                  decoration: BoxDecoration(
-                      color: (widget.room.getTotalNumberOfNotifications() == 0)
-                          ? Theme.of(context).cardColor
-                          : Colors.red,
+                  decoration: new BoxDecoration(
+                      gradient: new LinearGradient(
+                          colors: [
+                            const Color(0xFF003C64),
+                            const Color(0xFF428879)
+                          ],
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.bottomRight,
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
                       border: new Border(
                           top: new BorderSide(
-                              width: 3.0, color: Colors.orange))),
+                              width: 1.5, color: const Color(0xFF428879)))),
                 ),
+
+                // decoration: BoxDecoration(
+                //   color: (widget.room.getTotalNumberOfNotifications() == 0)
+                //       ? Theme.of(context).cardColor
+                //      : Colors.red,
+                // border: new Border(
+                //      top: new BorderSide(
+                //          width: 3.0, color: Colors.orange))),
+                //    ),
                 Container(
+            
                     child: Column(
-                  children: [
-                    Container(
-                      child: Text(" רופא/ה אחראי:" + doctorName,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Container(
-                      child: Text("אח/אחות אחראי:" + nurseName,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    Container(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Center(
-                            child: Visibility(
-                                visible: talk10AMvisible,
-                                child: IconButton(
-                                    icon: Icon(Icons.people),
-                                    iconSize: 30,
-                                    tooltip:
-                                        "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                            (widget.room).roomName,
-                                    color: iconTalkColor,
-                                    onPressed: () => handleTalk1()))),
-                        Center(
-                            child: Visibility(
-                                visible: talk15AMvisible,
-                                child: IconButton(
-                                    icon: Icon(Icons.people),
-                                    iconSize: 30,
-                                    tooltip:
-                                        "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                            (widget.room).roomName,
-                                    color: iconTalkColor2,
-                                    onPressed: () => handleTalk2()))),
+                      children: [
+                        Container(
+                          child: Text(" רופא/ה אחראי:" + doctorName,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Container(
+                          child: Text("אח/אחות אחראי:" + nurseName,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Container(
+                            child: Row(
+                              
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Center(
+                                    child: Visibility(
+                                        visible: talk10AMvisible,
+                                        child: IconButton(
+                                            icon: Icon(Icons.people),
+                                            iconSize: 30,
+                                            tooltip:
+                                                "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                    (widget.room).roomName,
+                                            color: iconTalkColor,
+                                            onPressed: () => handleTalk1()))),
+                                Center(
+                                    child: Visibility(
+                                        visible: talk15AMvisible,
+                                        child: IconButton(
+                                            icon: Icon(Icons.people),
+                                            iconSize: 30,
+                                            tooltip:
+                                                "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                    (widget.room).roomName,
+                                            color: iconTalkColor2,
+                                            onPressed: () => handleTalk2()))),
+                              ],
+                            )),
                       ],
-                    )),
-                  ],
-                ))
+                    ))
               ],
-            )));
+            )
+            )
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            ));
   }
 
   Widget buildTrial() {
@@ -200,49 +246,46 @@ class _RoomCardState extends State<RoomCard> {
     // else
     //  cardColor = Colors.green.withOpacity(0.7);
 
-    timer =
-        Timer.periodic(Duration(seconds: 60), (Timer t) => onTimeElapsed());
-
-
+    timer = Timer.periodic(Duration(seconds: 60), (Timer t) => onTimeElapsed());
 
     super.initState();
   }
 
   handleTalk1() {
     setState(() {
-      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor || User.getInstance().loggedInUserType == UserType.Nurse ) {
+      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+          User.getInstance().loggedInUserType == UserType.Nurse) {
         if (widget.room.docAcceptedTalk1) iconTalkColor = Colors.green;
         // set nurseAcceptedTalk to true
 
       }
 
       if (User.getInstance().loggedInUserType ==
-          UserType.RoomDoctorSuperviosor ||  User.getInstance().loggedInUserType == UserType.Doctor ) {
+              UserType.RoomDoctorSuperviosor ||
+          User.getInstance().loggedInUserType == UserType.Doctor) {
         if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
         // set docAcceptedTalk to true
       }
     });
   }
 
-
-
-    handleTalk2() {
+  handleTalk2() {
     setState(() {
-      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor || User.getInstance().loggedInUserType == UserType.Nurse ) {
+      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+          User.getInstance().loggedInUserType == UserType.Nurse) {
         if (widget.room.docAcceptedTalk2) iconTalkColor2 = Colors.green;
         // set nurseAcceptedTalk to true
 
       }
 
       if (User.getInstance().loggedInUserType ==
-          UserType.RoomDoctorSuperviosor ||  User.getInstance().loggedInUserType == UserType.Doctor ) {
-         if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
+              UserType.RoomDoctorSuperviosor ||
+          User.getInstance().loggedInUserType == UserType.Doctor) {
+        if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
         // set docAcceptedTalk to true
       }
     });
   }
-
-
 
   void onTimeElapsed() {
     var date = DateTime.now();
@@ -254,17 +297,17 @@ class _RoomCardState extends State<RoomCard> {
         //set all to false in room  and prepare fo r10 AM fot talk
       }
 
-
       if (widget.room.timeforUpdate2 ||
           widget.room.nurseAcceptedTalk2 ||
           widget.room.docAcceptedTalk2) {
         //set all to false in room  and prepare fo r10 AM fot talk
       }
-
     }
 
     if (hour == 10) {
-      if (User.getInstance().loggedInUserType ==UserType.Nurse || User.getInstance().loggedInUserType ==UserType.Doctor ||  User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+      if (User.getInstance().loggedInUserType == UserType.Nurse ||
+          User.getInstance().loggedInUserType == UserType.Doctor ||
+          User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
           User.getInstance().loggedInUserType ==
               UserType.RoomDoctorSuperviosor) {
         if (!talk10AMvisible) {
@@ -278,12 +321,10 @@ class _RoomCardState extends State<RoomCard> {
       }
     }
 
-
-
-
-
     if (hour == 15) {
-      if (User.getInstance().loggedInUserType ==UserType.Nurse || User.getInstance().loggedInUserType ==UserType.Doctor ||  User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
+      if (User.getInstance().loggedInUserType == UserType.Nurse ||
+          User.getInstance().loggedInUserType == UserType.Doctor ||
+          User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
           User.getInstance().loggedInUserType ==
               UserType.RoomDoctorSuperviosor) {
         if (!talk15AMvisible) {
@@ -296,7 +337,5 @@ class _RoomCardState extends State<RoomCard> {
         // set timeforUpdate to true  and nurseAcceptedTalk and  docAcceptedTalk to false to start enabling talk functionality
       }
     }
-
-
   }
 }

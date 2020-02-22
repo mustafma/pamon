@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
            // cardColor: Color.fromRGBO(64, 75, 96, 9),
              primaryColor: Color.fromRGBO(200, 201, 202, 1.0),
-            cardColor: Color.fromRGBO(134, 165, 195, 9),
+            cardColor:  const Color(0xFFA1BBCD) ,    //Colors(const [0xFF546C7D])        // Colors.red,//Color.fromRGBO(134, 165, 195, 9),
             popupMenuTheme: new PopupMenuThemeData(
               color: Colors.white,
             ),
