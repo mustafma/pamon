@@ -19,8 +19,6 @@ class BedCard extends StatefulWidget {
   final List rooms;
   CrudMethods crudObj = new CrudMethods();
   BedCard(
-
-
       {Key key,
       @required this.bed,
       this.parentRoomAction,
@@ -32,8 +30,6 @@ class BedCard extends StatefulWidget {
 enum Status { none, withKatter, forCT, isInficted, fasting }
 
 class _BedCardState extends State<BedCard> {
-
-
   bool popMenueBtnEnaled = false;
   bool popMenueBtnEnaled1 = false;
   Color iconTalk1Color = Colors.white;
@@ -80,75 +76,84 @@ class _BedCardState extends State<BedCard> {
     return Container(
         height: 135,
         child: Card(
-            elevation: 8.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-            child: Column(children: <Widget>[
-              Container(
-                  decoration: BoxDecoration(color: cardColor),
-                  child: ListTile(
-                    leading: buildLeading(),
-                    title: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          if (widget.bed.dismissed)
-                            new Icon(
-                              Icons.exit_to_app,
-                              color: Colors.green,
-                            ),
-                          new Padding(padding: EdgeInsets.all(10.0)),
-                          Text(widget.bed.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    subtitle: buildSubTrial(),
-                    trailing: buildTrial(),
-                    onTap: () => onTapBrowseToBedInstructions(context),
-                    //onLongPress: () => moveBed(context),
-                  )),
-              Container(
-                decoration: BoxDecoration(
-                    color: cardColor,
-                    border: new Border(
-                        top: new BorderSide(width: 3.0, color: Colors.orange))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: generateListOfIcons()),
-                    new Spacer(),
-                    Container(
-                      // margin: EdgeInsets.only(left: 310),
-
-                      child: IconButton(
-                        icon: Icon(Icons.list),
-                        onPressed:() => {
-                          showDialog(
-                            barrierDismissible: false,
-              context: context,
-              builder: (context) {
-                return new BedStatusDialog(bed: widget.bed, roomId: widget.roomId,);
-              })
-                           
-                        }
-                            
-
-                        
-                            
-
-                      )
+          elevation: 8.0,
+          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          child: Container(
+              decoration: new BoxDecoration(
+                  gradient: new LinearGradient(
+                      colors: [
+                        const Color(0xFF003C64), const Color(0xFF428879)
+                        //const Color(0xFF003C64),
+                        //const Color(0xFF00885A)
+                      ],
                       
-                    ),
-                  ],
-                ),
-              )
-            ])));
+                      begin: FractionalOffset.topLeft,
+                      end: FractionalOffset.bottomRight,
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp)),
+              child: Column(children: <Widget>[
+                Container(
+                    //decoration: BoxDecoration(color: cardColor),
+                    child: ListTile(
+                      leading: buildLeading(),
+                      title: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            if (widget.bed.dismissed)
+                              new Icon(
+                                Icons.exit_to_app,
+                                color: Colors.green,
+                              ),
+                            new Padding(padding: EdgeInsets.all(10.0)),
+                            Text(widget.bed.name,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                      subtitle: buildSubTrial(),
+                      trailing: buildTrial(),
+                      onTap: () => onTapBrowseToBedInstructions(context),
+                      //onLongPress: () => moveBed(context),
+                    )),
+                Container(
+                  decoration: BoxDecoration(
+                     // color: cardColor,
+                      border: new Border(
+                          top: new BorderSide(
+                              width: 1.5, color: const Color(0xFF428879)))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: generateListOfIcons()),
+                      new Spacer(),
+                      Container(
+                          // margin: EdgeInsets.only(left: 310),
+
+                          child: IconButton(
+                              icon: Icon(Icons.list),
+                              onPressed: () => {
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return new BedStatusDialog(
+                                            bed: widget.bed,
+                                            roomId: widget.roomId,
+                                          );
+                                        })
+                                  })),
+                    ],
+                  ),
+                )
+              ])),
+        ));
   }
 
   Widget buildLeading() {
@@ -272,7 +277,10 @@ class _BedCardState extends State<BedCard> {
           showDialog(
               context: context,
               builder: (context) {
-                return new MoveBedDialog(bed: widget.bed,rooms: widget.rooms,roomId:widget.roomId);
+                return new MoveBedDialog(
+                    bed: widget.bed,
+                    rooms: widget.rooms,
+                    roomId: widget.roomId);
               });
           break;
         case BedAction.Swap:
@@ -324,8 +332,6 @@ class _BedCardState extends State<BedCard> {
       allowedForBedStatus = true;
     }
 
-
-  
     // _selectedBedNumber = widget.bed;
     super.initState();
   }
@@ -341,8 +347,6 @@ class _BedCardState extends State<BedCard> {
                   bedId: widget.bed.bedId,
                 )));
   }
-
- 
 
   void handleIconStatusSelection(BedStatus status, bool highlight) {
     String fieldName = (status.toString()).split(".")[1];
@@ -540,9 +544,4 @@ class _BedCardState extends State<BedCard> {
 
     return genList;
   }
-
- 
-
-
-
 }
