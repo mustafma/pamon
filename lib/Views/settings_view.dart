@@ -33,7 +33,9 @@ class _SettingsWindowsState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: BaseAppBar(
-          title: Text('הגדרות'),
+           title: Text('הגדרות' , style: TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
+            backButtonVisible: true,
           appBar: AppBar(),
         ),
         body: Align(

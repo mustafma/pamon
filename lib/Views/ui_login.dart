@@ -27,7 +27,6 @@ class PasswordFieldValidator {
 }
 
 class _LoginWidget extends State<LoginWidget> {
-
   final AuthService _auth = AuthService();
   String _email = '';
   String _password = '';
@@ -36,66 +35,77 @@ class _LoginWidget extends State<LoginWidget> {
   FormType _formType = FormType.login;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white);
+  TextStyle style =
+      TextStyle(fontFamily: 'Montserrat', fontSize: 20.0, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(97, 138, 179, 9) ,
-        title:  Center(child:Text("Bridge" , style: TextStyle(
-                    color: Colors.orange,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold))),
-        leading: new Visibility(
-            
+        appBar: AppBar(
+          backgroundColor:  const Color(0xFF144464),
+          title: Center(
+              child: Text("Bridge",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold))),
+          leading: new Visibility(
             visible: false,
             child: IconButton(
-          
-          icon: new Icon(Icons.keyboard_return , color: Colors.white,),
-          onPressed: () => Navigator.of(context).pop(),
-        ),) ,  
-      ),
-      body: Center(
-        child: Container(
-          color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(58, 66, 86, 1.0),
-          
-          child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: buildInputs() + buildSubmitButtons()),
-              )),
+              icon: new Icon(
+                Icons.keyboard_return,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
         ),
-      ),
-    );
+        body: Container(
+          decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                  colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                  begin: FractionalOffset.topLeft,
+                  end: FractionalOffset.bottomRight,
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp)),
+          child: Center(
+            child: Container(
+             // color: Color.fromRGBO(
+                //  134, 165, 195, 9), //Color.fromRGBO(58, 66, 86, 1.0),
+
+              child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: buildInputs() + buildSubmitButtons()),
+                  )),
+            ),
+          ),
+        ));
   }
 
   List<Widget> buildInputs() {
     return <Widget>[
- 
       //SizedBox(height: 45.0),
       TextFormField(
-      
         obscureText: false,
         style: style,
         decoration: InputDecoration(
-             filled: true,
-      fillColor: Color.fromRGBO(200, 201, 202, 1.0),//Color.fromRGBO(64, 75, 96, 9),
-        
-          //hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
+            filled: true,
+            fillColor: Color.fromRGBO(
+                200, 201, 202, 1.0), //Color.fromRGBO(64, 75, 96, 9),
+
+            //hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "אימייל",
-             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
-            border:
-                OutlineInputBorder(
-                   borderSide: new BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(5.0) 
-                  
-                  ) ),
+            hintStyle: TextStyle(
+                fontFamily: 'Montserrat', fontSize: 20.0, color: Colors.white),
+            border: OutlineInputBorder(
+                borderSide: new BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(5.0))),
         keyboardType: TextInputType.emailAddress,
         validator: EmailFieldValidator.validate,
         onSaved: (String value) => _email = value,
@@ -106,19 +116,21 @@ class _LoginWidget extends State<LoginWidget> {
         obscureText: true,
         style: style,
         decoration: InputDecoration(
-                    filled: true,
-      fillColor: Color.fromRGBO(200, 201, 202, 1.0), //Color.fromRGBO(64, 75, 96, 9),
+            filled: true,
+            fillColor: Color.fromRGBO(
+                200, 201, 202, 1.0), //Color.fromRGBO(64, 75, 96, 9),
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-           //  hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
+            //  hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 10.0 , color: Colors.white),
             hintText: "סיסמה",
-            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: 20.0 , color: Colors.white),
+            hintStyle: TextStyle(
+                fontFamily: 'Montserrat', fontSize: 20.0, color: Colors.white),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
         validator: PasswordFieldValidator.validate,
         onSaved: (String value) => _password = value,
       ),
 
-    SizedBox(height: 10.0),
+      SizedBox(height: 10.0),
     ];
   }
 
@@ -126,7 +138,7 @@ class _LoginWidget extends State<LoginWidget> {
     if (_formType == FormType.login) {
       return <Widget>[
         Material(
-         // elevation: 5.0,
+          // elevation: 5.0,
           borderRadius: BorderRadius.circular(30.0),
           color: Colors.orange,
           child: MaterialButton(
@@ -140,7 +152,8 @@ class _LoginWidget extends State<LoginWidget> {
           ),
         ),
         FlatButton(
-          child: Text('חשבון חדש', style: TextStyle(fontSize: 15.0 , color: Colors.white)),
+          child: Text('חשבון חדש',
+              style: TextStyle(fontSize: 15.0, color: Colors.white)),
           onPressed: moveToRegister,
         ),
         SizedBox(
@@ -150,8 +163,8 @@ class _LoginWidget extends State<LoginWidget> {
     } else {
       return <Widget>[
         Material(
-        //  elevation: 5.0,
-            borderRadius: BorderRadius.circular(30.0),
+          //  elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
           color: Colors.orange,
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
@@ -164,8 +177,8 @@ class _LoginWidget extends State<LoginWidget> {
           ),
         ),
         FlatButton(
-          child:
-              Text('כניסה ?', style: TextStyle(fontSize: 20.0  , color: Colors.white)),
+          child: Text('כניסה ?',
+              style: TextStyle(fontSize: 20.0, color: Colors.white)),
           onPressed: moveToLogin,
         ),
         SizedBox(
@@ -189,19 +202,17 @@ class _LoginWidget extends State<LoginWidget> {
     if (validateAndSave()) {
       print(_email);
       print(_password);
-      dynamic result = await _auth.signInWithEmailAndPassword(_email, _password);
-      if(result == null)
-        {
-          setState(() => error = 'could not sign in with those credentials.');
-        }
-      if(result != null) {
-
+      dynamic result =
+          await _auth.signInWithEmailAndPassword(_email, _password);
+      if (result == null) {
+        setState(() => error = 'could not sign in with those credentials.');
+      }
+      if (result != null) {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ListViewRooms()),
         );
       }
-
     }
   }
 
