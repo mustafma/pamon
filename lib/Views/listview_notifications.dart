@@ -29,7 +29,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
         key: _scaffoldKey,
         appBar: BaseAppBar(
           title: Text('הוראות עבור מיטה ' + widget.bedId, style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18), textDirection: TextDirection.rtl),
             backButtonVisible: true,
           appBar: AppBar(),
         ),
