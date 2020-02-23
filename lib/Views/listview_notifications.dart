@@ -82,7 +82,7 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
         
         ,
         bottomNavigationBar: BottomAppBar(
-            color: Color.fromRGBO(97, 138, 179, 9),//Color.fromRGBO(64, 75, 96, 9),
+            color:const Color(0xFF144464), //Color.fromRGBO(97, 138, 179, 9),//Color.fromRGBO(64, 75, 96, 9),
             child: new Container(
               height: 40,
               child: Row(
