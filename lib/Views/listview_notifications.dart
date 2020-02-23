@@ -28,12 +28,20 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
         backgroundColor: Color.fromRGBO(200, 201, 202, 1.0),//Color.fromRGBO(58, 66, 86, 1.0),
         key: _scaffoldKey,
         appBar: BaseAppBar(
-          title: Text('רשימת ההוראות', style: TextStyle(
-            color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
+          title: Text('הוראות עבור מיטה ' + widget.bedId, style: TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20), textDirection: TextDirection.rtl),
             backButtonVisible: true,
           appBar: AppBar(),
         ),
-        body: Center(
+        body: Container(
+           decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+                colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.bottomRight,
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp)),
+          child:Center(
             child: StreamBuilder(
                 stream: _firestoreRef.document(widget.roomId).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -67,7 +75,12 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
                           return instrCard;
                         });
                   }
-                })),
+                }))
+        )
+        
+        
+        
+        ,
         bottomNavigationBar: BottomAppBar(
             color: Color.fromRGBO(97, 138, 179, 9),//Color.fromRGBO(64, 75, 96, 9),
             child: new Container(

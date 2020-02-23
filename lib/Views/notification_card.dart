@@ -39,8 +39,21 @@ class _NotificationCard extends State<NotificationCard> {
   Widget build(BuildContext context) {
     return Card(
         //
-        color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
-        child: ListTile(
+       // color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
+        child: Container(
+          decoration: new BoxDecoration(
+                  gradient: new LinearGradient(
+                      colors: [
+                        const Color(0xFF003C64), const Color(0xFF428879)
+                        //const Color(0xFF003C64),
+                        //const Color(0xFF00885A)
+                      ],
+                      
+                      begin: FractionalOffset.topLeft,
+                      end: FractionalOffset.bottomRight,
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp)),
+          child:ListTile(
           // leading: buildLeading(),
           title: Center(
             child: Text(
@@ -54,7 +67,8 @@ class _NotificationCard extends State<NotificationCard> {
           subtitle: buildSubTrial(),
           trailing: buildTrial(),
           onTap: () => doAction(context),
-        ));
+        )
+        ) );
   }
 
   Widget buildLeading() {
@@ -151,7 +165,7 @@ class _NotificationCard extends State<NotificationCard> {
             new FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                setInstructionAsSeen();
+               // setInstructionAsSeen();
               },
               child: new Text("לא",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

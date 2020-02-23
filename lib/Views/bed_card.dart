@@ -229,7 +229,7 @@ class _BedCardState extends State<BedCard> {
           child: new Text(
         "אין הוראות חדשות",
         style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         overflow: TextOverflow.fade,
         maxLines: 1,
         softWrap: true,
@@ -243,7 +243,7 @@ class _BedCardState extends State<BedCard> {
           child: new Text(
         text3,
         style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         overflow: TextOverflow.visible,
         maxLines: 1,
         softWrap: false,
