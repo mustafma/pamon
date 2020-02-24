@@ -36,6 +36,18 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Text('הגדרות'),
       ),
     ),
+
+        new PopupMenuItem<int>(
+      value: 6,
+      child: ListTile(
+        trailing: Icon(
+          Icons.speaker_notes,
+          color: Color.fromRGBO(134, 165, 195, 9),
+          // color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('כריזה'),
+      ),
+    ),
     new PopupMenuItem<int>(
       value: 3,
       child: ListTile(
@@ -114,6 +126,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     case 2:
                       _handleSettings(context);
                       break;
+                      case 6:
+                      _handleInstanceMessage(context);
+                      break;
                   }
                 },
               ),
@@ -136,3 +151,12 @@ void _handleSettings(BuildContext context) {
   Navigator.pushNamed(context, '/Settings');
   //return LoginWidget();
 }
+
+void _handleInstanceMessage(BuildContext context) {
+  Navigator.pushNamed(context, '/IM');
+  //return LoginWidget();
+}
+
+
+
+

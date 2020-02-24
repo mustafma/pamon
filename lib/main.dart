@@ -3,6 +3,7 @@ import 'package:BridgeTeam/Views/ui_login.dart';
 import 'package:BridgeTeam/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'Views/instanseMessage.dart';
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/SignOut': (context) => LoginWidget(),
           '/Settings': (context) => SettingsWindow(),
+          '/IM': (context) => InstanceMessage(),
         },
         theme: new ThemeData(
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
