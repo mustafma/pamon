@@ -1,6 +1,7 @@
+import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:flutter/material.dart';
 
-enum UserType { RoomDoctorSuperviosor  , NurseRoomsupervisor,  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
+
 
 class User {
   @protected

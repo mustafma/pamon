@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'package:BridgeTeam/Model/enumTypes.dart' ;
+import 'package:BridgeTeam/Model/User.dart'  hide Element;
+
+//import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
-import 'package:BridgeTeam/Model/User.dart';
+
 import 'package:BridgeTeam/Model/bed.dart';
 
 class NotificationCard extends StatefulWidget {

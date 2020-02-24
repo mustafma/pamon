@@ -19,3 +19,6 @@ enum BedAction {
     Clean,
     Release
   }
+
+  enum UserType { RoomDoctorSuperviosor  , NurseRoomsupervisor,  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
+

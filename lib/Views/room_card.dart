@@ -2,6 +2,7 @@ import 'dart:async';
 //import 'dart:js';
 
 import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
