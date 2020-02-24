@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MoveBedDialog extends StatefulWidget {
-  var _selectedRoomNumber;
-  var _selectedBedNumber;
+  var _selectedRoom;
+  var _selectedBed;
   final List rooms;
 
   final Bed bed;
@@ -18,9 +18,17 @@ class MoveBedDialog extends StatefulWidget {
 
   List getRoomBeds() {
     List beds;
+
+  if(_selectedRoom != null) {
     rooms.forEach((room) =>
-        {if ((room as Room).roomId == roomId) beds = (room as Room).beds});
+    {
+      if ((room as Room).roomId == (_selectedRoom as Room).roomId)
+        beds = (room as Room).beds
+    });
     return beds;
+  }
+  return new List(0);
+
   }
 }
 
@@ -52,10 +60,10 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                         new Padding(padding: EdgeInsets.all(16.0)),
                         new DropdownButton<Room>(
                           iconSize: 30,
-                          value: widget._selectedRoomNumber,
+                          value: widget._selectedRoom,
                           onChanged: (Room newValue) {
                             setState(() {
-                              widget._selectedRoomNumber = newValue;
+                              widget._selectedRoom = newValue;
                             });
 
                             // });
@@ -79,7 +87,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                         new Padding(padding: EdgeInsets.all(16.0)),
                         new DropdownButton<Bed>(
                           iconSize: 30,
-                          value: widget._selectedBedNumber,
+                          value: widget._selectedBed,
                           isDense: true,
                           onChanged: (Bed newValue) {
                             _onDropDownChanged(newValue);
@@ -87,7 +95,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                           items: widget.getRoomBeds().map((var bed) {
                             return new DropdownMenuItem<Bed>(
                               value: bed,
-                              child: new Text((bed).bedId + "חדר "),
+                              child: new Text((bed).bedId ),
                             );
                           }).toList(),
                         ),
@@ -104,8 +112,8 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                 Navigator.of(context).pop();
                 handleMoveBed(
                     widget.roomId,
-                    widget._selectedRoomNumber.roomId,
-                    widget._selectedBedNumber.bedId);
+                    widget._selectedRoom.roomId,
+                    widget._selectedBed.bedId);
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -125,7 +133,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
 
   void _onDropDownChanged(Bed val) {
     setState(() {
-      widget._selectedBedNumber = val;
+      widget._selectedBed = val;
       // initState();
     });
   }

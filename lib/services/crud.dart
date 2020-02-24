@@ -100,14 +100,6 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
     }
   }
 
-
-
-
-
-
-
-
-
   Future<void> cleanBed(roomId, bedId) {
     if (isLoggedIn()) {
       DocumentReference roomRef =
@@ -118,10 +110,10 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
           List beds = List.from(postSnapshot.data['beds']);
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              beds[i]["fasting"] = false;
-              beds[i]["forCT"] = false;
-              beds[i]["isInficted"] = false;
-              beds[i]["withCut"] = false;
+              beds[i]["Fasting"] = false;
+              beds[i]["CT"] = false;
+              beds[i]["Inficted"] = false;
+              beds[i]["Cateter"] = false;
               beds[i]["SocialAid"] = false;
               beds[i]["PhysoAid"] = false;
               beds[i]["DiatentAid"] = false;
@@ -147,6 +139,8 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
       });
     }
   }
+
+
 
   Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
     if (isLoggedIn()) {
@@ -282,8 +276,7 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
 
         for (int i = 0; i < beds.length; i++) {
           if (beds[i]['bedId'] == bedId) {
-            movingBed = fromPostSnapshot.data['beds'][
-                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+            movingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             toBeds.add(movingBed);
@@ -319,39 +312,58 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
         final DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
         final DocumentSnapshot toPostSnapshot = await tx.get(toRoomRef);
 
-        List beds = List.from(fromPostSnapshot.data['beds']);
+        List fromBeds = List.from(fromPostSnapshot.data['beds']);
 
         dynamic firstmovingBed;
         dynamic secondmovingBed;
         dynamic tempBed;
         List toBeds = [];
 
-        for (int i = 0; i < beds.length; i++) {
-          if (beds[i]['bedId'] == firstBedId) {
-            firstmovingBed = fromPostSnapshot.data['beds'][
-                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+        for (int i = 0; i < fromBeds.length; i++) {
+          if (fromBeds[i]['bedId'] == firstBedId) {
+            firstmovingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             for (int j = 0; j < toBeds.length; i++) {
-              secondmovingBed = toPostSnapshot.data['beds'][
-                  j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
-              tempBed = secondmovingBed;
-              firstmovingBed['bedId'] = tempBed['bedId'];
-              firstmovingBed['bedName'] = tempBed['bedName'];
+              if (fromBeds[i]['bedId'] == firstBedId) {
+                secondmovingBed = toPostSnapshot
+                    .data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+                tempBed = new Map.from(secondmovingBed);
+                secondmovingBed["Fasting"] = firstmovingBed['Fasting'];
+                secondmovingBed["CT"] = firstmovingBed['CT'];
+                secondmovingBed["Infected"] = firstmovingBed['Infected'];
+                secondmovingBed["Cateter"] = firstmovingBed['Cateter'];
+                secondmovingBed["SocialAid"] = firstmovingBed['SocialAid'];
+                secondmovingBed["PhysoAid"] = firstmovingBed['PhysoAid'];
+                secondmovingBed["DiatentAid"] = firstmovingBed['DiatentAid'];
+                secondmovingBed["O2"] = firstmovingBed['O2'];
+                secondmovingBed["Petsa"] = firstmovingBed['Petsa'];
+                secondmovingBed["Invasive"] = firstmovingBed['Invasive'];
+                secondmovingBed["dismissed"] = firstmovingBed['dismissed'];
+                List notifications = firstmovingBed["notifications"];
+                secondmovingBed["notifications"] = notifications;
 
-              secondmovingBed['bedId'] = firstBedId;
-              firstmovingBed['bedName'] = firstBedId;
 
-              beds.removeAt(i);
-              beds.add(secondmovingBed);
+                firstmovingBed["Fasting"] = tempBed['Fasting'];
+                firstmovingBed["CT"] = tempBed['CT'];
+                firstmovingBed["Infected"] = tempBed['Infected'];
+                firstmovingBed["Cateter"] = tempBed['Cateter'];
+                firstmovingBed["SocialAid"] = tempBed['SocialAid'];
+                firstmovingBed["PhysoAid"] = tempBed['PhysoAid'];
+                firstmovingBed["DiatentAid"] = tempBed['DiatentAid'];
+                firstmovingBed["O2"] = tempBed['O2'];
+                firstmovingBed["Petsa"] = tempBed['Petsa'];
+                firstmovingBed["Invasive"] = tempBed['Invasive'];
+                firstmovingBed["dismissed"] = tempBed['dismissed'];
+                List notificationsSecond = tempBed["notifications"];
+                firstmovingBed["notifications"] = notificationsSecond;
 
-              toBeds.removeAt(j);
-              toBeds.add(firstmovingBed);
-              break;
+                break;
+              }
             }
           }
         }
-        await tx.update(fromRoomRef, <String, dynamic>{'beds': beds});
+        await tx.update(fromRoomRef, <String, dynamic>{'beds': fromBeds});
         await tx.update(toRoomRef, <String, dynamic>{'beds': toBeds});
 
         return;
@@ -359,11 +371,13 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
 
       return Firestore.instance
           .runTransaction(createTransaction)
-          .then(_toMap)
-          .catchError((e) {
+          .then((_) {
+            print("Success");
+         }).catchError((e) {
         print('error runningbtransaction: $e');
         return null;
-      });
+        });
+
     }
   }
 

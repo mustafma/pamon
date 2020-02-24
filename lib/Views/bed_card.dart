@@ -27,7 +27,7 @@ class BedCard extends StatefulWidget {
   _BedCardState createState() => _BedCardState();
 }
 
-enum Status { none, withKatter, forCT, isInficted, fasting }
+
 
 class _BedCardState extends State<BedCard> {
   bool popMenueBtnEnaled = false;
@@ -350,9 +350,9 @@ class _BedCardState extends State<BedCard> {
 
   void handleIconStatusSelection(BedStatus status, bool highlight) {
     String fieldName = (status.toString()).split(".")[1];
-    if (status == BedStatus.Cateter) fieldName = "withCut";
-    if (status == BedStatus.Infected) fieldName = "isInficted";
-    if (status == BedStatus.Fasting) fieldName = "fasting";
+    if (status == BedStatus.Cateter) fieldName = "Cateter";
+    if (status == BedStatus.Infected) fieldName = "Infected";
+    if (status == BedStatus.Fasting) fieldName = "Fasting";
 
     widget.crudObj
         .updateBedStatus(widget.roomId, widget.bed.bedId, fieldName, highlight);
