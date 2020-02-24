@@ -324,10 +324,9 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
             firstmovingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
-            for (int j = 0; j < toBeds.length; i++) {
-              if (fromBeds[i]['bedId'] == firstBedId) {
-                secondmovingBed = toPostSnapshot
-                    .data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+            for (int j = 0; j < toBeds.length; j++) {
+              if (toBeds[j]['bedId'] == secondBedId) {
+                secondmovingBed = toPostSnapshot.data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
                 tempBed = new Map.from(secondmovingBed);
                 secondmovingBed["Fasting"] = firstmovingBed['Fasting'];
                 secondmovingBed["CT"] = firstmovingBed['CT'];
@@ -358,11 +357,20 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
                 List notificationsSecond = tempBed["notifications"];
                 firstmovingBed["notifications"] = notificationsSecond;
 
+                if(fromRoomId == toRoomId)
+                  {
+                    toBeds[i] = firstmovingBed;
+                    toBeds[j] = secondmovingBed;
+                    await tx.update(fromRoomRef, <String, dynamic>{'beds': toBeds});
+                    return;
+
+                  }
                 break;
-              }
             }
           }
+          }
         }
+
         await tx.update(fromRoomRef, <String, dynamic>{'beds': fromBeds});
         await tx.update(toRoomRef, <String, dynamic>{'beds': toBeds});
 
