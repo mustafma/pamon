@@ -18,7 +18,10 @@ class Bed {
   bool Petsa = false;
   bool Invasive = false;
   bool dismissed = false;
-   bool pranola = false;
+  bool pranola = false;
+  bool seodi = false;
+  bool cognitive = false;
+
   DateTime CatDate;
   List<dynamic> notifications = new List<BedInstruction>();
 
@@ -39,6 +42,8 @@ class Bed {
         CatDate = ( snapshot['CatDate'] as Timestamp).toDate(),
         dismissed = snapshot['dismissed'] ?? false,
         pranola = snapshot['pranola'] ?? false,
+        seodi = snapshot['seodi'] ?? false,
+        cognitive = snapshot['cognitive'] ?? false,
         notifications = snapshot['notifications']
             .map(
                 (map) => new BedInstruction.fromMap(map, map['notificationId']))
@@ -59,6 +64,8 @@ class Bed {
     if (Petsa) bedStatuses.add(BedStatus.Petsa);
     if (Invasive) bedStatuses.add(BedStatus.Invasive);
     if (pranola) bedStatuses.add(BedStatus.Pranola);
+    if (seodi) bedStatuses.add(BedStatus.Seodi);
+    if (cognitive) bedStatuses.add(BedStatus.Cognitive);
     
 
     return bedStatuses;

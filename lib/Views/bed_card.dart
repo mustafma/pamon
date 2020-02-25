@@ -353,7 +353,11 @@ class _BedCardState extends State<BedCard> {
     if (status == BedStatus.Cateter) fieldName = "Cateter";
     if (status == BedStatus.Infected) fieldName = "Infected";
     if (status == BedStatus.Fasting) fieldName = "Fasting";
-     if (status == BedStatus.Pranola) fieldName = "pranola";
+    if (status == BedStatus.Pranola) fieldName = "pranola";
+    if (status == BedStatus.Pranola) fieldName = "pranola";
+    if (status == BedStatus.Seodi) fieldName = "seodi";
+    if (status == BedStatus.Cognitive) fieldName = "cognitive";
+
 
     widget.crudObj
         .updateBedStatus(widget.roomId, widget.bed.bedId, fieldName, highlight);
@@ -394,6 +398,12 @@ class _BedCardState extends State<BedCard> {
         break;
       case BedStatus.Pranola:
               res = widget.bed.pranola;
+        break;
+              case BedStatus.Seodi:
+              res = widget.bed.seodi;
+        break;
+              case BedStatus.Cognitive:
+              res = widget.bed.cognitive;
         break;
 
     }
@@ -440,6 +450,12 @@ class _BedCardState extends State<BedCard> {
         break;
       case BedStatus.Pranola:
         message = "החולה זקוק לברנולה";
+        break;
+      case BedStatus.Seodi:
+        message = "חולה סיעודי";
+        break;
+      case BedStatus.Cognitive:
+        message = "חולה עם ירידה קוגניטיבית";
         break;
     }
     return message;
@@ -545,6 +561,13 @@ class _BedCardState extends State<BedCard> {
           message = "החולה זקוק לברנולה";
           calcIcon = Icons.explore;
           break;
+        case BedStatus.Seodi:
+        message = "חולה סיעודי";
+        calcIcon = Icons.explore;
+        break;
+      case BedStatus.Cognitive:
+        message = "חולה עם ירידה קוגניטיבית";
+        calcIcon = Icons.explore;
       }
       genList.add(new IconButton(
         icon: Icon(calcIcon),

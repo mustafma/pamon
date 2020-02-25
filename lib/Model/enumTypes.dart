@@ -10,7 +10,9 @@ enum BedStatus {
   O2,
   Petsa,
   Invasive ,
-  Pranola
+  Pranola,
+  Seodi,
+  Cognitive
   }
 
 

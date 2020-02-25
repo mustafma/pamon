@@ -24,7 +24,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
   @override
   Widget build(BuildContext context) {
     bool isNurse = User.getInstance().loggedInUserType == UserType.Nurse;
-    return new Directionality(
+    return SingleChildScrollView(child:new Directionality(
         textDirection: TextDirection.rtl,
         //return Container(
         child: AlertDialog(
@@ -40,12 +40,60 @@ class _BedStatusDialog extends State<BedStatusDialog> {
               )),
           content: Container(
             width: 400,
-            height: isNurse?300 :385,
+            height: isNurse?300 :480,
             child: Column(
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    new Row(children: <Widget>[
+
+
+
+              
+                      Visibility(
+                          visible: !isNurse,
+                          child: Row(children: <Widget>[
+                            Switch(
+                                value: widget.bed.seodi,
+                                onChanged: (bool newValue) {
+                                  var obj = new StatusTypeValue();
+                                  obj.bedStatus = BedStatus.Seodi;
+                                  obj.value = newValue;
+                                  obj.dbFieldName = "seodi";
+                                  statusTypesValues.add(obj);
+                                }),
+                            new Padding(padding: EdgeInsets.all(1.0)),
+                            Text("חולה סיעודי",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold)),
+                          ])),
+                  
+
+   
+                      Visibility(
+                          visible: !isNurse,
+                          child: Row(children: <Widget>[
+                            Switch(
+                                value: widget.bed.cognitive,
+                                onChanged: (bool newValue) {
+                                  var obj = new StatusTypeValue();
+                                  obj.bedStatus = BedStatus.Cognitive;
+                                  obj.value = newValue;
+                                  obj.dbFieldName = "cognitive";
+                                  statusTypesValues.add(obj);
+
+                                }),
+                            new Padding(padding: EdgeInsets.all(1.0)),
+                            Text("חולה עם ירידה קוגניטיבית",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold)),
+                          ])),
+               
+
+                 
                       Visibility(
                           visible: true,
                           child: Row(children: <Widget>[
@@ -66,8 +114,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                     color: Colors.black,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold)),
-                          ]))
-                    ]),
+                          ])),
+              
                     Visibility(
                       visible: true,
                       child: Row(children: <Widget>[
@@ -243,7 +291,9 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ],
-        ));
+        )) 
+    
+    ,) ;
   }
 
   void handleIconStatusSelection2(BuildContext context) {

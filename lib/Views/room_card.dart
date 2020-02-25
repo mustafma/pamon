@@ -43,7 +43,6 @@ class _RoomCardState extends State<RoomCard> {
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             //color: cardColor,
-
             child: Container(
                 decoration: new BoxDecoration(
                     gradient: new LinearGradient(
@@ -104,6 +103,7 @@ class _RoomCardState extends State<RoomCard> {
                     //          width: 3.0, color: Colors.orange))),
                     //    ),
                     Container(
+                      
                         child: Column(
                       children: [
                         Container(
