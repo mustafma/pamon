@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 
 class CustomDialog extends StatefulWidget {
   final String text;
-  final handleYesButton;
-  final handleNoButton;
+   final bedId;
+   final roomId;
+   final statusfieldName;
+   final operationName;
+
   CrudMethods crudObj = new CrudMethods();
   CustomDialog(
-      {@required this.text, this.handleYesButton, this.handleNoButton});
+      {@required this.text, this.bedId, this.roomId , this.statusfieldName ,this.operationName});
   _CustomDialog createState() => _CustomDialog();
 }
 
@@ -44,18 +47,20 @@ class _CustomDialog extends State<CustomDialog> {
           actions: <Widget>[
             new FlatButton(
               onPressed: () async {
+                handleYesButton();
                 Navigator.of(context).pop();
-                widget.handleYesButton();
+               // handleYesButton();
               },
               child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             new FlatButton(
               onPressed: () {
+                  handleNoButton();
                 Navigator.of(context).pop();
                 
 
-                widget.handleNoButton();
+              
                 
               },
               child: new Text("ביטול",
@@ -63,5 +68,27 @@ class _CustomDialog extends State<CustomDialog> {
             ),
           ],
         ));
+  }
+
+  void handleYesButton()
+  {
+
+    if(widget.operationName.toString().toLowerCase() ==  "cleanbed")
+        widget.crudObj.cleanBed(widget.roomId, widget.bedId);
+    else if(widget.operationName.toString().toLowerCase() ==  "releasebed")
+          releaseBed(true);
+  }
+
+    void handleNoButton()
+  {
+  if(widget.operationName.toString().toLowerCase() ==  "releasebed")
+          releaseBed(false);
+  }
+
+
+  void releaseBed(bool isReleasedBed)
+  {
+    widget.crudObj.updateBedStatus(widget.roomId, widget.bedId, "dismissed", isReleasedBed);
+
   }
 }

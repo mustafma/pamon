@@ -266,9 +266,10 @@ class _BedCardState extends State<BedCard> {
               builder: (context) {
                 return new CustomDialog(
                   text: "לנקות מיטה",
-                  handleYesButton:
-                      widget.crudObj.cleanBed(widget.roomId, widget.bed.bedId),
-                  handleNoButton: () => {},
+                  bedId:widget.bed.bedId ,
+                  roomId: widget.roomId,
+                  operationName: "cleanbed"
+                
                 );
               });
 
@@ -291,12 +292,9 @@ class _BedCardState extends State<BedCard> {
               builder: (context) {
                 return new CustomDialog(
                   text: "החולה לשחרור",
-                  handleYesButton: () => {
-                    widget.crudObj.updateBedStatus(
-                        widget.roomId, widget.bed.bedId, "dismissed", true)
-                  },
-                  handleNoButton: widget.crudObj.updateBedStatus(
-                      widget.roomId, widget.bed.bedId, "dismissed", false),
+                  bedId:widget.bed.bedId ,
+                  roomId: widget.roomId,
+                  operationName: "releasebed"
                 );
               });
           break;
