@@ -69,7 +69,7 @@ class _InstanceMessage extends State<InstanceMessage> {
                                 fillColor: Colors.white,
                                 // icon: const Icon(Icons.calendar_today),
                                 hintText:
-                                    'רשום כאן את ההודעה שברצונכה לשלוח לאחת או יותר מהקבוצות למטה',
+                                    'תוכן ההודעה',
                                 //labelText: "הודעה",
                               )),
                         )),
@@ -132,7 +132,7 @@ class _InstanceMessage extends State<InstanceMessage> {
                       child: Padding(
                           padding: EdgeInsets.all(15.0),
                           child: Text('שלח הודעה')),
-                      color: Colors.redAccent,
+                      color: Colors.orange,
                       textColor: Colors.white,
                     ),
                     SizedBox(

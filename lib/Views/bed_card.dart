@@ -353,6 +353,7 @@ class _BedCardState extends State<BedCard> {
     if (status == BedStatus.Cateter) fieldName = "Cateter";
     if (status == BedStatus.Infected) fieldName = "Infected";
     if (status == BedStatus.Fasting) fieldName = "Fasting";
+     if (status == BedStatus.Pranola) fieldName = "pranola";
 
     widget.crudObj
         .updateBedStatus(widget.roomId, widget.bed.bedId, fieldName, highlight);
@@ -391,6 +392,10 @@ class _BedCardState extends State<BedCard> {
       case BedStatus.SocialAid:
         res = widget.bed.SocialAid;
         break;
+      case BedStatus.Pranola:
+              res = widget.bed.pranola;
+        break;
+
     }
     return res;
   }
@@ -432,6 +437,9 @@ class _BedCardState extends State<BedCard> {
         break;
       case BedStatus.SocialAid:
         message = "החולה זקוק לעזרה סוציאלית";
+        break;
+      case BedStatus.Pranola:
+        message = "החולה זקוק לברנולה";
         break;
     }
     return message;
@@ -531,6 +539,10 @@ class _BedCardState extends State<BedCard> {
           break;
         case BedStatus.SocialAid:
           message = "החולה זקוק לעזרה סוציאלית";
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Pranola:
+          message = "החולה זקוק לברנולה";
           calcIcon = Icons.explore;
           break;
       }

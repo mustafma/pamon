@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/bed.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
@@ -22,12 +23,14 @@ class _BedStatusDialog extends State<BedStatusDialog> {
 
   @override
   Widget build(BuildContext context) {
+    bool isNurse = User.getInstance().loggedInUserType == UserType.Nurse;
     return new Directionality(
         textDirection: TextDirection.rtl,
         //return Container(
         child: AlertDialog(
           title: new Container(
-              color: Color.fromRGBO(134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
+              color: Color.fromRGBO(
+                  134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
               child: Center(
                 child: Text("בחר סוג התראה",
                     style: TextStyle(
@@ -37,149 +40,194 @@ class _BedStatusDialog extends State<BedStatusDialog> {
               )),
           content: Container(
             width: 400,
-            height: 385,
+            height: isNurse?300 :385,
             child: Column(
               children: <Widget>[
                 Column(
                   children: <Widget>[
                     new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.Cateter,
-                          onChanged: (bool newValue) {
-                            cateterOptionSelected = newValue;
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.Cateter;
-                            obj.value = newValue;
-                            obj.dbFieldName = "withCut";
-                            statusTypesValues.add(obj);
-                            if (newValue) _selectDate(context);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('קטטר שתן',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
+                      Visibility(
+                          visible: true,
+                          child: Row(children: <Widget>[
+                            Switch(
+                                value: widget.bed.Cateter,
+                                onChanged: (bool newValue) {
+                                  cateterOptionSelected = newValue;
+                                  var obj = new StatusTypeValue();
+                                  obj.bedStatus = BedStatus.Cateter;
+                                  obj.value = newValue;
+                                  obj.dbFieldName = "withCut";
+                                  statusTypesValues.add(obj);
+                                  if (newValue) _selectDate(context);
+                                }),
+                            new Padding(padding: EdgeInsets.all(1.0)),
+                            Text('קטטר שתן',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold)),
+                          ]))
                     ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.Petsa,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.Petsa;
-                            obj.value = newValue;
-                            obj.dbFieldName = "Petsa";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('פצע לחץ דרגה',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.PhysoAid,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.PhysoAid;
-                            obj.value = newValue;
-                            obj.dbFieldName = "PhysoAid";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('זקוק לפיזוטרפיה',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.SocialAid,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.SocialAid;
-                            obj.value = newValue;
-                            obj.dbFieldName = "SocialAid";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('זקוק להערכה סוציאלית',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.DiatentAid,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.DiatentAid;
-                            obj.value = newValue;
-                            obj.dbFieldName = "DiatentAid";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('זקוק להתערבות של דיאטנית',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.Invasive,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.Invasive;
-                            obj.value = newValue;
-                            obj.dbFieldName = "Invasive";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('מונשם Invasive ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.O2,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.O2;
-                            obj.value = newValue;
-                            obj.dbFieldName = "O2";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('זקוק לחמצן BiPAP/CPAP ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
-                    new Row(children: <Widget>[
-                      Switch(
-                          value: widget.bed.Fasting,
-                          onChanged: (bool newValue) {
-                            var obj = new StatusTypeValue();
-                            obj.bedStatus = BedStatus.Fasting;
-                            obj.value = newValue;
-                            obj.dbFieldName = "fasting";
-                            statusTypesValues.add(obj);
-                          }),
-                      new Padding(padding: EdgeInsets.all(1.0)),
-                      Text('צום',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold)),
-                    ]),
+                    Visibility(
+                      visible: true,
+                      child: Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.Petsa,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.Petsa;
+                              obj.value = newValue;
+                              obj.dbFieldName = "Petsa";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('פצע לחץ דרגה',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: true,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.PhysoAid,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.PhysoAid;
+                              obj.value = newValue;
+                              obj.dbFieldName = "PhysoAid";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('זקוק לפיזוטרפיה',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: true,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.SocialAid,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.SocialAid;
+                              obj.value = newValue;
+                              obj.dbFieldName = "SocialAid";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('זקוק להערכה סוציאלית',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: true,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.DiatentAid,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.DiatentAid;
+                              obj.value = newValue;
+                              obj.dbFieldName = "DiatentAid";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('זקוק להתערבות של דיאטנית',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: !isNurse,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.Invasive,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.Invasive;
+                              obj.value = newValue;
+                              obj.dbFieldName = "Invasive";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('מונשם Invasive ',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: !isNurse,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.O2,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.O2;
+                              obj.value = newValue;
+                              obj.dbFieldName = "O2";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('זקוק לחמצן BiPAP/CPAP ',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                    Visibility(
+                      visible: !isNurse,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.Fasting,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.Fasting;
+                              obj.value = newValue;
+                              obj.dbFieldName = "fasting";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('צום',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                     Visibility(
+                      visible: isNurse,
+                      child: new Row(children: <Widget>[
+                        Switch(
+                            value: widget.bed.pranola,
+                            onChanged: (bool newValue) {
+                              var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.Pranola;
+                              obj.value = newValue;
+                              obj.dbFieldName = "pranola";
+                              statusTypesValues.add(obj);
+                            }),
+                        new Padding(padding: EdgeInsets.all(1.0)),
+                        Text('החולה זקוק ל ברנולה',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
                   ],
                 )
               ],
@@ -200,8 +248,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
 
   void handleIconStatusSelection2(BuildContext context) {
     if (statusTypesValues != null && statusTypesValues.length > 0) {
-      widget.crudObj
-          .updateListOfBedStatuses(widget.roomId, widget.bed.bedId, statusTypesValues);
+      widget.crudObj.updateListOfBedStatuses(
+          widget.roomId, widget.bed.bedId, statusTypesValues);
 
       if (cateterOptionSelected)
         widget.crudObj.updateBedDateField(
