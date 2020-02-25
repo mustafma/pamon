@@ -350,6 +350,9 @@ class CrudMethods {
                 secondmovingBed["Petsa"] = firstmovingBed['Petsa'];
                 secondmovingBed["Invasive"] = firstmovingBed['Invasive'];
                 secondmovingBed["dismissed"] = firstmovingBed['dismissed'];
+                secondmovingBed["pranola"] = firstmovingBed['pranola'];
+                secondmovingBed["seodi"] = firstmovingBed['seodi'];
+                secondmovingBed["cognitive"] = firstmovingBed['cognitive'];
                 List notifications = firstmovingBed["notifications"];
                 secondmovingBed["notifications"] = notifications;
 
@@ -364,6 +367,9 @@ class CrudMethods {
                 firstmovingBed["Petsa"] = tempBed['Petsa'];
                 firstmovingBed["Invasive"] = tempBed['Invasive'];
                 firstmovingBed["dismissed"] = tempBed['dismissed'];
+                firstmovingBed["pranola"] = tempBed['pranola'];
+                firstmovingBed["seodi"] = tempBed['seodi'];
+                firstmovingBed["cognitive"] = tempBed['cognitive'];
                 List notificationsSecond = tempBed["notifications"];
                 firstmovingBed["notifications"] = notificationsSecond;
 
