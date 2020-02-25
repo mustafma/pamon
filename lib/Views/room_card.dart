@@ -44,28 +44,24 @@ class _RoomCardState extends State<RoomCard> {
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
             //color: cardColor,
 
-
-
             child: Container(
-              decoration: new BoxDecoration(
-                        gradient: new LinearGradient(
-                            colors: [
-                              const Color(0xFF144464),
-                              const Color(0xFF546C7D)
-                            ],
-                            begin: FractionalOffset.topLeft,
-                            end: FractionalOffset.bottomRight,
-                            stops: [0.0, 1.0],
-                            tileMode: TileMode.clamp)),
+                decoration: new BoxDecoration(
+                    gradient: new LinearGradient(
+                        colors: [
+                          const Color(0xFF144464),
+                          const Color(0xFF546C7D)
+                        ],
+                        begin: FractionalOffset.topLeft,
+                        end: FractionalOffset.bottomRight,
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.clamp)),
+                child: Column(
+                  children: <Widget>[
+                    Container(
 
-                            child:Column(
-              children: <Widget>[
-                Container(
-            
-
-                    // decoration:
-                    //BoxDecoration(color: Theme.of(context).cardColor),
-                    child: ListTile(
+                        // decoration:
+                        //BoxDecoration(color: Theme.of(context).cardColor),
+                        child: ListTile(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
 
@@ -83,33 +79,32 @@ class _RoomCardState extends State<RoomCard> {
                       // trailing: buildTrial(),
                       onTap: () => onTapBrowseToBeds(context),
                     )),
-                Container(
-                  decoration: new BoxDecoration(
-                      gradient: new LinearGradient(
-                          colors: [
-                            const Color(0xFF003C64),
-                            const Color(0xFF428879)
-                          ],
-                          begin: FractionalOffset.topLeft,
-                          end: FractionalOffset.bottomRight,
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
-                      border: new Border(
-                          top: new BorderSide(
-                              width: 1.5, color: const Color(0xFF428879)))),
-                ),
+                    Container(
+                      decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                              colors: [
+                                const Color(0xFF003C64),
+                                const Color(0xFF428879)
+                              ],
+                              begin: FractionalOffset.topLeft,
+                              end: FractionalOffset.bottomRight,
+                              stops: [0.0, 1.0],
+                              tileMode: TileMode.clamp),
+                          border: new Border(
+                              top: new BorderSide(
+                                  width: 1.5, color: const Color(0xFF428879)))),
+                    ),
 
-                // decoration: BoxDecoration(
-                //   color: (widget.room.getTotalNumberOfNotifications() == 0)
-                //       ? Theme.of(context).cardColor
-                //      : Colors.red,
-                // border: new Border(
-                //      top: new BorderSide(
-                //          width: 3.0, color: Colors.orange))),
-                //    ),
-                Container(
-            
-                    child: Column(
+                    // decoration: BoxDecoration(
+                    //   color: (widget.room.getTotalNumberOfNotifications() == 0)
+                    //       ? Theme.of(context).cardColor
+                    //      : Colors.red,
+                    // border: new Border(
+                    //      top: new BorderSide(
+                    //          width: 3.0, color: Colors.orange))),
+                    //    ),
+                    Container(
+                        child: Column(
                       children: [
                         Container(
                           child: Text(" רופא/ה אחראי:" + doctorName,
@@ -127,48 +122,36 @@ class _RoomCardState extends State<RoomCard> {
                         ),
                         Container(
                             child: Row(
-                              
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                    child: Visibility(
-                                        visible: talk10AMvisible,
-                                        child: IconButton(
-                                            icon: Icon(Icons.people),
-                                            iconSize: 30,
-                                            tooltip:
-                                                "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                    (widget.room).roomName,
-                                            color: iconTalkColor,
-                                            onPressed: () => handleTalk1()))),
-                                Center(
-                                    child: Visibility(
-                                        visible: talk15AMvisible,
-                                        child: IconButton(
-                                            icon: Icon(Icons.people),
-                                            iconSize: 30,
-                                            tooltip:
-                                                "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                    (widget.room).roomName,
-                                            color: iconTalkColor2,
-                                            onPressed: () => handleTalk2()))),
-                              ],
-                            )),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Center(
+                                child: Visibility(
+                                    visible: talk10AMvisible,
+                                    child: IconButton(
+                                        icon: Icon(Icons.people),
+                                        iconSize: 30,
+                                        tooltip:
+                                            "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                (widget.room).roomName,
+                                        color: iconTalkColor,
+                                        onPressed: () => handleTalk1()))),
+                            Center(
+                                child: Visibility(
+                                    visible: talk15AMvisible,
+                                    child: IconButton(
+                                        icon: Icon(Icons.people),
+                                        iconSize: 30,
+                                        tooltip:
+                                            "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                (widget.room).roomName,
+                                        color: iconTalkColor2,
+                                        onPressed: () => handleTalk2()))),
+                          ],
+                        )),
                       ],
                     ))
-              ],
-            )
-            )
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            ));
+                  ],
+                ))));
   }
 
   Widget buildTrial() {

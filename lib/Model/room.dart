@@ -97,6 +97,9 @@ class Room {
         case BedStatus.Petsa:
           if (bed.Infected) sum = sum + 1;
           break;
+       case BedStatus.Pranola:
+          if (bed.pranola) sum = sum + 1;
+          break;
       }
     }
     return sum;

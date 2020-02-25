@@ -9,7 +9,8 @@ enum BedStatus {
   DiatentAid,
   O2,
   Petsa,
-  Invasive 
+  Invasive ,
+  Pranola
   }
 
 
