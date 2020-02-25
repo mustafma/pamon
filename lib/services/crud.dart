@@ -16,7 +16,8 @@ class CrudMethods {
     return false;
   }
 
-  final HttpsCallable sendMessageFunction = CloudFunctions.instance.getHttpsCallable(
+  final HttpsCallable sendMessageFunction =
+      CloudFunctions.instance.getHttpsCallable(
     functionName: 'sendMessageFunction',
   );
   Future<void> addBed(roomId, bed) {
@@ -78,8 +79,8 @@ class CrudMethods {
     }
   }
 
-
-Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOfbedStatuses) async {
+  Future<void> updateListOfBedStatuses(
+      roomId, bedId, List<StatusTypeValue> listOfbedStatuses) async {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
@@ -125,6 +126,11 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
               beds[i]["Petsa"] = false;
               beds[i]["Invasive"] = false;
               beds[i]["dismissed"] = false;
+
+              beds[i]["seodi"] = false;
+              beds[i]["cognitive"] = false;
+              beds[i]["pranola"] = false;
+
               List notifications =
                   List.from(postSnapshot.data['beds'][i]['notifications']);
               for (int i = 0; i < notifications.length; i++) {
@@ -143,8 +149,6 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
       });
     }
   }
-
-
 
   Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
     if (isLoggedIn()) {
@@ -280,7 +284,8 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
 
         for (int i = 0; i < beds.length; i++) {
           if (beds[i]['bedId'] == bedId) {
-            movingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+            movingBed = fromPostSnapshot.data['beds'][
+                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             toBeds.add(movingBed);
@@ -325,12 +330,14 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
 
         for (int i = 0; i < fromBeds.length; i++) {
           if (fromBeds[i]['bedId'] == firstBedId) {
-            firstmovingBed = fromPostSnapshot.data['beds'][i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+            firstmovingBed = fromPostSnapshot.data['beds'][
+                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             for (int j = 0; j < toBeds.length; j++) {
               if (toBeds[j]['bedId'] == secondBedId) {
-                secondmovingBed = toPostSnapshot.data['beds'][j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+                secondmovingBed = toPostSnapshot.data['beds'][
+                    j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
                 tempBed = new Map.from(secondmovingBed);
                 secondmovingBed["Fasting"] = firstmovingBed['Fasting'];
                 secondmovingBed["CT"] = firstmovingBed['CT'];
@@ -346,7 +353,6 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
                 List notifications = firstmovingBed["notifications"];
                 secondmovingBed["notifications"] = notifications;
 
-
                 firstmovingBed["Fasting"] = tempBed['Fasting'];
                 firstmovingBed["CT"] = tempBed['CT'];
                 firstmovingBed["Infected"] = tempBed['Infected'];
@@ -361,17 +367,16 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
                 List notificationsSecond = tempBed["notifications"];
                 firstmovingBed["notifications"] = notificationsSecond;
 
-                if(fromRoomId == toRoomId)
-                  {
-                    toBeds[i] = firstmovingBed;
-                    toBeds[j] = secondmovingBed;
-                    await tx.update(fromRoomRef, <String, dynamic>{'beds': toBeds});
-                    return;
-
-                  }
+                if (fromRoomId == toRoomId) {
+                  toBeds[i] = firstmovingBed;
+                  toBeds[j] = secondmovingBed;
+                  await tx
+                      .update(fromRoomRef, <String, dynamic>{'beds': toBeds});
+                  return;
+                }
                 break;
+              }
             }
-          }
           }
         }
 
@@ -381,15 +386,12 @@ Future<void> updateListOfBedStatuses(roomId, bedId, List<StatusTypeValue> listOf
         return;
       };
 
-      return Firestore.instance
-          .runTransaction(createTransaction)
-          .then((_) {
-            print("Success");
-         }).catchError((e) {
+      return Firestore.instance.runTransaction(createTransaction).then((_) {
+        print("Success");
+      }).catchError((e) {
         print('error runningbtransaction: $e');
         return null;
-        });
-
+      });
     }
   }
 
