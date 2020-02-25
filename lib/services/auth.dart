@@ -105,25 +105,26 @@ class AuthService {
 
       case UserType.Doctor:
         _fcm.subscribeToTopic('removeInstruction_topic');
+        _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
       case UserType.Nurse:
       case UserType.NurseShiftManager:
         _fcm.subscribeToTopic('addInstruction_topic');
+        _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
         break;
       case UserType.DepartmentManager:
-
+        _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
-
-         case UserType.RoomDoctorSuperviosor:
-
+      case UserType.RoomDoctorSuperviosor:
+        _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
-
-         case UserType.NurseRoomsupervisor:
+      case UserType.NurseRoomsupervisor:
+        _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
 
         break;
       case UserType.Other:
         break;
     }
-
+    _fcm.subscribeToTopic("messagesFromAdmin_all_topic");
   }
 }

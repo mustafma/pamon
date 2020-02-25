@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:BridgeTeam/Model/bed.dart';
 import 'package:BridgeTeam/locator.dart';
 import 'package:BridgeTeam/services/auth.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
 class CrudMethods {
   bool isLoggedIn() {
@@ -15,6 +16,9 @@ class CrudMethods {
     return false;
   }
 
+  final HttpsCallable sendMessageFunction = CloudFunctions.instance.getHttpsCallable(
+    functionName: 'sendMessageFunction',
+  );
   Future<void> addBed(roomId, bed) {
     if (isLoggedIn()) {
       var roomRef = Firestore.instance.collection("rooms").document(roomId);

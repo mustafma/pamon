@@ -1,5 +1,8 @@
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
+import 'package:BridgeTeam/services/auth.dart';
 import 'package:BridgeTeam/services/crud.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'appBar.dart';
@@ -157,8 +160,26 @@ class _InstanceMessage extends State<InstanceMessage> {
         bottomNavigationBar: BaseBottomBar());
   }
 
-  void sendTextAsNotofocation() {
+  Future<void> sendTextAsNotofocation() async {
     String msgTxt = textController.text;
-// Call Firebase method   XXXX(msgTxt,sendDoctors,sendNurses,sendAll)
+    CrudMethods crud = new CrudMethods();
+    var topic = "";
+    if((sendDoctors && sendNurses) || sendAll)
+      {
+        topic = "messagesFromAdmin_all_topic";
+      }
+    else if(sendDoctors)
+      {
+        topic = "messagesFromAdmin_doc_topic";
+      }
+    else
+      {
+      topic = "messagesFromAdmin_nurse_topic";
+    }
+    dynamic resp = await crud.sendMessageFunction.call(<String, String>{
+      'content': msgTxt,
+      'topic':topic
+    });
+ //Call Firebase method   XXXX(msgTxt,sendDoctors,sendNurses,sendAll)
   }
 }
