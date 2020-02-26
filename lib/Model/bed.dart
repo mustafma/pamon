@@ -29,7 +29,7 @@ class Bed {
   Bed.fromMap(Map snapshot, String id)
       : bedId = id,
         name = snapshot['bedName'] ?? '',
-        Cateter = snapshot['withCut'] ?? false,
+        Cateter = snapshot['Cateter'] ?? false,
         Infected = snapshot['Infected'] ?? false,
         CT = snapshot['CT'] ?? false,
         Fasting = snapshot['Fasting'] ?? false,
@@ -39,7 +39,7 @@ class Bed {
         O2 = snapshot['O2'] ?? false,
         Petsa = snapshot['Petsa'] ?? false,
         Invasive = snapshot['Invasive'] ?? false,
-        CatDate = ( snapshot['CatDate'] as Timestamp).toDate(),
+        CatDate = ( snapshot['CatDate'] as Timestamp) != null? ( snapshot['CatDate'] as Timestamp).toDate():DateTime.now(),
         dismissed = snapshot['dismissed'] ?? false,
         pranola = snapshot['pranola'] ?? false,
         seodi = snapshot['seodi'] ?? false,
@@ -124,7 +124,9 @@ class BedInstruction {
 class StatusTypeValue {
   BedStatus bedStatus;
   bool value;
+  FieldType fieldType;
   String dbFieldName;
+  DateTime datetimeVal;
 
   BedStatus get status {
     return bedStatus;

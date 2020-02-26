@@ -180,63 +180,54 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildSubTrial() {
+    String text1;
+    if (widget.room.getTotalNumberOfNotifications() == 0)
+      text1 = "אין הוראות חדשות";
+    else {
+      String txt1 = "הוראות שעדין לא נצפו ";
 
- String text1;
-if (widget.room.getTotalNumberOfNotifications() == 0)
-  text1 = "אין הוראות חדשות";
-  else{
-     String txt1 = "הוראות שעדין לא נצפו ";
+      text1 = txt1 + widget.room.getTotalNumberOfNotifications().toString();
+    }
 
-      text1 =
-          txt1 + widget.room.getTotalNumberOfNotifications().toString();
+    String text2;
+    if (widget.room.getTotalNumberOfReleases() == 0)
+      text2 = "אין שחרורים מתוכננים";
+    else {
+      String txt2 = "שחרורים מתוכננים בחדר זה ";
+
+      text2 = txt2 + widget.room.getTotalNumberOfReleases().toString();
+    }
+
+    return new Align(
+        alignment: Alignment(0, -2.8),
+        child: new Stack(children: <Widget>[
+          Container(
+            height: 40,
+            child: Column(children: <Widget>[
+              new Text(
+                text1,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+                overflow: TextOverflow.visible,
+                maxLines: 1,
+                softWrap: false,
+              ),
+              new Text(
+                text2,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+                overflow: TextOverflow.visible,
+                maxLines: 1,
+                softWrap: false,
+              )
+            ]),
+          )
+        ]));
   }
-
-
-   String text2;
-if (widget.room.getTotalNumberOfReleases() == 0)
-  text2 = "אין שחרורים מתוכננים";
-  else{
-     String txt2 = "שחרורים מתוכננים בחדר זה ";
-
-      text2 =
-          txt2 + widget.room.getTotalNumberOfReleases().toString();
-  }
-
-
-
-
-      return new Align(
-          alignment: Alignment(0, -2.8),
-          child: new Stack(children: <Widget>[
-            Container(
-              height: 40,
-              child: Column(children: <Widget>[
-                new Text(
-                  text1,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                  overflow: TextOverflow.visible,
-                  maxLines: 1,
-                  softWrap: false,
-                ),
-                    new Text(
-                  text2,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
-                  overflow: TextOverflow.visible,
-                  maxLines: 1,
-                  softWrap: false,
-                )
-
-              ]),
-            )
-          ]));
-  }
-
 
   void onTapBrowseToBeds(BuildContext context) async {
     // navigate to the next screen.

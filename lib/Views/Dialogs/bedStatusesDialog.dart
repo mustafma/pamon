@@ -104,7 +104,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   var obj = new StatusTypeValue();
                                   obj.bedStatus = BedStatus.Cateter;
                                   obj.value = newValue;
-                                  obj.dbFieldName = "withCut";
+                                  obj.dbFieldName = "Cateter";
+                                   obj.fieldType = FieldType.bool;
                                   statusTypesValues.add(obj);
                                   if (newValue) _selectDate(context);
                                 }),
@@ -126,6 +127,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.Petsa;
                               obj.value = newValue;
                               obj.dbFieldName = "Petsa";
+                                 obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -145,6 +147,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               var obj = new StatusTypeValue();
                               obj.bedStatus = BedStatus.PhysoAid;
                               obj.value = newValue;
+                              obj.fieldType = FieldType.bool;
                               obj.dbFieldName = "PhysoAid";
                               statusTypesValues.add(obj);
                             }),
@@ -165,6 +168,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               var obj = new StatusTypeValue();
                               obj.bedStatus = BedStatus.SocialAid;
                               obj.value = newValue;
+                              obj.fieldType = FieldType.bool;
                               obj.dbFieldName = "SocialAid";
                               statusTypesValues.add(obj);
                             }),
@@ -186,6 +190,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.DiatentAid;
                               obj.value = newValue;
                               obj.dbFieldName = "DiatentAid";
+                              obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -206,6 +211,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.Invasive;
                               obj.value = newValue;
                               obj.dbFieldName = "Invasive";
+                              obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -226,6 +232,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.O2;
                               obj.value = newValue;
                               obj.dbFieldName = "O2";
+                              obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -246,6 +253,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.Fasting;
                               obj.value = newValue;
                               obj.dbFieldName = "fasting";
+                              obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -266,6 +274,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                               obj.bedStatus = BedStatus.Pranola;
                               obj.value = newValue;
                               obj.dbFieldName = "pranola";
+                              obj.fieldType = FieldType.bool;
                               statusTypesValues.add(obj);
                             }),
                         new Padding(padding: EdgeInsets.all(1.0)),
@@ -298,12 +307,12 @@ class _BedStatusDialog extends State<BedStatusDialog> {
 
   void handleIconStatusSelection2(BuildContext context) {
     if (statusTypesValues != null && statusTypesValues.length > 0) {
-      widget.crudObj.updateListOfBedStatuses(
+      widget.crudObj.updateListOfBedStatusesAndDates(
           widget.roomId, widget.bed.bedId, statusTypesValues);
 
-      if (cateterOptionSelected)
-        widget.crudObj.updateBedDateField(
-            widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
+     // if (cateterOptionSelected)
+        //widget.crudObj.updateBedDateField(
+          //  widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
     }
   }
 
@@ -317,6 +326,12 @@ class _BedStatusDialog extends State<BedStatusDialog> {
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        var obj = new StatusTypeValue();
+                              obj.bedStatus = BedStatus.Cateter;
+                              obj.datetimeVal = selectedDate;
+                              obj.dbFieldName = "CatDate";
+                              obj.fieldType = FieldType.DateTime;
+                              statusTypesValues.add(obj);
       });
   }
 }

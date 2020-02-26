@@ -25,3 +25,12 @@ enum BedAction {
 
   enum UserType { RoomDoctorSuperviosor  , NurseRoomsupervisor,  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
 
+
+  
+enum FieldType { 
+    Date,
+    DateTime,
+    String,
+    bool
+  }
+

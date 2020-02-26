@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/Model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,6 +69,38 @@ class CrudMethods {
 
               list.forEach(
                   (x) => {if (x != null && x != "") beds[i][x] = status});
+            }
+          }
+          //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
+          await tx.update(roomRef, <String, dynamic>{'beds': beds});
+        }
+      }).then((_) {
+        print("Success");
+      });
+    }
+  }
+
+  Future<void> updateListOfBedStatusesAndDates(roomId, bedId,
+      List<StatusTypeValue> listOfbedStatuses) async {
+    if (isLoggedIn()) {
+      //var roomRef = Firestore.instance.collection("rooms").document(roomId);
+
+      DocumentReference roomRef =
+          Firestore.instance.collection("rooms").document(roomId);
+      Firestore.instance.runTransaction((Transaction tx) async {
+        DocumentSnapshot postSnapshot = await tx.get(roomRef);
+        if (postSnapshot.exists) {
+          var beds = postSnapshot.data['beds'];
+          for (int i = 0; i < beds.length; i++) {
+            if (beds[i]['bedId'] == bedId) {
+              listOfbedStatuses.forEach((x) => {
+                    if (x != null)
+                    {
+                      if(x.fieldType == FieldType.bool)
+                        beds[i][x.dbFieldName] = x.value
+                      else if(x.fieldType == FieldType.DateTime)
+                      beds[i][x.dbFieldName] = Timestamp.fromDate(x.datetimeVal)
+                    } });
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
