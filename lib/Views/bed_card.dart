@@ -1,4 +1,4 @@
-import 'package:BridgeTeam/Model/room.dart';
+
 import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
@@ -26,8 +26,6 @@ class BedCard extends StatefulWidget {
       this.rooms});
   _BedCardState createState() => _BedCardState();
 }
-
-
 
 class _BedCardState extends State<BedCard> {
   bool popMenueBtnEnaled = false;
@@ -86,7 +84,6 @@ class _BedCardState extends State<BedCard> {
                         //const Color(0xFF003C64),
                         //const Color(0xFF00885A)
                       ],
-                      
                       begin: FractionalOffset.topLeft,
                       end: FractionalOffset.bottomRight,
                       stops: [0.0, 1.0],
@@ -95,34 +92,34 @@ class _BedCardState extends State<BedCard> {
                 Container(
                     //decoration: BoxDecoration(color: cardColor),
                     child: ListTile(
-                      leading: buildLeading(),
-                      title: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            if (widget.bed.dismissed)
-                              new Icon(
-                                Icons.exit_to_app,
-                                color: Colors.green,
-                              ),
-                            new Padding(padding: EdgeInsets.all(10.0)),
-                            Text(widget.bed.name,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                      subtitle: buildSubTrial(),
-                      trailing: buildTrial(),
-                      onTap: () => onTapBrowseToBedInstructions(context),
-                      //onLongPress: () => moveBed(context),
-                    )),
+                  leading: buildLeading(),
+                  title: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        if (widget.bed.dismissed)
+                          new Icon(
+                            Icons.exit_to_app,
+                            color: Colors.green,
+                          ),
+                        new Padding(padding: EdgeInsets.all(10.0)),
+                        Text(widget.bed.name,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  ),
+                  subtitle: buildSubTrial(),
+                  trailing: buildTrial(),
+                  onTap: () => onTapBrowseToBedInstructions(context),
+                  //onLongPress: () => moveBed(context),
+                )),
                 Container(
                   decoration: BoxDecoration(
-                     // color: cardColor,
+                      // color: cardColor,
                       border: new Border(
                           top: new BorderSide(
                               width: 1.5, color: const Color(0xFF428879)))),
@@ -265,12 +262,10 @@ class _BedCardState extends State<BedCard> {
               context: context,
               builder: (context) {
                 return new CustomDialog(
-                  text: "לנקות מיטה",
-                  bedId:widget.bed.bedId ,
-                  roomId: widget.roomId,
-                  operationName: "cleanbed"
-                
-                );
+                    text: "לנקות מיטה",
+                    bedId: widget.bed.bedId,
+                    roomId: widget.roomId,
+                    operationName: "cleanbed");
               });
 
           break;
@@ -291,11 +286,10 @@ class _BedCardState extends State<BedCard> {
               context: context,
               builder: (context) {
                 return new CustomDialog(
-                  text: "החולה לשחרור",
-                  bedId:widget.bed.bedId ,
-                  roomId: widget.roomId,
-                  operationName: "releasebed"
-                );
+                    text: "החולה לשחרור",
+                    bedId: widget.bed.bedId,
+                    roomId: widget.roomId,
+                    operationName: "releasebed");
               });
           break;
       }
@@ -356,7 +350,6 @@ class _BedCardState extends State<BedCard> {
     if (status == BedStatus.Seodi) fieldName = "seodi";
     if (status == BedStatus.Cognitive) fieldName = "cognitive";
 
-
     widget.crudObj
         .updateBedStatus(widget.roomId, widget.bed.bedId, fieldName, highlight);
   }
@@ -395,15 +388,14 @@ class _BedCardState extends State<BedCard> {
         res = widget.bed.SocialAid;
         break;
       case BedStatus.Pranola:
-              res = widget.bed.pranola;
+        res = widget.bed.pranola;
         break;
-              case BedStatus.Seodi:
-              res = widget.bed.seodi;
+      case BedStatus.Seodi:
+        res = widget.bed.seodi;
         break;
-              case BedStatus.Cognitive:
-              res = widget.bed.cognitive;
+      case BedStatus.Cognitive:
+        res = widget.bed.cognitive;
         break;
-
     }
     return res;
   }
@@ -560,12 +552,12 @@ class _BedCardState extends State<BedCard> {
           calcIcon = Icons.explore;
           break;
         case BedStatus.Seodi:
-        message = "חולה סיעודי";
-        calcIcon = Icons.explore;
-        break;
-      case BedStatus.Cognitive:
-        message = "חולה עם ירידה קוגניטיבית";
-        calcIcon = Icons.explore;
+          message = "חולה סיעודי";
+          calcIcon = Icons.explore;
+          break;
+        case BedStatus.Cognitive:
+          message = "חולה עם ירידה קוגניטיבית";
+          calcIcon = Icons.explore;
       }
       genList.add(new IconButton(
         icon: Icon(calcIcon),
