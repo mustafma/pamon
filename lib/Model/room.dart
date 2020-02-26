@@ -63,6 +63,19 @@ class Room {
     return sum;
   }
 
+
+    int getTotalNumberOfReleases() {
+    var sum = 0;
+    for (Bed bed in beds) {
+    
+          if(bed.dismissed) sum++;
+
+    }
+    return sum;
+  }
+
+
+
   int getTotalNumberOfBedsWithCateter(BedStatus bedStat) {
     var sum = 0;
     for (Bed bed in beds) {

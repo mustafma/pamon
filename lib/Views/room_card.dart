@@ -38,7 +38,7 @@ class _RoomCardState extends State<RoomCard> {
     String doctorName = "דר מהנד אבו אלהיגא";
     String nurseName = "עולא עולא";
     return Container(
-        height: 188,
+        height: 190,
         child: Card(
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -57,27 +57,28 @@ class _RoomCardState extends State<RoomCard> {
                 child: Column(
                   children: <Widget>[
                     Container(
+                        height: 105,
 
                         // decoration:
                         //BoxDecoration(color: Theme.of(context).cardColor),
                         child: ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 6.0),
 
-                      title: Align(
-                        alignment: Alignment(0, -0.75),
-                        child: Text(
-                          widget.room.roomName,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                      ),
-                      subtitle: buildSubTrial(),
-                      // trailing: buildTrial(),
-                      onTap: () => onTapBrowseToBeds(context),
-                    )),
+                          title: Align(
+                            alignment: Alignment(0, -0.75),
+                            child: Text(
+                              widget.room.roomName,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                          ),
+                          subtitle: buildSubTrial(),
+                          // trailing: buildTrial(),
+                          onTap: () => onTapBrowseToBeds(context),
+                        )),
                     Container(
                       decoration: new BoxDecoration(
                           gradient: new LinearGradient(
@@ -103,7 +104,6 @@ class _RoomCardState extends State<RoomCard> {
                     //          width: 3.0, color: Colors.orange))),
                     //    ),
                     Container(
-                      
                         child: Column(
                       children: [
                         Container(
@@ -180,35 +180,63 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildSubTrial() {
-    if (widget.room.getTotalNumberOfNotifications() == 0)
-      return new Align(
-          alignment: Alignment(0, -2.8),
-          child: new Text(
-            "אין הוראות חדשות",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-            overflow: TextOverflow.fade,
-            maxLines: 3,
-            // softWrap: true,
-          ));
-    else {
-      String text2 = "הוראות שלא בוצעו ";
 
-      String text3 =
-          text2 + widget.room.getTotalNumberOfNotifications().toString();
+ String text1;
+if (widget.room.getTotalNumberOfNotifications() == 0)
+  text1 = "אין הוראות חדשות";
+  else{
+     String txt1 = "הוראות שעדין לא נצפו ";
 
-      return new Align(
-          alignment: Alignment(0, -2.8),
-          child: new Text(
-            text3,
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
-            overflow: TextOverflow.visible,
-            maxLines: 1,
-            softWrap: false,
-          ));
-    }
+      text1 =
+          txt1 + widget.room.getTotalNumberOfNotifications().toString();
   }
+
+
+   String text2;
+if (widget.room.getTotalNumberOfReleases() == 0)
+  text2 = "אין שחרורים מתוכננים";
+  else{
+     String txt2 = "שחרורים מתוכננים בחדר זה ";
+
+      text2 =
+          txt2 + widget.room.getTotalNumberOfReleases().toString();
+  }
+
+
+
+
+      return new Align(
+          alignment: Alignment(0, -2.8),
+          child: new Stack(children: <Widget>[
+            Container(
+              height: 40,
+              child: Column(children: <Widget>[
+                new Text(
+                  text1,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                  overflow: TextOverflow.visible,
+                  maxLines: 1,
+                  softWrap: false,
+                ),
+                    new Text(
+                  text2,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                  overflow: TextOverflow.visible,
+                  maxLines: 1,
+                  softWrap: false,
+                )
+
+              ]),
+            )
+          ]));
+  }
+
 
   void onTapBrowseToBeds(BuildContext context) async {
     // navigate to the next screen.
