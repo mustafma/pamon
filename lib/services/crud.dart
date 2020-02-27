@@ -224,6 +224,9 @@ class CrudMethods {
             "ADD_INSTRUCTION",
             new DateTime.now().toString());
         Firestore.instance.collection("messages").add(message.toMap());
+      }).catchError((e) {
+        print('error runningbtransaction: $e');
+        return null;
       });
     }
   }
@@ -269,6 +272,9 @@ class CrudMethods {
         }
       }).then((_) {
         print("Success");
+      }).catchError((e) {
+        print('error runningbtransaction: $e');
+        return null;
       });
     }
   }
@@ -294,6 +300,9 @@ class CrudMethods {
         }
       }).then((_) {
         print("Success");
+      }).catchError((e) {
+        print('error runningbtransaction: $e');
+        return null;
       });
     }
   }

@@ -56,10 +56,13 @@ class AuthService {
       case UserType.Doctor:
         _fcm.unsubscribeFromTopic('removeInstruction_topic');
         _fcm.unsubscribeFromTopic('addInstruction_topic');
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_doc_topic");
+
         break;
       case UserType.Nurse:
       case UserType.NurseShiftManager:
         _fcm.unsubscribeFromTopic('addInstruction_topic');
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_nurse_topic");
         break;
       case UserType.DepartmentManager:
 
@@ -74,6 +77,8 @@ class AuthService {
         // TODO: Handle this case.
         break;
   }
+
+    _fcm.unsubscribeFromTopic("messagesFromAdmin_all_topic");
     await _auth.signOut();
   }
 
