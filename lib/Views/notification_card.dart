@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:BridgeTeam/Model/enumTypes.dart' ;
-import 'package:BridgeTeam/Model/User.dart'  hide Element;
+import 'package:BridgeTeam/Model/User.dart' ;
 
 //import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';

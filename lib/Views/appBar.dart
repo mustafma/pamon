@@ -126,6 +126,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     case 2:
                       _handleSettings(context);
                       break;
+                      case 3:
+                      _handleUserMangments(context);
+                      break;
                       case 6:
                       _handleInstanceMessage(context);
                       break;
@@ -154,6 +157,12 @@ void _handleSettings(BuildContext context) {
 
 void _handleInstanceMessage(BuildContext context) {
   Navigator.pushNamed(context, '/IM');
+  //return LoginWidget();
+}
+
+
+void _handleUserMangments(BuildContext context) {
+  Navigator.pushNamed(context, '/UserMng');
   //return LoginWidget();
 }
 
