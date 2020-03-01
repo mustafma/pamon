@@ -295,6 +295,26 @@ class _BedCardState extends State<BedCard> {
       }
   }
 
+
+ /* Future<void> addInstructionFunction(InstructionType type) async
+  {
+    CrudMethods crud = new CrudMethods();
+    // Call Service to update DB  and Push  Notification
+    String choiceText = type.toString().split('.').last;
+
+    dynamic resp = await crud.addInstructionFunction.call(<String, String>{
+      'roomId': widget.roomId,
+      'bedId' : widget.bed.bedId,
+      'index':type.index.toString(),
+      'typeText': choiceText
+    });
+    //Ca
+    widget.parentRoomAction();
+    setState(() {
+      cardColor = Colors.red;
+    });
+  }
+*/
   void addInstruction(InstructionType choice) {
     // Call Service to update DB  and Push  Notification
     String choiceText = choice.toString().split('.').last;

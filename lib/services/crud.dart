@@ -16,10 +16,15 @@ class CrudMethods {
     }
     return false;
   }
-
+  
   final HttpsCallable sendMessageFunction =
       CloudFunctions.instance.getHttpsCallable(
     functionName: 'sendMessageFunction',
+  );
+
+  final HttpsCallable addInstructionFunction =
+  CloudFunctions.instance.getHttpsCallable(
+    functionName: 'addInstructionFunction',
   );
   Future<void> addBed(roomId, bed) {
     if (isLoggedIn()) {
@@ -183,52 +188,59 @@ class CrudMethods {
     }
   }
 
-  Future<void> addInstruction(roomId, bedId, instructionType, instructionText) {
-    if (isLoggedIn()) {
-      BedInstruction newInstruction =
-          new BedInstruction(instructionText, instructionType, bedId, "active");
+  Future<void> addInstruction(roomId, bedId, instructionType, instructionText) async {
+    try {
+      if (isLoggedIn()) {
+        BedInstruction newInstruction =
+        new BedInstruction(instructionText, instructionType, bedId, "active");
 
-      DocumentReference roomRef =
-          Firestore.instance.collection("rooms").document(roomId);
+        DocumentReference roomRef =
+        Firestore.instance.collection("rooms").document(roomId);
 
-      Firestore.instance.runTransaction((Transaction tx) async {
-        DocumentSnapshot postSnapshot = await tx.get(roomRef);
-        if (postSnapshot.exists) {
-          List beds = List.from(postSnapshot.data['beds']);
-          for (int i = 0; i < beds.length; i++) {
-            if (beds[i]['bedId'] == bedId) {
-              List notifications =
-                  List.from(postSnapshot.data['beds'][i]['notifications']);
+        Firestore.instance.runTransaction((Transaction tx) async {
+          DocumentSnapshot postSnapshot = await tx.get(roomRef);
+          if (postSnapshot.exists) {
+            List beds = List.from(postSnapshot.data['beds']);
+            for (int i = 0; i < beds.length; i++) {
+              if (beds[i]['bedId'] == bedId) {
+                List notifications =
+                List.from(postSnapshot.data['beds'][i]['notifications']);
 
-              dynamic instructionMap = newInstruction.toMap();
-              notifications.add(instructionMap);
-              beds[i]["notifications"] = notifications;
-              break;
+                dynamic instructionMap = newInstruction.toMap();
+                notifications.add(instructionMap);
+                beds[i]["notifications"] = notifications;
+                break;
+              }
             }
+            await tx.update(roomRef, <String, dynamic>{'beds': beds});
           }
-          await tx.update(roomRef, <String, dynamic>{'beds': beds});
-        }
-      }).then((_) {
-        print("Success");
+        }).then((_) {
+          print("Success");
 
-        Message message = new Message(
-            newInstruction.notificationId,
-            bedId,
-            bedId,
-            newInstruction.notificationType,
-            newInstruction.notificationText,
-            roomId,
-            roomId,
-            "uid",
-            "departmentId",
-            "ADD_INSTRUCTION",
-            new DateTime.now().toString());
-        Firestore.instance.collection("messages").add(message.toMap());
-      }).catchError((e) {
-        print('error runningbtransaction: $e');
-        return null;
-      });
+          Message message = new Message(
+              newInstruction.notificationId,
+              bedId,
+              bedId,
+              newInstruction.notificationType,
+              newInstruction.notificationText,
+              roomId,
+              roomId,
+              "uid",
+              "departmentId",
+              "ADD_INSTRUCTION",
+              new DateTime.now().toString());
+          Firestore.instance.collection("messages").add(message.toMap());
+        }).catchError((e) {
+          print('error runningbtransaction: $e');
+          return null;
+        });
+      }
     }
+    catch(e)
+    {
+        print('error caught: $e');
+    }
+
   }
 
   Future<void> removeInstruction(roomId, bedId, instructionId) {
