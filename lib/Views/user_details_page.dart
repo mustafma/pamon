@@ -113,8 +113,23 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 onTap: () {
                   if (formKey.currentState.validate()) {
                     crud.addUser(user, isNew);
+
+                     showDialog(
+                      context: context,
+                      child: new AlertDialog(
+                        title: Text('ניהול משתמשים'),
+                        content: const Text('רשומה עודכנה בהצלחה'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('סגור'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
                     // usersProvider.updateUser(user: user, isRegistering: widget.user == null ? true : false);
-                    Navigator.of(context).pop();
+                   // Navigator.of(context).pop();
                   }
                 },
               ),

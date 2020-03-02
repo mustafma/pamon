@@ -35,84 +35,87 @@ class _ShiftView extends State<ShiftView> {
           backButtonVisible: true,
           appBar: AppBar(),
         ),
-        body:new Container(
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-                colors: [const Color(0xFF003C64), const Color(0xFF428879)],
-                begin: FractionalOffset.topLeft,
-                end: FractionalOffset.bottomRight,
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
-                child:
-        
-        
-        
-         Center(
+        body: new Container(
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                    begin: FractionalOffset.topLeft,
+                    end: FractionalOffset.bottomRight,
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
             child: Center(
-                child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: StreamBuilder(
-              stream: _firestoreRef.snapshots(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return LinearProgressIndicator();
-                } else {
-                  List items = [];
-                  items = snapshot.data.documents
-                      .map((doc) =>
-                          User2.fromMap(doc.data, doc.documentID.toString()))
-                      .toList();
-                  return ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      User2 user = (items[index] as User2);
+                child: Center(
+                    child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: StreamBuilder(
+                  stream: _firestoreRef.snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return LinearProgressIndicator();
+                    } else {
+                      List items = [];
+                      items = snapshot.data.documents
+                          .map((doc) => User2.fromMap(
+                              doc.data, doc.documentID.toString()))
+                          .toList();
+                      return ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          User2 user = (items[index] as User2);
 
-                      return Visibility(
-                          visible: true,
-                          child: Row(children: <Widget>[
-                            Switch(
-                                value: user.isInShift,
-                                onChanged: (bool newValue) {
-                                  user.isInShift = newValue;
-                                  if (updatedUsers.contains(user))
-                                  
-                                    updatedUsers.remove(user);
+                          return Visibility(
+                              visible: true,
+                              child: Row(children: <Widget>[
+                                Switch(
+                                    value: user.isInShift,
+                                    onChanged: (bool newValue) {
+                                      user.isInShift = newValue;
+                                      if (updatedUsers.contains(user))
+                                        updatedUsers.remove(user);
 
-                                  updatedUsers.add(user);
-                                }),
-                            new Padding(padding: EdgeInsets.all(1.0)),
-                            Text(user.name,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold)),
-                          ]));
-                    },
-                  );
-                } //else
-              } //builder
-              ),
-        )))),
-        floatingActionButton: Container
-            (
+                                      updatedUsers.add(user);
+                                    }),
+                                new Padding(padding: EdgeInsets.all(1.0)),
+                                Text(user.name,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ]));
+                        },
+                      );
+                    } //else
+                  } //builder
+                  ),
+            )))),
+        floatingActionButton: Container(
             margin: EdgeInsets.only(bottom: 10),
             child: FloatingActionButton.extended(
-            backgroundColor: Colors.orange,
-            onPressed: (
-                // Save mashmeret
+                backgroundColor: Colors.orange,
+                onPressed: (
+                    // Save mashmeret
 
-            ) {
-               updatedUsers.forEach((u) => {
-                 crud.addUser(u, false)
+                    ) {
+                  updatedUsers.forEach((u) => {crud.addUser(u, false)});
 
-               });
-              },
+                  showDialog(
+                      context: context,
+                      child: new AlertDialog(
+                        title: Text('ניהול משמרת'),
+                        content: const Text('משמרת עודכנה בהצלחה'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('סגור'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
+                },
                 icon: Icon(
                   Icons.save,
                 ),
                 label: Text("שמור"))));
-  
-  
-  
   }
 }
