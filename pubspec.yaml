@@ -33,6 +33,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_emoji: ">= 2.0.0"
+  dropdown_formfield: "0.1.1"
 
 
 

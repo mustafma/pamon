@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Components/dropdown_form_field_validation.dart';
 import 'package:BridgeTeam/Components/flat_button_custom.dart';
 import 'package:BridgeTeam/Components/page_header.dart';
 import 'package:BridgeTeam/Components/text_form_field_validation.dart';
@@ -87,6 +88,17 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     user.password = val.trim();
                   },
                 ),
+          DropDownFormFieldValidation(
+                hint: 'סוג משתמש',
+                initialValue: user.userType.toString(),
+                onValueChanged: (val) {
+                  user.email = val.trim();
+                }),
+
+
+
+
+                
               SizedBox(height: 10),
               FlatButtonCustom(
                 title: widget.user == null ? 'חדש' : 'עדכן',

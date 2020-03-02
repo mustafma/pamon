@@ -1,4 +1,5 @@
 import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:flutter/material.dart';
 
 //import '../models_services/users_services.dart';
@@ -14,11 +15,12 @@ class UsersProvider with ChangeNotifier {
 
   UsersProvider(){
     User2 u2 = new User2(
-      documentID: "1",
-      name: "Yosef",
+         name: "Yosef",
       email: "yosuf.abed@gmail.com",
       isAdmin: true,
-      password: "123456");
+      password: "123456",
+      isInMashmert: true,
+      userType: UserType.Nurse);
 
 _users.add(u2);
 
@@ -29,11 +31,13 @@ _users.add(u2);
   Future initState() async {
 
     User2 u2 = new User2(
-      documentID: "1",
       name: "Yosef",
       email: "yosuf.abed@gmail.com",
       isAdmin: true,
-      password: "123456");
+      password: "123456",
+      isInMashmert: true,
+      userType: UserType.Nurse
+      );
 
 _users.add(u2);
     

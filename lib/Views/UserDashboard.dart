@@ -4,7 +4,6 @@ import 'package:BridgeTeam/Views/user_details_page.dart';
 import 'package:BridgeTeam/model_providers/users_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'appBar.dart';
 
