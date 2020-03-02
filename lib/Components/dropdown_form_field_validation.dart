@@ -66,6 +66,7 @@ String _myActivity;
                   onChanged: (value) {
                     setState(() {
                       _myActivity = value;
+                      widget.onValueChanged(_myActivity);
                     });
                   },
                   dataSource: [

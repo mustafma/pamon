@@ -3,6 +3,7 @@ import 'package:BridgeTeam/Components/flat_button_custom.dart';
 import 'package:BridgeTeam/Components/page_header.dart';
 import 'package:BridgeTeam/Components/text_form_field_validation.dart';
 import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,17 +19,23 @@ class UserDetailsPage extends StatefulWidget {
 
 class _UserDetailsPageState extends State<UserDetailsPage> {
   User2 user;
+  bool isNew = false;
   @override
   void initState() {
     if (widget.user == null) {
       user = User2();
+      user.role = "nr";
+      isNew = true;
     } else {
       user = widget.user;
+      isNew = false;
     }
     super.initState();
   }
 
   final formKey = GlobalKey<FormState>();
+  var crud = new CrudMethods();
+  
   @override
   Widget build(BuildContext context) {
     //final themeProvider = Provider.of<ThemeProvider>(context);
@@ -105,6 +112,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 color: Colors.orange,
                 onTap: () {
                   if (formKey.currentState.validate()) {
+                    crud.addUser(user, isNew);
                     // usersProvider.updateUser(user: user, isRegistering: widget.user == null ? true : false);
                     Navigator.of(context).pop();
                   }
