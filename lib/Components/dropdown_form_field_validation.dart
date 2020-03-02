@@ -40,10 +40,7 @@ class _DropDownFormFieldValidationState extends State<DropDownFormFieldValidatio
   @override
   void initState() {
     super.initState();
-    valueController = widget.controller ?? TextEditingController.fromValue(TextEditingValue(text: widget.initialValue ?? ""));
-    valueController.addListener(() {
-      widget.onValueChanged(valueController.text);
-    });
+    _myActivity = widget.initialValue==null?"nr":widget.initialValue;
   }
 
 String _myActivity;
@@ -73,33 +70,25 @@ String _myActivity;
                   },
                   dataSource: [
                     {
-                      "display": "Running",
-                      "value": "Running",
+                      "display": "רופאה/ה",
+                      "value": "dr",
                     },
                     {
-                      "display": "Climbing",
-                      "value": "Climbing",
+                      "display": "אח/אחות",
+                      "value": "nr",
                     },
                     {
-                      "display": "Walking",
-                      "value": "Walking",
+                      "display": "מנהל/ת מחלקה",
+                      "value": "drm",
                     },
                     {
-                      "display": "Swimming",
-                      "value": "Swimming",
+                      "display": "אח/אחות ראשי",
+                      "value": "nrm",
                     },
                     {
-                      "display": "Soccer Practice",
-                      "value": "Soccer Practice",
-                    },
-                    {
-                      "display": "Baseball Practice",
-                      "value": "Baseball Practice",
-                    },
-                    {
-                      "display": "Football Practice",
-                      "value": "Football Practice",
-                    },
+                      "display": "אחר",
+                      "value": "other",
+                    }
                   ],
                   textField: 'display',
                   valueField: 'value',

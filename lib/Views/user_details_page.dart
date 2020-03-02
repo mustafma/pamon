@@ -90,9 +90,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                 ),
           DropDownFormFieldValidation(
                 hint: 'סוג משתמש',
-                initialValue: user.userType.toString(),
+                initialValue: user.role.toString(),
                 onValueChanged: (val) {
-                  user.email = val.trim();
+                  user.role  = val.trim();
                 }),
 
 
