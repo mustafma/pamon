@@ -1,4 +1,5 @@
 import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 
 //import '../models_services/users_services.dart';
@@ -12,30 +13,22 @@ class UsersProvider with ChangeNotifier {
   List<User2> get users => _users;
 
 
-  UsersProvider(){
-    User2 u2 = new User2(
-      documentID: "1",
-      name: "Yosef",
-      email: "yosuf.abed@gmail.com",
-      isAdmin: true,
-      password: "123456");
+  UsersProvider()  {
+    updateUSersList().then((value) => _users = List.from(value));
+    /*usersList.then((value) =>
+    _users = List.from(value)
+    );*/
 
-_users.add(u2);
 
   }
 
 
 
   Future initState() async {
+    var crud = new CrudMethods();
 
-    User2 u2 = new User2(
-      documentID: "1",
-      name: "Yosef",
-      email: "yosuf.abed@gmail.com",
-      isAdmin: true,
-      password: "123456");
-
-_users.add(u2);
+    var usersList = crud.getUsers("001", "001");
+    usersList.then((value) =>_users = List.from(value));
     
     //var res = await UsersService.streamUsers();
    // res.listen((r) {
@@ -51,5 +44,12 @@ _users.add(u2);
 
   Future updateUserPassword({User2 user}) async {
     //await UsersService.updateUserPassword(user: user);
+  }
+
+  Future<List<User2>> updateUSersList() async
+  {
+
+    var crud = new CrudMethods();
+    return await crud.getUsers("001", "001");
   }
 }

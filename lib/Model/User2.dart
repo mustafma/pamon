@@ -5,6 +5,10 @@ class User2 {
   String email;
   String name;
   String password;
+  String title;
+  String role;
+  String uid;
+  bool isInShift;
 
   bool isAdmin;
 
@@ -14,16 +18,24 @@ class User2 {
     this.isAdmin,
     this.name,
     this.password,
+    this.uid,
+    this.role,
+    this.title,
+    this.isInShift
   });
 
-  factory User2.fromFirestore(DocumentSnapshot document) {
-    Map data = document.data;
 
-    return User2(
-      documentID: document.documentID,
-      email: data['email'] ?? '',
-      name: data['name'] ?? '',
-      isAdmin: data['isAdmin'] ?? false,
-    );
-  }
+  User2.fromMap(Map snapshot, String id):
+
+      documentID =  id,
+      uid =  snapshot['uid'],
+      title =  snapshot['title'],
+      role =  snapshot['role'],
+      isInShift =  snapshot['isInShift'] ?? false,
+      email =  snapshot['email'] ?? '',
+      password =  snapshot['password'] ?? '',
+      name =  snapshot['name'] ?? '',
+      isAdmin =  snapshot['isAdmin'] ?? false;
+
+
 }

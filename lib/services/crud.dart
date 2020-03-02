@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/User2.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/Model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -458,12 +460,29 @@ class CrudMethods {
   Future<String> getUserRole(uid) async {
     if (isLoggedIn()) {
       var usersRef = Firestore.instance.collection("users");
-      var authService = locator<AuthService>();
-
       List<DocumentSnapshot> docs =
           (await usersRef.where('uid', isEqualTo: uid).getDocuments())
               .documents;
       return docs[0].data['role'];
+    }
+  }
+
+  Future<List<User2>> getUsers(hospitalId, departmentId) async {
+    if (isLoggedIn()) {
+      var usersRef = Firestore.instance.collection("users");
+      List<DocumentSnapshot> docs =
+          (await usersRef.where('departmentId', isEqualTo: departmentId).where('hospitalId', isEqualTo: hospitalId).
+          getDocuments())
+              .documents;
+
+      List<User2> _users = new List<User2>();
+      for(int i =0;i<docs.length;i++)
+      {
+      //  var user = User2.fromFirestore(docs[i]);
+       // _users.add(user);
+
+      }
+      return _users;
     }
   }
 }
