@@ -75,7 +75,6 @@ class _UsersDashboardPageState extends State<UsersDashboardPage> {
       ),
           floatingActionButton: Container
             (
-
             margin: EdgeInsets.only(bottom: 10),
             child: FloatingActionButton.extended(
             backgroundColor: Colors.orange,

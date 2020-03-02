@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User2 {
+  String hospitalId;
+  String departmentId;
   String documentID;
   String email;
   String name;
@@ -15,6 +17,8 @@ class User2 {
   User2({
     this.documentID,
     this.email,
+    this.hospitalId,
+    this.departmentId,
     this.isAdmin,
     this.name,
     this.password,
@@ -35,7 +39,9 @@ class User2 {
       email =  snapshot['email'] ?? '',
       password =  snapshot['password'] ?? '',
       name =  snapshot['name'] ?? '',
-      isAdmin =  snapshot['isAdmin'] ?? false;
+      isAdmin =  snapshot['isAdmin'] ?? false,
+      hospitalId = snapshot['hospitalId'] ?? '',
+      departmentId = snapshot['departmentId'] ?? '';
 
 
 }
