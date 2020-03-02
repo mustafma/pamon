@@ -59,6 +59,16 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     ),
     new PopupMenuItem<int>(
+      value: 7,
+      child: ListTile(
+        trailing: Icon(
+          Icons.control_point_duplicate,
+          color: Color.fromRGBO(134, 165, 195, 9),
+        ),
+        title: Text('ניהול משמרת'),
+      ),
+    ),
+    new PopupMenuItem<int>(
       value: 4,
       child: ListTile(
         trailing: Icon(
@@ -132,6 +142,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                       case 6:
                       _handleInstanceMessage(context);
                       break;
+                      case 7:
+                      _handleShiftView(context);
+                      break;
                   }
                 },
               ),
@@ -165,6 +178,12 @@ void _handleUserMangments(BuildContext context) {
   Navigator.pushNamed(context, '/UserMng');
   //return LoginWidget();
 }
+
+void _handleShiftView(BuildContext context) {
+  Navigator.pushNamed(context, '/ShiftMng');
+  //return LoginWidget();
+}
+
 
 
 

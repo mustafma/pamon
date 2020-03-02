@@ -1,4 +1,4 @@
-import 'package:BridgeTeam/Components/page_header.dart';
+
 import 'package:BridgeTeam/Views/UserItem.dart';
 import 'package:BridgeTeam/Views/user_details_page.dart';
 import 'package:BridgeTeam/Model/User2.dart';
@@ -31,6 +31,7 @@ class _UsersDashboardPageState extends State<UsersDashboardPage> {
         appBar: AppBar(),
       ),
       body: Container(
+        padding: EdgeInsets.only(bottom: 56),
           decoration: new BoxDecoration
             (
               gradient: new LinearGradient(
