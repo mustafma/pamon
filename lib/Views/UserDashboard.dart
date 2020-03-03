@@ -1,11 +1,10 @@
-import 'package:BridgeTeam/Components/page_header.dart';
+
 import 'package:BridgeTeam/Views/UserItem.dart';
 import 'package:BridgeTeam/Views/user_details_page.dart';
 import 'package:BridgeTeam/Model/User2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'appBar.dart';
 
@@ -32,6 +31,7 @@ class _UsersDashboardPageState extends State<UsersDashboardPage> {
         appBar: AppBar(),
       ),
       body: Container(
+        padding: EdgeInsets.only(bottom: 56),
           decoration: new BoxDecoration
             (
               gradient: new LinearGradient(

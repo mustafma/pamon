@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Components/dropdown_form_field_validation.dart';
 import 'package:BridgeTeam/Components/flat_button_custom.dart';
 import 'package:BridgeTeam/Components/page_header.dart';
 import 'package:BridgeTeam/Components/text_form_field_validation.dart';
@@ -18,18 +19,23 @@ class UserDetailsPage extends StatefulWidget {
 
 class _UserDetailsPageState extends State<UserDetailsPage> {
   User2 user;
+  bool isNew = false;
   @override
   void initState() {
     if (widget.user == null) {
       user = User2();
+      user.role = "nr";
+      isNew = true;
     } else {
       user = widget.user;
+      isNew = false;
     }
     super.initState();
   }
 
   final formKey = GlobalKey<FormState>();
   var crud = new CrudMethods();
+  
   @override
   Widget build(BuildContext context) {
     //final themeProvider = Provider.of<ThemeProvider>(context);
@@ -89,15 +95,41 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     user.password = val.trim();
                   },
                 ),
+          DropDownFormFieldValidation(
+                hint: 'סוג משתמש',
+                initialValue: user.role.toString(),
+                onValueChanged: (val) {
+                  user.role  = val.trim();
+                }),
+
+
+
+
+                
               SizedBox(height: 10),
               FlatButtonCustom(
                 title: widget.user == null ? 'חדש' : 'עדכן',
                 color: Colors.orange,
                 onTap: () {
                   if (formKey.currentState.validate()) {
-                    crud.addUser(user, true);
+                    crud.addUser(user, isNew);
+
+                     showDialog(
+                      context: context,
+                      child: new AlertDialog(
+                        title: Text('ניהול משתמשים'),
+                        content: const Text('רשומה עודכנה בהצלחה'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('סגור'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ));
                     // usersProvider.updateUser(user: user, isRegistering: widget.user == null ? true : false);
-                    Navigator.of(context).pop();
+                   // Navigator.of(context).pop();
                   }
                 },
               ),

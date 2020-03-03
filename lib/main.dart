@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Views/shiftview.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Views/ui_login.dart';
 import 'package:BridgeTeam/locator.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           '/Settings': (context) => SettingsWindow(),
           '/IM': (context) => InstanceMessage(),
           '/UserMng': (context) => UsersDashboardPage(),
+          '/ShiftMng':(context) => ShiftView(),
         },
         theme: new ThemeData(
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),

@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
+
 
 class User2 {
   String hospitalId;
@@ -11,11 +12,10 @@ class User2 {
   String role;
   String uid;
   bool isInShift;
-
   bool isAdmin;
+  UserType userole;
 
   User2({
-    this.documentID,
     this.email,
     this.hospitalId,
     this.departmentId,
@@ -25,13 +25,14 @@ class User2 {
     this.uid,
     this.role,
     this.title,
-    this.isInShift
+    this.isInShift,
+
   });
 
 
   User2.fromMap(Map snapshot, String id):
 
-      documentID =  id,
+     // documentID =  id,
       uid =  snapshot['uid'],
       title =  snapshot['title'],
       role =  snapshot['role'],
@@ -42,6 +43,7 @@ class User2 {
       isAdmin =  snapshot['isAdmin'] ?? false,
       hospitalId = snapshot['hospitalId'] ?? '',
       departmentId = snapshot['departmentId'] ?? '';
+
 
 
 }

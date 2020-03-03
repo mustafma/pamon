@@ -506,7 +506,7 @@ class CrudMethods {
           },
         );
       } else {
-        // updating
+        // updating206
          Firestore.instance.collection('users').document(user.uid).setData(
             {
               'uid':user.uid,
