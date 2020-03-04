@@ -35,8 +35,7 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
-    String doctorName = "דר מהנד אבו אלהיגא";
-    String nurseName = "עולא עולא";
+
     return Container(
         height: 190,
         child: Card(
@@ -107,14 +106,14 @@ class _RoomCardState extends State<RoomCard> {
                         child: Column(
                       children: [
                         Container(
-                          child: Text(" רופא/ה אחראי:" + doctorName,
+                          child: Text(" רופא/ה אחראי:" + (widget.room).responsibleDoctor,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),
                         Container(
-                          child: Text("אח/אחות אחראי:" + nurseName,
+                          child: Text("אח/אחות אחראי:" + (widget.room).responsibleNurse,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
