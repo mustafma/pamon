@@ -1,4 +1,4 @@
-enum InstructionType { IV,PO }
+enum InstructionType { IV,PO ,SIV,SPO}
 enum BedStatus { 
   CT, 
   Cateter, 

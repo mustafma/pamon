@@ -47,7 +47,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('I.V מתן עירוי תרופה/נוזל'),
+        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -57,9 +57,32 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('P.O מתו תרופה מיוחדת'),
+        title: Center(child: Text('P.O מתן תרופה מיוחדת')),
+      ), 
+    ),
+    new PopupMenuItem<InstructionType>(
+      value: InstructionType.SPO,
+      child: ListTile(
+        trailing: Icon(
+          Icons.filter_3,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Center(child:Text('P.O הפסקת תרופה ')),
+      ),  
+    ),
+     new PopupMenuItem<InstructionType>(
+      value: InstructionType.SIV,
+      child: ListTile(
+        trailing: Icon(
+          Icons.filter_4,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+         title: Center(child:Text('I.V הפסקת עירוי')),
       ),
+
+      
     )
+
   ];
 
   @override
@@ -296,28 +319,30 @@ class _BedCardState extends State<BedCard> {
   }
 
 
- /* Future<void> addInstructionFunction(InstructionType type) async
-  {
-    CrudMethods crud = new CrudMethods();
-    // Call Service to update DB  and Push  Notification
-    String choiceText = type.toString().split('.').last;
-
-    dynamic resp = await crud.addInstructionFunction.call(<String, String>{
-      'roomId': widget.roomId,
-      'bedId' : widget.bed.bedId,
-      'index':type.index.toString(),
-      'typeText': choiceText
-    });
-    //Ca
-    widget.parentRoomAction();
-    setState(() {
-      cardColor = Colors.red;
-    });
-  }
-*/
+ 
   void addInstruction(InstructionType choice) {
     // Call Service to update DB  and Push  Notification
-    String choiceText = choice.toString().split('.').last;
+    String choiceText;
+
+
+    switch(choice)
+    {
+      case InstructionType.IV : 
+      choiceText = "חדשה I.V נרשמה הוראת";
+      break;
+      case InstructionType.PO : 
+      choiceText = "חדשה P.O נרשמה הוראת";
+      break;
+      case InstructionType.SIV:
+        choiceText = "קיימת I.V הופסקה הוראת";
+      break;
+      case InstructionType.SPO:
+      choiceText = "קיימת P.O הופסקה הוראת";
+      break;
+    }
+
+
+
     widget.crudObj.addInstruction(
         widget.roomId, widget.bed.bedId, choice.index, choiceText);
 

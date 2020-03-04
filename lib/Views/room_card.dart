@@ -107,14 +107,14 @@ class _RoomCardState extends State<RoomCard> {
                         child: Column(
                       children: [
                         Container(
-                          child: Text(" רופא/ה אחראי:" + doctorName,
+                          child: Text("רופא/ה:" + doctorName,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),
                         Container(
-                          child: Text("אח/אחות אחראי:" + nurseName,
+                          child: Text("אח/אחות:" + nurseName,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
