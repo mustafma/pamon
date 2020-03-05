@@ -509,6 +509,7 @@ class CrudMethods {
         // updating206
          Firestore.instance.collection('users').document(user.uid).setData(
             {
+              'uid':user.uid,
               'email': user.email,
               'isInShift': user.isInShift,
               'name': user.name,

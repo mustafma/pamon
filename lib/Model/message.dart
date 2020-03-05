@@ -1,4 +1,6 @@
 
+import 'package:BridgeTeam/Model/enumTypes.dart';
+
 class Message {
   String notificationId;
   String bedId;
@@ -16,7 +18,7 @@ class Message {
     this.notificationId = notificationId;
     this.bedId = bedId;
     this.bedName = bedName;
-    this.notificationType = notificationType;
+    this.notificationType = (notificationType as InstructionType).index;
     this.notificationText = notificationText;
     this.roomId = roomId;
     this.roomName = roomName;

@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
-
-
+import 'package:flutter/material.dart';
 
 class Bed {
   String bedId;
@@ -39,7 +40,9 @@ class Bed {
         O2 = snapshot['O2'] ?? false,
         Petsa = snapshot['Petsa'] ?? false,
         Invasive = snapshot['Invasive'] ?? false,
-        CatDate = ( snapshot['CatDate'] as Timestamp) != null? ( snapshot['CatDate'] as Timestamp).toDate():DateTime.now(),
+        CatDate = (snapshot['CatDate'] as Timestamp) != null
+            ? (snapshot['CatDate'] as Timestamp).toDate()
+            : DateTime.now(),
         dismissed = snapshot['dismissed'] ?? false,
         pranola = snapshot['pranola'] ?? false,
         seodi = snapshot['seodi'] ?? false,
@@ -66,7 +69,6 @@ class Bed {
     if (pranola) bedStatuses.add(BedStatus.Pranola);
     if (seodi) bedStatuses.add(BedStatus.Seodi);
     if (cognitive) bedStatuses.add(BedStatus.Cognitive);
-    
 
     return bedStatuses;
   }
@@ -86,40 +88,47 @@ class Bed {
 class BedInstruction {
   String notificationId;
   String parentBedId;
-  int notificationType;
+  InstructionType notificationType;
   String notificationText;
   String notificationStatus;
   DateTime createdAt;
+  Color color;
 
   BedInstruction(notificationText, notificationType, parentBedId, status) {
     this.notificationText = notificationText;
     this.parentBedId = parentBedId;
-    this.notificationType = notificationType;
+    this.notificationType = InstructionType.values[notificationType];
     this.createdAt = new DateTime.now();
     this.notificationStatus = status;
     this.notificationId = this.createdAt.toString();
+
+    if (notificationType == InstructionType.PO ||
+        notificationType == InstructionType.IV)
+      color = Colors.green;
+    else
+      color = Colors.red;
   }
 
   BedInstruction.fromMap(Map snapshot, String id)
       : notificationId = id,
-        notificationType = snapshot['notificationType'] ?? "",
+        notificationType = InstructionType.values[snapshot['notificationType'] ?? 1],
         notificationText = snapshot['notificationText'] ?? "",
         notificationStatus = snapshot['notificationStatus'] ?? "",
+        color = (InstructionType.values[snapshot['notificationType'] ?? 1]==InstructionType.IV || InstructionType.values[snapshot['notificationType'] ?? 1]==InstructionType.PO )?Colors.green:Colors.red,
         createdAt = (snapshot['createdAt'] as Timestamp).toDate();
+    
 
   Map<String, dynamic> toMap() {
     return {
       'notificationId': this.notificationId,
       'notificationText': this.notificationText,
-      'notificationType': this.notificationType,
+      'notificationType': this.notificationType.index,
       'notificationStatus': this.notificationStatus,
       'createdAt': this.createdAt,
       'parentBedId': this.parentBedId
     };
   }
 }
-
-
 
 class StatusTypeValue {
   BedStatus bedStatus;

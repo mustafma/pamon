@@ -105,7 +105,7 @@ class _NotificationCard extends State<NotificationCard> {
           shape: BoxShape
               .circle, // You can use like this way or like the below line
           //borderRadius: new BorderRadius.circular(30.0),
-          color: Colors.green,
+          color: widget.bedInstruction.color
         ));
   }
 

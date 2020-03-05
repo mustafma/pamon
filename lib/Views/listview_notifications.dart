@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Model/bed.dart';
-import 'package:BridgeTeam/Model/repository.dart';
 
 import 'appBar.dart';
 import 'notification_card.dart';
@@ -20,7 +19,6 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var _firestoreRef = Firestore.instance.collection('rooms');
 
-  Repository repository = new Repository();
   List<dynamic> _listViewData;
   @override
   Widget build(BuildContext context) {
