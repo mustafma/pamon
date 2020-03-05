@@ -31,35 +31,21 @@ class CrudMethods {
 Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
 {
   try {
-     if (isLoggedIn()) {
-          DocumentReference roomRef =
-        Firestore.instance.collection("rooms").document(roomId);
-          Firestore.instance.runTransaction((Transaction tx) async {
-             DocumentSnapshot postSnapshot = await tx.get(roomRef);
-            if (postSnapshot.exists) {
-              if(field != null && value != null )
-                 postSnapshot.data[field] = value;
-              if(reset)
-              {
-                postSnapshot.data["docAcceptedTalk"] = false;
-                postSnapshot.data["docAcceptedTalk2"] = false;
-                postSnapshot.data["nurseAcceptedTalk"] = false;
-                postSnapshot.data["nurseAcceptedTalk2"] = false;
-              }
-                await tx.update(roomRef, <String, dynamic>{'rooms': roomRef});
-            }
-          
-          }).then((_) {
-             print("Success");
-          }).catchError((e) {
-          print('error runningbtransaction: $e');
-          return null;
-        });
-
-     }
-
-     }
-
+    if (isLoggedIn()) {
+      DocumentReference roomRef =
+      Firestore.instance.collection("rooms").document(roomId);
+      if (field != null && value != null) {
+        roomRef.updateData({field: value});
+        return;
+      }
+      if (reset) {
+        roomRef.updateData({'docAcceptedTalk': false});
+        roomRef.updateData({'docAcceptedTalk2': false});
+        roomRef.updateData({'nurseAcceptedTalk': false});
+        roomRef.updateData({'nurseAcceptedTalk2': false});
+      }
+    }
+  }
   catch (e) {
       print('error caught: $e');
     }
