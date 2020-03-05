@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
+import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -12,6 +13,7 @@ import 'package:BridgeTeam/Views/listview_beds.dart';
 class RoomCard extends StatefulWidget {
   final Room room;
   List rooms = [];
+    CrudMethods crudObj = new CrudMethods();
   RoomCard({@required this.room, this.rooms});
 
   _RoomCardState createState() => _RoomCardState();
@@ -35,9 +37,8 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-        height: 190,
+        height: 210,
         child: Card(
             elevation: 8.0,
             margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -106,18 +107,16 @@ class _RoomCardState extends State<RoomCard> {
                         child: Column(
                       children: [
                         Container(
-
-                          child: Text("רופא/ה:" + (widget.room).responsibleDoctor,
-
+                          child: Text(
+                              "רופא/ה:" + (widget.room).responsibleDoctor,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)),
                         ),
                         Container(
-
-                          child: Text("אח/אחות:" + (widget.room).responsibleNurse,
-
+                          child: Text(
+                              "אח/אחות:" + (widget.room).responsibleNurse,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -129,26 +128,26 @@ class _RoomCardState extends State<RoomCard> {
                           children: <Widget>[
                             Center(
                                 child: Visibility(
-                                    visible: talk10AMvisible,
+                                    visible: true,
                                     child: IconButton(
                                         icon: Icon(Icons.people),
-                                        iconSize: 30,
+                                        iconSize: 25,
                                         tooltip:
                                             "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                 (widget.room).roomName,
-                                        color: iconTalkColor,
-                                        onPressed: () => handleTalk1()))),
+                                        color: setIconTalkColor(1),
+                                        onPressed: () => handleTalk1(context)))),
                             Center(
                                 child: Visibility(
-                                    visible: talk15AMvisible,
+                                    visible: true,
                                     child: IconButton(
                                         icon: Icon(Icons.people),
-                                        iconSize: 30,
+                                        iconSize: 25,
                                         tooltip:
                                             "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                 (widget.room).roomName,
-                                        color: iconTalkColor2,
-                                        onPressed: () => handleTalk2()))),
+                                        color: setIconTalkColor(2),
+                                        onPressed: () => handleTalk2(context)))),
                           ],
                         )),
                       ],
@@ -173,7 +172,7 @@ class _RoomCardState extends State<RoomCard> {
           icon: Icon(Icons.exit_to_app),
           iconSize: 30,
           color: iconTalkColor,
-          onPressed: () => handleTalk1(),
+          onPressed: () => handleTalk1(context),
         ),
 
         //],
@@ -254,93 +253,245 @@ class _RoomCardState extends State<RoomCard> {
 
     timer = Timer.periodic(Duration(seconds: 60), (Timer t) => onTimeElapsed());
 
+
+  if(!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1) 
+    iconTalkColor = Colors.grey;
+  else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+           iconTalkColor = Colors.yellow;
+  else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+           iconTalkColor = Colors.green;
+
+
+  if(!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2) 
+    iconTalkColor2 = Colors.grey;
+  else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+           iconTalkColor2 = Colors.yellow;
+  else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+           iconTalkColor2 = Colors.green;
+
+     
+
     super.initState();
   }
 
-  handleTalk1() {
-    setState(() {
-      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
-          User.getInstance().loggedInUserType == UserType.Nurse) {
-        if (widget.room.docAcceptedTalk1) iconTalkColor = Colors.green;
-        // set nurseAcceptedTalk to true
 
-      }
 
-      if (User.getInstance().loggedInUserType ==
-              UserType.RoomDoctorSuperviosor ||
-          User.getInstance().loggedInUserType == UserType.Doctor) {
-        if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
-        // set docAcceptedTalk to true
-      }
-    });
+Color setIconTalkColor(int select){
+
+  if(select ==1)
+  {
+      if(!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1) 
+    iconTalkColor = Colors.grey;
+  else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+           iconTalkColor = Colors.yellow;
+  else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+           iconTalkColor = Colors.green;
+
+           return iconTalkColor;
+
   }
 
-  handleTalk2() {
-    setState(() {
-      if (User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
-          User.getInstance().loggedInUserType == UserType.Nurse) {
-        if (widget.room.docAcceptedTalk2) iconTalkColor2 = Colors.green;
-        // set nurseAcceptedTalk to true
+else{
 
-      }
+  if(!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2) 
+    iconTalkColor2 = Colors.grey;
+  else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+           iconTalkColor2 = Colors.yellow;
+  else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+           iconTalkColor2 = Colors.green;
+           
+   return iconTalkColor2;
+}
 
-      if (User.getInstance().loggedInUserType ==
-              UserType.RoomDoctorSuperviosor ||
-          User.getInstance().loggedInUserType == UserType.Doctor) {
-        if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
-        // set docAcceptedTalk to true
-      }
-    });
+}
+
+  handleTalk1(BuildContext context) {
+    var date = DateTime.now();
+    var hour = date.hour;
+
+    if (hour < 10) {
+      // Show dialog
+      // העדכון  הבא ב 10:00
+      showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: Text('עדכון'),
+            content: const Text('העדכון  הבא ב 10:00'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('סגור'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ));
+    }
+
+    else if (hour >= 15) {
+      // What to do here to show message that this updat eis not relevant anymore
+      showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: Text('עדכון'),
+            content: const Text('העדכון של שעה 10:00 הסתיים'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('סגור'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ));
+    } else {
+      setState(() {
+        if (User.getInstance().loggedInUserType ==
+            UserType.NurseRoomsupervisor) {
+          if (widget.room.docAcceptedTalk1) {
+            iconTalkColor = Colors.green;
+            // set nurseAcceptedTalk to true
+            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "nurseAcceptedTalk", true,false);
+          } else {
+            showDialog(
+                context: context,
+                child: new AlertDialog(
+                  title: Text('עדכון'),
+                  content:
+                      const Text('הרופא עדיין לא אשר עדיין עדכון של שעה 10:00'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('סגור'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+          }
+        }
+
+        if (User.getInstance().loggedInUserType ==
+                UserType.RoomDoctorSuperviosor ||
+            User.getInstance().loggedInUserType == UserType.Doctor) {
+          if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
+           widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk", true , false);
+        }
+      });
+    }
+  }
+
+  handleTalk2(BuildContext context) {
+    var date = DateTime.now();
+    var hour = date.hour;
+
+    if (hour < 15) {
+      // Show dialog
+      // העדכון  הבא ב 10:00
+      showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: Text('עדכון'),
+            content: const Text('העדכון  הבא ב 15:00'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('סגור'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ));
+    }
+
+   else if (hour >= 23) {
+      // What to do here to show message that this updat eis not relevant anymore
+      showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: Text('עדכון'),
+            content: const Text('העדכון של שעה 15:00 הסתיים'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('סגור'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ));
+    } else {
+      setState(() {
+        if (User.getInstance().loggedInUserType ==
+            UserType.NurseRoomsupervisor) {
+          if (widget.room.docAcceptedTalk2) {
+            iconTalkColor2 = Colors.green;
+            // set nurseAcceptedTalk to true
+            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "nurseAcceptedTalk2", true,false);
+          } else {
+            showDialog(
+                context: context,
+                child: new AlertDialog(
+                  title: Text('עדכון'),
+                  content:
+                      const Text('הרופא עדיין לא אשר עדיין עדכון של שעה 15:00'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('סגור'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ));
+          }
+        }
+
+        if (User.getInstance().loggedInUserType ==
+                UserType.RoomDoctorSuperviosor ||
+            User.getInstance().loggedInUserType == UserType.Doctor) {
+          if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
+          // set docAcceptedTalk to true
+            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk2", true ,false);
+        }
+      });
+    }
   }
 
   void onTimeElapsed() {
     var date = DateTime.now();
     var hour = date.hour;
-    if ((hour < 10)) {
-      if (widget.room.timeforUpdate1 ||
-          widget.room.nurseAcceptedTalk1 ||
-          widget.room.docAcceptedTalk1) {
-        //set all to false in room  and prepare fo r10 AM fot talk
-      }
 
-      if (widget.room.timeforUpdate2 ||
+    // Set icons for update to  initial state
+    if ((hour < 8)) {
+      //set all to false in room  and prepare fo r10 AM fot talk
+      iconTalkColor = Colors.grey;
+      iconTalkColor2 = Colors.grey;
+
+      if (widget.room.docAcceptedTalk1 ||
+          widget.room.nurseAcceptedTalk1 ||
           widget.room.nurseAcceptedTalk2 ||
           widget.room.docAcceptedTalk2) {
-        //set all to false in room  and prepare fo r10 AM fot talk
+        // update those fields in  Database as false preparing for the coming sheduled updates
+          widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, null, null ,true);
+
       }
     }
 
-    if (hour == 10) {
-      if (User.getInstance().loggedInUserType == UserType.Nurse ||
-          User.getInstance().loggedInUserType == UserType.Doctor ||
-          User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
-          User.getInstance().loggedInUserType ==
-              UserType.RoomDoctorSuperviosor) {
-        if (!talk10AMvisible) {
-          setState(() {
-            talk10AMvisible = true;
-          });
-        }
-      }
-      if (!widget.room.timeforUpdate1) {
-        // set timeforUpdate to true  and nurseAcceptedTalk and  docAcceptedTalk to false to start enabling talk functionality
+    if (hour >= 10) {
+      if (!widget.room
+          .docAcceptedTalk1) // Doctor still  not accepted talk  with  nurse
+      {
+        iconTalkColor = Colors.red;
       }
     }
 
-    if (hour == 15) {
-      if (User.getInstance().loggedInUserType == UserType.Nurse ||
-          User.getInstance().loggedInUserType == UserType.Doctor ||
-          User.getInstance().loggedInUserType == UserType.NurseRoomsupervisor ||
-          User.getInstance().loggedInUserType ==
-              UserType.RoomDoctorSuperviosor) {
-        if (!talk15AMvisible) {
-          setState(() {
-            talk15AMvisible = true;
-          });
-        }
-      }
-      if (!widget.room.timeforUpdate2) {
-        // set timeforUpdate to true  and nurseAcceptedTalk and  docAcceptedTalk to false to start enabling talk functionality
+    if (hour >= 15) {
+      if (!widget.room
+          .docAcceptedTalk2) // Doctor still  not accepted talk  with  nurse
+      {
+        iconTalkColor2 =
+            Colors.red; // Waiting for doctor  to accept  the updat erequest
       }
     }
   }

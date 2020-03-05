@@ -27,8 +27,8 @@ class Room {
         responsibleNurse = snapshot['responsibleNurse'] ?? '',
         departmentID = snapshot['departmntId'] ?? '',
         timeforUpdate1 = snapshot['timeforUpdate1'] ?? false,
-        docAcceptedTalk1 = snapshot['docAcceptedTalk1'] ?? false,
-        nurseAcceptedTalk1 = snapshot['nurseAcceptedTalk1'] ?? false,
+        docAcceptedTalk1 = snapshot['docAcceptedTalk'] ?? false,
+        nurseAcceptedTalk1 = snapshot['nurseAcceptedTalk'] ?? false,
 
 
         timeforUpdate2 = snapshot['timeforUpdate2'] ?? false,

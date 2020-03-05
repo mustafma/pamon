@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/User2.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/Model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:BridgeTeam/Model/bed.dart';
-import 'package:BridgeTeam/locator.dart';
-import 'package:BridgeTeam/services/auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class CrudMethods {
@@ -28,6 +25,45 @@ class CrudMethods {
   CloudFunctions.instance.getHttpsCallable(
     functionName: 'addInstructionFunction',
   );
+
+
+
+Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
+{
+  try {
+     if (isLoggedIn()) {
+          DocumentReference roomRef =
+        Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.runTransaction((Transaction tx) async {
+             DocumentSnapshot postSnapshot = await tx.get(roomRef);
+            if (postSnapshot.exists) {
+              if(field != null && value != null )
+                 postSnapshot.data[field] = value;
+              if(reset)
+              {
+                postSnapshot.data["docAcceptedTalk"] = false;
+                postSnapshot.data["docAcceptedTalk2"] = false;
+                postSnapshot.data["nurseAcceptedTalk"] = false;
+                postSnapshot.data["nurseAcceptedTalk2"] = false;
+              }
+                await tx.update(roomRef, <String, dynamic>{'rooms': roomRef});
+            }
+          
+          }).then((_) {
+             print("Success");
+          }).catchError((e) {
+          print('error runningbtransaction: $e');
+          return null;
+        });
+
+     }
+
+     }
+
+  catch (e) {
+      print('error caught: $e');
+    }
+}
 
   Future<void> addBed(roomId, bed) {
     if (isLoggedIn()) {
