@@ -59,6 +59,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   obj.bedStatus = BedStatus.Seodi;
                                   obj.value = newValue;
                                   obj.dbFieldName = "seodi";
+                                  obj.fieldType = FieldType.bool;
                                   statusTypesValues.add(obj);
                                 }),
                             new Padding(padding: EdgeInsets.all(1.0)),
@@ -81,6 +82,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   obj.bedStatus = BedStatus.Cognitive;
                                   obj.value = newValue;
                                   obj.dbFieldName = "cognitive";
+                                  obj.fieldType = FieldType.bool;
                                   statusTypesValues.add(obj);
 
                                 }),
