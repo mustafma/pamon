@@ -77,6 +77,8 @@ class User {
           userPermessions[BridgeOperation.SendMessages] = false;
           userPermessions[BridgeOperation.ChangeBedStatus] = true;
           userPermessions[BridgeOperation.UserManagment] = false;
+          userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
           
       break;
 
@@ -91,6 +93,10 @@ class User {
           userPermessions[BridgeOperation.SendMessages] = false;
            userPermessions[BridgeOperation.ChangeBedStatus] = true;
             userPermessions[BridgeOperation.UserManagment] = false;
+            userPermessions[BridgeOperation.SetRoomAsInfected] = false;
+             userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
+
+
       break;
 
       case UserType.DepartmentManager:
@@ -104,6 +110,10 @@ class User {
           userPermessions[BridgeOperation.SendMessages] = true;
            userPermessions[BridgeOperation.ChangeBedStatus] = true;
             userPermessions[BridgeOperation.UserManagment] = true;
+            userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+             userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+
+
       break;
 
 
@@ -118,6 +128,8 @@ class User {
           userPermessions[BridgeOperation.SendMessages] = true;
            userPermessions[BridgeOperation.ChangeBedStatus] = true;
             userPermessions[BridgeOperation.UserManagment] = true;
+            userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+             userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
       break;
 
       case UserType.Other:
@@ -131,6 +143,8 @@ class User {
           userPermessions[BridgeOperation.SendMessages] = false;
            userPermessions[BridgeOperation.ChangeBedStatus] = false;
             userPermessions[BridgeOperation.UserManagment] = false;
+            userPermessions[BridgeOperation.SetRoomAsInfected] = false;
+             userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
       break;
 
 

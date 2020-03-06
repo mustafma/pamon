@@ -15,7 +15,7 @@ class Room {
   bool timeforUpdate2;
   bool docAcceptedTalk2;
   bool nurseAcceptedTalk2;
-
+bool infected;
 
   List<dynamic> beds = new List<Bed>();
   Room({this.roomId, this.roomName, this.beds});
@@ -34,7 +34,7 @@ class Room {
         timeforUpdate2 = snapshot['timeforUpdate2'] ?? false,
         docAcceptedTalk2 = snapshot['docAcceptedTalk2'] ?? false,
         nurseAcceptedTalk2 = snapshot['nurseAcceptedTalk2'] ?? false,
-
+infected = snapshot['infected'] ?? false,
 
         beds = snapshot['beds']
             .map((map) => new Bed.fromMap(map, map['bedId']))

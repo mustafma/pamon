@@ -22,6 +22,11 @@ enum BedAction {
     Clean,
     Release
   }
+  
+enum RoomAction { 
+   Infected,
+   CancelInfection
+  }
 
   enum UserType { /*RoomDoctorSuperviosor  , NurseRoomsupervisor,*/  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
 
@@ -47,6 +52,8 @@ enum FieldType {
       AddInstruction,
       ChangeBedStatus,
       UserManagment,
+      SetRoomAsInfected,
+      CancelRoomInfectectionStatus
       
 
   }

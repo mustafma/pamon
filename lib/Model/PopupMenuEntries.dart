@@ -147,4 +147,52 @@ if (loggedInUser.userPermessions[BridgeOperation.ReleaseBed])
 
     return _listBedActions;
   }
+
+
+
+ static List<PopupMenuEntry<RoomAction>> get Roomctions {
+     User loggedInUser = User.getInstance();
+
+ List<PopupMenuEntry<RoomAction>> _listRoomActions = [];
+    if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected])
+    {
+      var popMenuItem1 = new  PopupMenuItem<RoomAction>(
+      
+      value: RoomAction.Infected,
+      child: ListTile(
+        trailing: Icon(
+          Icons.add,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('חדר עם זהום'),
+      ),
+    );
+
+    _listRoomActions.add(popMenuItem1);
+    }
+
+       if (loggedInUser.userPermessions[BridgeOperation.CancelRoomInfectectionStatus])
+    {
+      var popMenuItem2 = new  PopupMenuItem<RoomAction>(
+      
+      value: RoomAction.CancelInfection,
+      child: ListTile(
+        trailing: Icon(
+          Icons.clear,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('בטל הערת זהום'),
+      ),
+    );
+
+    _listRoomActions.add(popMenuItem2);
+    }
+
+
+    return _listRoomActions;
+  }
+
+
+
+
 }

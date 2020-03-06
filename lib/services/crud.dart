@@ -28,6 +28,26 @@ class CrudMethods {
 
 
 
+
+Future<void> updateRoomField( roomId , field , value ) async
+{
+  try {
+    if (isLoggedIn()) {
+      DocumentReference roomRef =
+      Firestore.instance.collection("rooms").document(roomId);
+      if (field != null && value != null) {
+        roomRef.updateData({field: value});
+        return;
+      }
+      
+    }
+  }
+  catch (e) {
+      print('error caught: $e');
+    }
+}
+
+
 Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
 {
   try {
