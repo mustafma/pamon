@@ -1,3 +1,5 @@
+import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/services/auth.dart';
@@ -10,85 +12,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AuthService _auth = AuthService();
   BaseAppBar({Key key, this.title, this.appBar, this.backButtonVisible})
       : super(key: key);
-
-  final List<PopupMenuEntry<int>> _listOfType = [
-    new PopupMenuItem<int>(
-      value: 1,
-      child: ListTile(
-        trailing: Icon(
-          Icons.person,
-          color: Color.fromRGBO(134, 165, 195, 9),
-          // color: Color.fromRGBO(64, 75, 96, 9),
-        ),
-        title: Text('פרופיל'),
-      ),
-    ),
-    new PopupMenuItem<int>(
-      value: 2,
-      child: ListTile(
-        trailing: Icon(
-          // icon: Icon(
-          Icons.settings,
-          color: Color.fromRGBO(134, 165, 195, 9),
-          //  ),
-          // onPressed: () {},
-        ),
-        title: Text('הגדרות'),
-      ),
-    ),
-
-        new PopupMenuItem<int>(
-      value: 6,
-      child: ListTile(
-        trailing: Icon(
-          Icons.speaker_notes,
-          color: Color.fromRGBO(134, 165, 195, 9),
-          // color: Color.fromRGBO(64, 75, 96, 9),
-        ),
-        title: Text('כריזה'),
-      ),
-    ),
-    new PopupMenuItem<int>(
-      value: 3,
-      child: ListTile(
-        trailing: Icon(
-          Icons.control_point_duplicate,
-          color: Color.fromRGBO(134, 165, 195, 9),
-        ),
-        title: Text('ניהול משתמשים'),
-      ),
-    ),
-    new PopupMenuItem<int>(
-      value: 7,
-      child: ListTile(
-        trailing: Icon(
-          Icons.control_point_duplicate,
-          color: Color.fromRGBO(134, 165, 195, 9),
-        ),
-        title: Text('ניהול משמרת'),
-      ),
-    ),
-    new PopupMenuItem<int>(
-      value: 4,
-      child: ListTile(
-        trailing: Icon(
-          Icons.contact_phone,
-          color: Color.fromRGBO(134, 165, 195, 9),
-        ),
-        title: Text('צור קשר'),
-      ),
-    ),
-    new PopupMenuItem<int>(
-      value: 5,
-      child: ListTile(
-        trailing: Icon(
-          Icons.exit_to_app,
-          color: Color.fromRGBO(134, 165, 195, 9),
-        ),
-        title: Text('יציאה'),
-      ),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +29,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
             elevation: 0.1,
             title: Center(child: title),
             backgroundColor: const Color(0xFF144464), //Color.fromRGBO(
-               // 97, 138, 179, 9), //Color.fromRGBO(58, 66, 86, 1.0),
+            // 97, 138, 179, 9), //Color.fromRGBO(58, 66, 86, 1.0),
 
             leading: new Visibility(
               visible: backButtonVisible,
@@ -126,7 +49,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: Colors.white,
                 ),
                 itemBuilder: (BuildContext context) {
-                  return _listOfType;
+                  return barOprions();
                 },
                 onSelected: (selection) {
                   switch (selection) {
@@ -136,13 +59,13 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     case 2:
                       _handleSettings(context);
                       break;
-                      case 3:
+                    case 3:
                       _handleUserMangments(context);
                       break;
-                      case 6:
+                    case 6:
                       _handleInstanceMessage(context);
                       break;
-                      case 7:
+                    case 7:
                       _handleShiftView(context);
                       break;
                   }
@@ -155,6 +78,101 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
+
+  List<PopupMenuEntry<int>> barOprions() {
+    List<PopupMenuEntry<int>> _listOfType = [];
+    User loggedInUser = User.getInstance();
+
+    _listOfType.add(new PopupMenuItem<int>(
+      value: 1,
+      child: ListTile(
+        trailing: Icon(
+          Icons.person,
+          color: Color.fromRGBO(134, 165, 195, 9),
+          // color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('פרופיל'),
+      ),
+    ));
+
+    _listOfType.add(new PopupMenuItem<int>(
+      value: 2,
+      child: ListTile(
+        trailing: Icon(
+          // icon: Icon(
+          Icons.settings,
+          color: Color.fromRGBO(134, 165, 195, 9),
+          //  ),
+          // onPressed: () {},
+        ),
+        title: Text('הגדרות'),
+      ),
+    ));
+
+    if (loggedInUser.userPermessions[BridgeOperation.SendMessages]) {
+      _listOfType.add(new PopupMenuItem<int>(
+        value: 6,
+        child: ListTile(
+          trailing: Icon(
+            Icons.speaker_notes,
+            color: Color.fromRGBO(134, 165, 195, 9),
+            // color: Color.fromRGBO(64, 75, 96, 9),
+          ),
+          title: Text('כריזה'),
+        ),
+      ));
+    }
+
+    if (loggedInUser.userPermessions[BridgeOperation.UserManagment]) {
+      _listOfType.add(new PopupMenuItem<int>(
+        value: 3,
+        child: ListTile(
+          trailing: Icon(
+            Icons.control_point_duplicate,
+            color: Color.fromRGBO(134, 165, 195, 9),
+          ),
+          title: Text('ניהול משתמשים'),
+        ),
+      ));
+    }
+
+    if (loggedInUser.userPermessions[BridgeOperation.BuildDoctorsShift] ||
+        loggedInUser.userPermessions[BridgeOperation.BuildNursesShift]) {
+      _listOfType.add(new PopupMenuItem<int>(
+        value: 7,
+        child: ListTile(
+          trailing: Icon(
+            Icons.control_point_duplicate,
+            color: Color.fromRGBO(134, 165, 195, 9),
+          ),
+          title: Text('ניהול משמרת'),
+        ),
+      ));
+    }
+
+    _listOfType.add(new PopupMenuItem<int>(
+      value: 4,
+      child: ListTile(
+        trailing: Icon(
+          Icons.contact_phone,
+          color: Color.fromRGBO(134, 165, 195, 9),
+        ),
+        title: Text('צור קשר'),
+      ),
+    ));
+
+    _listOfType.add(new PopupMenuItem<int>(
+      value: 5,
+      child: ListTile(
+        trailing: Icon(
+          Icons.exit_to_app,
+          color: Color.fromRGBO(134, 165, 195, 9),
+        ),
+        title: Text('יציאה'),
+      ),
+    ));
+    return _listOfType;
+  }
 }
 
 Future _handleSignout(BuildContext context) async {
@@ -173,7 +191,6 @@ void _handleInstanceMessage(BuildContext context) {
   //return LoginWidget();
 }
 
-
 void _handleUserMangments(BuildContext context) {
   Navigator.pushNamed(context, '/UserMng');
   //return LoginWidget();
@@ -183,8 +200,3 @@ void _handleShiftView(BuildContext context) {
   Navigator.pushNamed(context, '/ShiftMng');
   //return LoginWidget();
 }
-
-
-
-
-

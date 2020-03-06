@@ -347,7 +347,7 @@ else{
     } else {
       setState(() {
         if (User.getInstance().loggedInUserType ==
-            UserType.NurseRoomsupervisor) {
+            UserType.NurseShiftManager) {
           if (widget.room.docAcceptedTalk1) {
             iconTalkColor = Colors.green;
             // set nurseAcceptedTalk to true
@@ -371,9 +371,7 @@ else{
           }
         }
 
-        if (User.getInstance().loggedInUserType ==
-                UserType.RoomDoctorSuperviosor ||
-            User.getInstance().loggedInUserType == UserType.Doctor) {
+        if ( User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk", true , false);
         }
@@ -423,7 +421,7 @@ else{
     } else {
       setState(() {
         if (User.getInstance().loggedInUserType ==
-            UserType.NurseRoomsupervisor) {
+            UserType.NurseShiftManager) {
           if (widget.room.docAcceptedTalk2) {
             iconTalkColor2 = Colors.green;
             // set nurseAcceptedTalk to true
@@ -447,9 +445,7 @@ else{
           }
         }
 
-        if (User.getInstance().loggedInUserType ==
-                UserType.RoomDoctorSuperviosor ||
-            User.getInstance().loggedInUserType == UserType.Doctor) {
+        if (User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
           // set docAcceptedTalk to true
             widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk2", true ,false);

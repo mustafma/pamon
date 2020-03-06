@@ -15,6 +15,7 @@ class User2 {
   bool isAdmin;
   UserType userole;
 
+
   User2({
     this.email,
     this.hospitalId,

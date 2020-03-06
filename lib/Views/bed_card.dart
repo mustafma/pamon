@@ -37,6 +37,7 @@ class _BedCardState extends State<BedCard> {
   bool allowedaddingInstruction = false;
 
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
+  User loggedInUser = User.getInstance();
 
   //List rooms =  widget.rooms;
   List<PopupMenuEntry<InstructionType>> _listOfType = [
@@ -276,8 +277,7 @@ class _BedCardState extends State<BedCard> {
   }
 
   void _selectBedStatus(BedAction choice, BuildContext context) {
-    if (User.getInstance().loggedInUserType == UserType.Nurse ||
-        User.getInstance().loggedInUserType == UserType.NurseShiftManager)
+  
       switch (choice) {
         case BedAction.Clean:
           showDialog(
@@ -357,19 +357,10 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
-    if (User.getInstance().loggedInUserType == UserType.Doctor ||
-        User.getInstance().loggedInUserType == UserType.DepartmentManager) {
-      allowedaddingInstruction = true;
-      allowedForBedStatus = false;
-    }
+ 
+    allowedaddingInstruction =loggedInUser.userPermessions[BridgeOperation.AddInstruction];
+    allowedForBedStatus  = loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus];
 
-    if (User.getInstance().loggedInUserType == UserType.Nurse ||
-        User.getInstance().loggedInUserType == UserType.NurseShiftManager) {
-      allowedaddingInstruction = false;
-      allowedForBedStatus = true;
-    }
-
-    // _selectedBedNumber = widget.bed;
     super.initState();
   }
 

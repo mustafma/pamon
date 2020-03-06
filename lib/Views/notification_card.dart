@@ -25,6 +25,7 @@ class _NotificationCard extends State<NotificationCard> {
   int diffInMints = 0;
   Timer timer;
   bool allowChangeInstrStatus = false;
+  User loggedInUser= User.getInstance();
 
   List<PopupMenuEntry<int>> _listOfBedStatuses = [
     new PopupMenuItem<int>(
@@ -65,7 +66,7 @@ class _NotificationCard extends State<NotificationCard> {
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20),
+                  fontSize: 16),
             ),
           ),
           subtitle: buildSubTrial(),
@@ -92,7 +93,7 @@ class _NotificationCard extends State<NotificationCard> {
     return new Center(
       child: Text(currentTimer,
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
     );
   }
 
@@ -113,11 +114,9 @@ class _NotificationCard extends State<NotificationCard> {
   void initState() {
     timer = Timer.periodic(
         Duration(seconds: 60), (Timer t) => calculatePassedTime());
-    UserType userType = User.getInstance().loggedInUserType;
-    if (userType == UserType.Nurse || userType == UserType.NurseShiftManager)
-      allowChangeInstrStatus = true;
-    else
-      allowChangeInstrStatus = false;
+
+    allowChangeInstrStatus = loggedInUser.userPermessions[BridgeOperation.RemoveInstruction];
+
     calculatePassedTime();
     super.initState();
   }

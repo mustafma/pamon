@@ -8,11 +8,18 @@ import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/session.dart';
 import 'package:BridgeTeam/services/crud.dart';
 
+
+
+
+
+
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _userCached;
   static Session sessionObj;
   final FirebaseMessaging _fcm = FirebaseMessaging();
+ 
+  
   // sign in anony.
   Future signInAnon() async {
     try {
@@ -67,12 +74,6 @@ class AuthService {
       case UserType.DepartmentManager:
 
       break;
-           case UserType.NurseRoomsupervisor:
-
-      break;
-           case UserType.RoomDoctorSuperviosor:
-
-      break;
       case UserType.Other:
         // TODO: Handle this case.
         break;
@@ -88,6 +89,7 @@ class AuthService {
     user.setUserId(userId);
     user.setUserName(displayName);
     user.setUserType(user.stringToUserTypeConvert(typeAsString));
+     user.populateUserPermessions();
   }
 
   Future<void> regiterTokenOfLoggedInDevise(uid) async {
@@ -120,13 +122,13 @@ class AuthService {
       case UserType.DepartmentManager:
         _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
-      case UserType.RoomDoctorSuperviosor:
+     /* case UserType.RoomDoctorSuperviosor:
         _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
       case UserType.NurseRoomsupervisor:
         _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
 
-        break;
+        break;*/
       case UserType.Other:
         break;
     }
