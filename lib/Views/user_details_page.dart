@@ -2,6 +2,7 @@ import 'package:BridgeTeam/Components/dropdown_form_field_validation.dart';
 import 'package:BridgeTeam/Components/flat_button_custom.dart';
 import 'package:BridgeTeam/Components/page_header.dart';
 import 'package:BridgeTeam/Components/text_form_field_validation.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/User2.dart';
 import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +36,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
   final formKey = GlobalKey<FormState>();
   var crud = new CrudMethods();
-  
+
   @override
   Widget build(BuildContext context) {
     //final themeProvider = Provider.of<ThemeProvider>(context);
@@ -68,11 +69,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
           key: formKey,
           child: ListView(
             children: <Widget>[
-              Center(child: PageHeader(
-                title: widget.user == null ? 'משתמש חדש' : 'עדכון משתמש קיים',
+              Center(
+                child: PageHeader(
+                  title: widget.user == null ? 'משתמש חדש' : 'עדכון משתמש קיים',
+                ),
               ),
-              ),
-              
               TextFormFieldValidation(
                 hint: 'שם',
                 initialValue: user.name,
@@ -95,17 +96,12 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                     user.password = val.trim();
                   },
                 ),
-          DropDownFormFieldValidation(
-                hint: 'סוג משתמש',
-                initialValue: user.role.toString(),
-                onValueChanged: (val) {
-                  user.role  = val.trim();
-                }),
-
-
-
-
-                
+              DropDownFormFieldValidation(
+                  hint: 'סוג משתמש',
+                  initialValue: user.role.toString(),
+                  onValueChanged: (val) {
+                    user.role = val.trim();
+                  }),
               SizedBox(height: 10),
               FlatButtonCustom(
                 title: widget.user == null ? 'חדש' : 'עדכן',
@@ -114,22 +110,25 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                   if (formKey.currentState.validate()) {
                     crud.addUser(user, isNew);
 
-                     showDialog(
-                      context: context,
-                      child: new AlertDialog(
-                        title: Text('ניהול משתמשים'),
-                        content: const Text('רשומה עודכנה בהצלחה'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('סגור'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ));
+                    if (user.uid == User.getInstance().loggedInUserId)
+                      User.getInstance().populateUserPermessions();
+
+                    showDialog(
+                        context: context,
+                        child: new AlertDialog(
+                          title: Text('ניהול משתמשים'),
+                          content: const Text('רשומה עודכנה בהצלחה'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('סגור'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ));
                     // usersProvider.updateUser(user: user, isRegistering: widget.user == null ? true : false);
-                   // Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   }
                 },
               ),
