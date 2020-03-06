@@ -347,7 +347,8 @@ else{
     } else {
       setState(() {
         if (User.getInstance().loggedInUserType ==
-            UserType.NurseShiftManager) {
+            UserType.NurseShiftManager  || User.getInstance().loggedInUserType ==
+            UserType.Nurse) {
           if (widget.room.docAcceptedTalk1) {
             iconTalkColor = Colors.green;
             // set nurseAcceptedTalk to true
