@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:BridgeTeam/Model/bed.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
+import 'auth.dart';
+
 class CrudMethods {
   bool isLoggedIn() {
     if (FirebaseAuth.instance.currentUser != null) {
@@ -245,7 +247,9 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
           }
         }).then((_) {
           print("Success");
-
+          var auth = new AuthService();
+          var displayName = auth.getUser().displayName;
+          var uid = auth.getUser().uid;
           Message message = new Message(
               newInstruction.notificationId,
               bedId,
@@ -254,8 +258,9 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               newInstruction.notificationText,
               roomId,
               roomId,
-              "uid",
-              "departmentId",
+              uid,
+              displayName,
+              "001",
               "ADD_INSTRUCTION",
               new DateTime.now().toString());
           Firestore.instance.collection("messages").add(message.toMap());

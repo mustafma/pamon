@@ -19,7 +19,8 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return LoginWidget();
           }
-          setUser(user.uid,user.displayName);
+          else
+            setUser(user.uid,user.displayName);
           return ListViewRooms();
         } else {
           return Scaffold(

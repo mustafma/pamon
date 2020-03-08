@@ -2,6 +2,7 @@ import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/auth.dart';
 import 'package:BridgeTeam/services/crud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -176,10 +177,15 @@ class _InstanceMessage extends State<InstanceMessage> {
       {
       topic = "messagesFromAdmin_nurse_topic";
     }
+    var auth = new AuthService();
+    var displayName = auth.getUser().displayName;
+
     dynamic resp = await crud.sendMessageFunction.call(<String, String>{
       'content': msgTxt,
+      'userName': displayName,
       'topic':topic
     });
+    var t = 4+5;
  //Call Firebase method   XXXX(msgTxt,sendDoctors,sendNurses,sendAll)
   }
 }
