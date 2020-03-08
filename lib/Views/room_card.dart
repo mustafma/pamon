@@ -167,7 +167,7 @@ class _RoomCardState extends State<RoomCard> {
           // alignment: Alignment(10.0, 10.0),
           icon: Icon(Icons.warning),
           iconSize: 30,
-          color: iconTalkColor,
+          color: Colors.red,
           onPressed: () => {},
         ));
   }
