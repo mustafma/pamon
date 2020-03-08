@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 
+import 'User.dart';
+
 class PamonMenus {
+  
   static List<PopupMenuEntry<BedStatus>> _listBedStatuses = [
     new PopupMenuItem<BedStatus>(
       value: BedStatus.Cateter,
       child: ListTile(
         trailing: Switch(value: true, onChanged: (bool newValue) { }),
-
-        // Icons.filter_1,
-        // color: Color.fromRGBO(64, 75, 96, 9),
-        // ),
         title: Text('קטטר שתן'),
       ),
     ),
@@ -86,8 +85,20 @@ class PamonMenus {
     ),
   ];
 
-  static List<PopupMenuEntry<BedAction>> _listBedActions = [
-    new PopupMenuItem<BedAction>(
+  static List<PopupMenuEntry<BedAction>> _listBedActions = [];
+
+  static List<PopupMenuEntry<BedStatus>> get BedStatuses {
+    return _listBedStatuses;
+  }
+
+  static List<PopupMenuEntry<BedAction>> get BedActions {
+     User loggedInUser = User.getInstance();
+
+_listBedActions = [];
+    if (loggedInUser.userPermessions[BridgeOperation.CleanBed])
+    {
+      var popMenuItem1 = new  PopupMenuItem<BedAction>(
+      
       value: BedAction.Clean,
       child: ListTile(
         trailing: Icon(
@@ -96,8 +107,15 @@ class PamonMenus {
         ),
         title: Text('נקה מיטה'),
       ),
-    ),
-    new PopupMenuItem<BedAction>(
+    );
+
+    _listBedActions.add(popMenuItem1);
+    }
+
+
+if (loggedInUser.userPermessions[BridgeOperation.MoveBed])
+{
+  var popMenuItem2 =  new PopupMenuItem<BedAction>(
       value: BedAction.Move,
       child: ListTile(
         trailing: Icon(
@@ -106,8 +124,14 @@ class PamonMenus {
         ),
         title: Text('החלף מיטות'),
       ),
-    ),
-    new PopupMenuItem<BedAction>(
+    );
+    _listBedActions.add(popMenuItem2);
+
+}
+
+if (loggedInUser.userPermessions[BridgeOperation.ReleaseBed])
+{
+  var popMenuItem3 =   new PopupMenuItem<BedAction>(
       value: BedAction.Release,
       child: ListTile(
         trailing: Icon(
@@ -116,14 +140,59 @@ class PamonMenus {
         ),
         title: Text('מיטה לשחרור'),
       ),
-    ),
-  ];
+    );
+    _listBedActions.add(popMenuItem3);
 
-  static List<PopupMenuEntry<BedStatus>> get BedStatuses {
-    return _listBedStatuses;
-  }
+}
 
-  static List<PopupMenuEntry<BedAction>> get BedActions {
     return _listBedActions;
   }
+
+
+
+ static List<PopupMenuEntry<RoomAction>> get Roomctions {
+     User loggedInUser = User.getInstance();
+
+ List<PopupMenuEntry<RoomAction>> _listRoomActions = [];
+    if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected])
+    {
+      var popMenuItem1 = new  PopupMenuItem<RoomAction>(
+      
+      value: RoomAction.Infected,
+      child: ListTile(
+        trailing: Icon(
+          Icons.add,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('חדר עם זהום'),
+      ),
+    );
+
+    _listRoomActions.add(popMenuItem1);
+    }
+
+       if (loggedInUser.userPermessions[BridgeOperation.CancelRoomInfectectionStatus])
+    {
+      var popMenuItem2 = new  PopupMenuItem<RoomAction>(
+      
+      value: RoomAction.CancelInfection,
+      child: ListTile(
+        trailing: Icon(
+          Icons.clear,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('בטל הערת זהום'),
+      ),
+    );
+
+    _listRoomActions.add(popMenuItem2);
+    }
+
+
+    return _listRoomActions;
+  }
+
+
+
+
 }

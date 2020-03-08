@@ -1,6 +1,7 @@
 import 'dart:async';
 //import 'dart:js';
 
+import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
 import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
@@ -28,6 +29,7 @@ class _RoomCardState extends State<RoomCard> {
   Timer timer;
   bool talk10AMvisible = false;
   bool talk15AMvisible = false;
+User loggedInUser = User.getInstance();
 
   void _updateNotificationcounter() {
     var totalNotifications = widget.room.getTotalNumberOfNotifications();
@@ -64,6 +66,7 @@ class _RoomCardState extends State<RoomCard> {
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 6.0),
+                               leading: buildLeading(),
 
                           title: Align(
                             alignment: Alignment(0, -0.75),
@@ -76,7 +79,7 @@ class _RoomCardState extends State<RoomCard> {
                             ),
                           ),
                           subtitle: buildSubTrial(),
-                          // trailing: buildTrial(),
+                           trailing: buildTrial(),
                           onTap: () => onTapBrowseToBeds(context),
                         )),
                     Container(
@@ -157,28 +160,16 @@ class _RoomCardState extends State<RoomCard> {
   }
 
   Widget buildTrial() {
-    return SingleChildScrollView(
-      //padding: const EdgeInsets.all(8.0),
-      child: Column(children: <Widget>[
-        // Column(
-        // children: <Widget>[
-
-        //  ],
-        //),
-        //Column(
-        //children: <Widget>[
-        IconButton(
+    return Visibility(
+      visible: widget.room.infected,
+      child:  IconButton(
           // alignment: Alignment(10.0, 10.0),
-          icon: Icon(Icons.exit_to_app),
+          icon: Icon(Icons.warning),
           iconSize: 30,
           color: iconTalkColor,
-          onPressed: () => handleTalk1(context),
-        ),
-
-        //],
-        //)
-      ]),
-    );
+          onPressed: () => {},
+    ));
+       
   }
 
   Widget buildSubTrial() {
@@ -231,6 +222,27 @@ class _RoomCardState extends State<RoomCard> {
         ]));
   }
 
+
+
+Widget buildLeading() {
+    if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] || loggedInUser.userPermessions[BridgeOperation.CancelRoomInfectectionStatus] ) {
+      return new PopupMenuButton(
+        color: Theme.of(context).popupMenuTheme.color,
+        icon: Icon(
+          Icons.list,
+          color: Colors.white,
+        ),
+        // enabled: popMenueBtnEnaled1,
+        onSelected: (value) => _selectRoomStatus(value, context),
+        itemBuilder: (BuildContext context) {
+          return PamonMenus.Roomctions;
+        },
+      );
+    }
+    return null;
+  }
+
+
   void onTapBrowseToBeds(BuildContext context) async {
     // navigate to the next screen.
     Navigator.push(
@@ -244,6 +256,20 @@ class _RoomCardState extends State<RoomCard> {
     );
   }
 
+
+  void _selectRoomStatus(RoomAction choice, BuildContext context) {
+  
+      switch (choice) {
+        case RoomAction.Infected:
+            widget.crudObj.updateRoomField(widget.room.roomId,'infected',true);
+
+        break;
+           case RoomAction.CancelInfection:
+            widget.crudObj.updateRoomField(widget.room.roomId,'infected',false);
+
+        break;
+      }
+  }
   @override
   void initState() {
     count = this.widget.room.getTotalNumberOfNotifications();
@@ -347,7 +373,8 @@ else{
     } else {
       setState(() {
         if (User.getInstance().loggedInUserType ==
-            UserType.NurseRoomsupervisor) {
+            UserType.NurseShiftManager  || User.getInstance().loggedInUserType ==
+            UserType.Nurse) {
           if (widget.room.docAcceptedTalk1) {
             iconTalkColor = Colors.green;
             // set nurseAcceptedTalk to true
@@ -371,9 +398,7 @@ else{
           }
         }
 
-        if (User.getInstance().loggedInUserType ==
-                UserType.RoomDoctorSuperviosor ||
-            User.getInstance().loggedInUserType == UserType.Doctor) {
+        if ( User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk", true , false);
         }
@@ -423,7 +448,7 @@ else{
     } else {
       setState(() {
         if (User.getInstance().loggedInUserType ==
-            UserType.NurseRoomsupervisor) {
+            UserType.NurseShiftManager) {
           if (widget.room.docAcceptedTalk2) {
             iconTalkColor2 = Colors.green;
             // set nurseAcceptedTalk to true
@@ -447,9 +472,7 @@ else{
           }
         }
 
-        if (User.getInstance().loggedInUserType ==
-                UserType.RoomDoctorSuperviosor ||
-            User.getInstance().loggedInUserType == UserType.Doctor) {
+        if (User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
           // set docAcceptedTalk to true
             widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk2", true ,false);
