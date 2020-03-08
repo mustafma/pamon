@@ -319,6 +319,9 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               break;
             }
           }
+          var auth = AuthService();
+          var displayName = auth.getUser().displayName;
+          var uid = auth.getUser().uid;
           await tx.update(roomRef, <String, dynamic>{'beds': beds});
           Message message = new Message(
               instructionId,
@@ -328,7 +331,8 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               removedInstruction['notificationText'],
               roomId,
               roomId,
-              "uid",
+              uid,
+              displayName,
               "departmentId",
               "EXECUTED_INSTRUCTION",
               new DateTime.now().toString());
