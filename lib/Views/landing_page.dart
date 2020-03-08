@@ -1,5 +1,7 @@
+
+
 import 'package:BridgeTeam/Model/User.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:BridgeTeam/Model/session.dart';
@@ -22,7 +24,18 @@ class LandingPage extends StatelessWidget {
           }
           else
             setUser(user.uid,user.displayName);
-          return ListViewRooms();
+          return FutureBuilder<bool>(
+            future: setUser(user.uid,user.displayName),
+            builder: (context,AsyncSnapshot<bool> snapshot) {
+              if(snapshot.hasData)
+              return ListViewRooms();
+              else
+              return CircularProgressIndicator();
+
+            }
+
+          
+          );
         } else {
           return Scaffold(
             body: Center(
@@ -34,13 +47,18 @@ class LandingPage extends StatelessWidget {
     );
   }
 
-  void setUser(String userId, String displayName) async{
+  Future<bool> setUser(String userId, String displayName) async{
   
       CrudMethods crudObj = new CrudMethods();
-      AuthService.setUserInfo(userId , displayName, await crudObj.getUserRole(userId));
-           User user = User.getInstance();
-         user.populateUserPermessions();
+      var userType =  await crudObj.getUserRole(userId);
+      AuthService.setUserInfo(userId , displayName, userType);
+        User user = User.getInstance();
+    user.setUserId(userId);
+    user.setUserName(displayName);
+    user.setUserType(user.stringToUserTypeConvert(userType));
+     user.populateUserPermessions();
          
       //AuthService.regiterTokenOfLoggedInDevise(userId);
+      return true;
   }
 }

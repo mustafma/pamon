@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Model/room.dart';
@@ -14,6 +15,8 @@ class ListViewRooms extends StatefulWidget {
 class _ListViewRoomsState extends State<ListViewRooms> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _message = "";
+  User user = User.getInstance();
+
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -30,9 +33,10 @@ class _ListViewRoomsState extends State<ListViewRooms> {
         context: context,
         builder: (context) => AlertDialog(
           content: ListTile(
-            title: Text(message['notification']['title'] + "\n" + message['notification']['subtitle']),
-            subtitle: Text(message['notification']['body'])
-          ),
+              title: Text(message['notification']['title'] +
+                  "\n" +
+                  message['notification']['subtitle']),
+              subtitle: Text(message['notification']['body'])),
           actions: <Widget>[
             FlatButton(
               child: Text('Ok'),

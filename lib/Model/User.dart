@@ -30,6 +30,7 @@ class User {
   static User getInstance() {
     if (_instance == null) {
       _instance = User._internal();
+     
     }
 
     return _instance;
@@ -62,7 +63,7 @@ class User {
 
 
 
-  void populateUserPermessions()
+  void populateUserPermessions() async
   {
     switch(_userType)
     {

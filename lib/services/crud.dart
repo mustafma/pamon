@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/User2.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/Model/message.dart';
@@ -517,6 +518,8 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
       List<DocumentSnapshot> docs =
           (await usersRef.where('uid', isEqualTo: uid).getDocuments())
               .documents;
+
+       //        
       return docs[0].data['role'];
     }
   }
