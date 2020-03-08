@@ -14,7 +14,7 @@ import 'package:BridgeTeam/Views/listview_beds.dart';
 class RoomCard extends StatefulWidget {
   final Room room;
   List rooms = [];
-    CrudMethods crudObj = new CrudMethods();
+  CrudMethods crudObj = new CrudMethods();
   RoomCard({@required this.room, this.rooms});
 
   _RoomCardState createState() => _RoomCardState();
@@ -29,7 +29,7 @@ class _RoomCardState extends State<RoomCard> {
   Timer timer;
   bool talk10AMvisible = false;
   bool talk15AMvisible = false;
-User loggedInUser = User.getInstance();
+  User loggedInUser = User.getInstance();
 
   void _updateNotificationcounter() {
     var totalNotifications = widget.room.getTotalNumberOfNotifications();
@@ -66,8 +66,7 @@ User loggedInUser = User.getInstance();
                         child: ListTile(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.0, vertical: 6.0),
-                               leading: buildLeading(),
-
+                          leading: buildLeading(),
                           title: Align(
                             alignment: Alignment(0, -0.75),
                             child: Text(
@@ -79,7 +78,7 @@ User loggedInUser = User.getInstance();
                             ),
                           ),
                           subtitle: buildSubTrial(),
-                           trailing: buildTrial(),
+                          trailing: buildTrial(),
                           onTap: () => onTapBrowseToBeds(context),
                         )),
                     Container(
@@ -139,7 +138,8 @@ User loggedInUser = User.getInstance();
                                             "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                 (widget.room).roomName,
                                         color: setIconTalkColor(1),
-                                        onPressed: () => handleTalk1(context)))),
+                                        onPressed: () =>
+                                            handleTalk1(context)))),
                             Center(
                                 child: Visibility(
                                     visible: true,
@@ -150,7 +150,8 @@ User loggedInUser = User.getInstance();
                                             "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                 (widget.room).roomName,
                                         color: setIconTalkColor(2),
-                                        onPressed: () => handleTalk2(context)))),
+                                        onPressed: () =>
+                                            handleTalk2(context)))),
                           ],
                         )),
                       ],
@@ -161,15 +162,14 @@ User loggedInUser = User.getInstance();
 
   Widget buildTrial() {
     return Visibility(
-      visible: widget.room.infected,
-      child:  IconButton(
+        visible: widget.room.infected,
+        child: IconButton(
           // alignment: Alignment(10.0, 10.0),
           icon: Icon(Icons.warning),
           iconSize: 30,
           color: iconTalkColor,
           onPressed: () => {},
-    ));
-       
+        ));
   }
 
   Widget buildSubTrial() {
@@ -222,10 +222,10 @@ User loggedInUser = User.getInstance();
         ]));
   }
 
-
-
-Widget buildLeading() {
-    if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] || loggedInUser.userPermessions[BridgeOperation.CancelRoomInfectectionStatus] ) {
+  Widget buildLeading() {
+    if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||
+        loggedInUser
+            .userPermessions[BridgeOperation.CancelRoomInfectectionStatus]) {
       return new PopupMenuButton(
         color: Theme.of(context).popupMenuTheme.color,
         icon: Icon(
@@ -242,7 +242,6 @@ Widget buildLeading() {
     return null;
   }
 
-
   void onTapBrowseToBeds(BuildContext context) async {
     // navigate to the next screen.
     Navigator.push(
@@ -256,20 +255,19 @@ Widget buildLeading() {
     );
   }
 
-
   void _selectRoomStatus(RoomAction choice, BuildContext context) {
-  
-      switch (choice) {
-        case RoomAction.Infected:
-            widget.crudObj.updateRoomField(widget.room.roomId,'infected',true);
+    switch (choice) {
+      case RoomAction.Infected:
+        widget.crudObj.updateRoomField(widget.room.roomId, 'infected', true);
 
         break;
-           case RoomAction.CancelInfection:
-            widget.crudObj.updateRoomField(widget.room.roomId,'infected',false);
+      case RoomAction.CancelInfection:
+        widget.crudObj.updateRoomField(widget.room.roomId, 'infected', false);
 
         break;
-      }
+    }
   }
+
   @override
   void initState() {
     count = this.widget.room.getTotalNumberOfNotifications();
@@ -279,57 +277,44 @@ Widget buildLeading() {
 
     timer = Timer.periodic(Duration(seconds: 60), (Timer t) => onTimeElapsed());
 
+    if (!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1)
+      iconTalkColor = Colors.grey;
+    else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+      iconTalkColor = Colors.yellow;
+    else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+      iconTalkColor = Colors.green;
 
-  if(!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1) 
-    iconTalkColor = Colors.grey;
-  else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
-           iconTalkColor = Colors.yellow;
-  else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
-           iconTalkColor = Colors.green;
-
-
-  if(!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2) 
-    iconTalkColor2 = Colors.grey;
-  else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
-           iconTalkColor2 = Colors.yellow;
-  else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
-           iconTalkColor2 = Colors.green;
-
-     
+    if (!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2)
+      iconTalkColor2 = Colors.grey;
+    else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+      iconTalkColor2 = Colors.yellow;
+    else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+      iconTalkColor2 = Colors.green;
 
     super.initState();
   }
 
+  Color setIconTalkColor(int select) {
+    if (select == 1) {
+      if (!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1)
+        iconTalkColor = Colors.grey;
+      else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+        iconTalkColor = Colors.yellow;
+      else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
+        iconTalkColor = Colors.green;
 
+      return iconTalkColor;
+    } else {
+      if (!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2)
+        iconTalkColor2 = Colors.grey;
+      else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+        iconTalkColor2 = Colors.yellow;
+      else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
+        iconTalkColor2 = Colors.green;
 
-Color setIconTalkColor(int select){
-
-  if(select ==1)
-  {
-      if(!widget.room.nurseAcceptedTalk1 && !widget.room.docAcceptedTalk1) 
-    iconTalkColor = Colors.grey;
-  else if (!widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
-           iconTalkColor = Colors.yellow;
-  else if (widget.room.nurseAcceptedTalk1 && widget.room.docAcceptedTalk1)
-           iconTalkColor = Colors.green;
-
-           return iconTalkColor;
-
+      return iconTalkColor2;
+    }
   }
-
-else{
-
-  if(!widget.room.nurseAcceptedTalk2 && !widget.room.docAcceptedTalk2) 
-    iconTalkColor2 = Colors.grey;
-  else if (!widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
-           iconTalkColor2 = Colors.yellow;
-  else if (widget.room.nurseAcceptedTalk2 && widget.room.docAcceptedTalk2)
-           iconTalkColor2 = Colors.green;
-           
-   return iconTalkColor2;
-}
-
-}
 
   handleTalk1(BuildContext context) {
     var date = DateTime.now();
@@ -352,9 +337,7 @@ else{
               ),
             ],
           ));
-    }
-
-    else if (hour >= 15) {
+    } else if (hour >= 15) {
       // What to do here to show message that this updat eis not relevant anymore
       showDialog(
           context: context,
@@ -372,13 +355,13 @@ else{
           ));
     } else {
       setState(() {
-        if (User.getInstance().loggedInUserType ==
-            UserType.NurseShiftManager  || User.getInstance().loggedInUserType ==
-            UserType.Nurse) {
+        if (User.getInstance().loggedInUserType == UserType.NurseShiftManager ||
+            User.getInstance().loggedInUserType == UserType.Nurse) {
           if (widget.room.docAcceptedTalk1) {
             iconTalkColor = Colors.green;
             // set nurseAcceptedTalk to true
-            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "nurseAcceptedTalk", true,false);
+            widget.crudObj.updateRoomTalkUpdates(
+                widget.room.roomId, "nurseAcceptedTalk", true, false);
           } else {
             showDialog(
                 context: context,
@@ -398,9 +381,10 @@ else{
           }
         }
 
-        if ( User.getInstance().loggedInUserType == UserType.Doctor) {
+        if (User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk1) iconTalkColor = Colors.yellow;
-           widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk", true , false);
+          widget.crudObj.updateRoomTalkUpdates(
+              widget.room.roomId, "docAcceptedTalk", true, false);
         }
       });
     }
@@ -427,9 +411,7 @@ else{
               ),
             ],
           ));
-    }
-
-   else if (hour >= 23) {
+    } else if (hour >= 23) {
       // What to do here to show message that this updat eis not relevant anymore
       showDialog(
           context: context,
@@ -447,12 +429,12 @@ else{
           ));
     } else {
       setState(() {
-        if (User.getInstance().loggedInUserType ==
-            UserType.NurseShiftManager) {
+        if (User.getInstance().loggedInUserType == UserType.NurseShiftManager) {
           if (widget.room.docAcceptedTalk2) {
             iconTalkColor2 = Colors.green;
             // set nurseAcceptedTalk to true
-            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "nurseAcceptedTalk2", true,false);
+            widget.crudObj.updateRoomTalkUpdates(
+                widget.room.roomId, "nurseAcceptedTalk2", true, false);
           } else {
             showDialog(
                 context: context,
@@ -475,7 +457,8 @@ else{
         if (User.getInstance().loggedInUserType == UserType.Doctor) {
           if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
           // set docAcceptedTalk to true
-            widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, "docAcceptedTalk2", true ,false);
+          widget.crudObj.updateRoomTalkUpdates(
+              widget.room.roomId, "docAcceptedTalk2", true, false);
         }
       });
     }
@@ -496,8 +479,8 @@ else{
           widget.room.nurseAcceptedTalk2 ||
           widget.room.docAcceptedTalk2) {
         // update those fields in  Database as false preparing for the coming sheduled updates
-          widget.crudObj.updateRoomTalkUpdates(widget.room.roomId, null, null ,true);
-
+        widget.crudObj
+            .updateRoomTalkUpdates(widget.room.roomId, null, null, true);
       }
     }
 

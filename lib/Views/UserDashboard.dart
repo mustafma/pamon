@@ -91,7 +91,7 @@ class _UsersDashboardPageState extends State<UsersDashboardPage> {
                 icon: Icon(
                   Icons.add,
                 ),
-                label: Text("User")),
+                label: Text("משתמש")),
 
       ),
     );

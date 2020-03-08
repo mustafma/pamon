@@ -457,7 +457,7 @@ class _BedCardState extends State<BedCard> {
         message = "החולה בצום";
         break;
       case BedStatus.Infected:
-        message = "החולה עם זיהום";
+        message = "החולה זקוק לחמצן ביתי";
         break;
       case BedStatus.Invasive:
         message = " החולה מונשם Invasive";

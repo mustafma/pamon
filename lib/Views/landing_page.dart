@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,8 +35,12 @@ class LandingPage extends StatelessWidget {
   }
 
   void setUser(String userId, String displayName) async{
+  
       CrudMethods crudObj = new CrudMethods();
       AuthService.setUserInfo(userId , displayName, await crudObj.getUserRole(userId));
+           User user = User.getInstance();
+         user.populateUserPermessions();
+         
       //AuthService.regiterTokenOfLoggedInDevise(userId);
   }
 }
