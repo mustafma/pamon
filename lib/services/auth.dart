@@ -40,8 +40,9 @@ class AuthService {
 
   // sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
+    AuthResult result;
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+       result = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password.trim());
 
       _userCached = result.user;
@@ -51,7 +52,9 @@ class AuthService {
           regiterTokenOfLoggedInDevise(_userCached.uid);
       return _userCached;
     } catch (e) {
-      throw new AuthException(e.code, e.message);
+      print(e.message);
+    return null;
+      //throw new AuthException(e.code, e.message);
     }
   }
 

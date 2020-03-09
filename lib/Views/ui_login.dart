@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Views/listview_rooms.dart';
 import 'package:BridgeTeam/services/auth.dart';
@@ -131,6 +133,16 @@ class _LoginWidget extends State<LoginWidget> {
       ),
 
       SizedBox(height: 10.0),
+      Text(error ,
+                style: TextStyle(
+                    color: Colors.red,
+                    
+                    fontSize: 12),
+                overflow: TextOverflow.visible,
+                maxLines: 1,
+                softWrap: false,
+              ),
+              SizedBox(height: 10.0),
     ];
   }
 
@@ -151,11 +163,7 @@ class _LoginWidget extends State<LoginWidget> {
                     color: Colors.white, fontWeight: FontWeight.bold)),
           ),
         ),
-        FlatButton(
-          child: Text('חשבון חדש',
-              style: TextStyle(fontSize: 15.0, color: Colors.white)),
-          onPressed: moveToRegister,
-        ),
+        
         SizedBox(
           height: 15.0,
         ),
@@ -199,13 +207,14 @@ class _LoginWidget extends State<LoginWidget> {
   }
 
   Future<void> validateAndSubmit(BuildContext context) async {
+    setState(() => error = '');
     if (validateAndSave()) {
-      print(_email);
-      print(_password);
+     // print(_email);
+     // print(_password);
       dynamic result =
           await _auth.signInWithEmailAndPassword(_email, _password);
       if (result == null) {
-        setState(() => error = 'could not sign in with those credentials.');
+        setState(() => error = 'כניסה למערכת נכשלה שם משתמש או סיסמה אינם נכונים');
       }
       if (result != null) {
         Navigator.push(
