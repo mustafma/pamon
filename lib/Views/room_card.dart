@@ -39,7 +39,12 @@ class _RoomCardState extends State<RoomCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child:Container(
+
+ 
+
         height: 210,
         child: Card(
             elevation: 8.0,
@@ -68,7 +73,7 @@ class _RoomCardState extends State<RoomCard> {
                               horizontal: 10.0, vertical: 6.0),
                           leading: buildLeading(),
                           title: Align(
-                            alignment: Alignment(0, -0.75),
+                            alignment: titleAligmemt(),
                             child: Text(
                               widget.room.roomName,
                               style: TextStyle(
@@ -125,39 +130,42 @@ class _RoomCardState extends State<RoomCard> {
                                   fontWeight: FontWeight.bold)),
                         ),
                         Container(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Center(
-                                child: Visibility(
-                                    visible: true,
-                                    child: IconButton(
-                                        icon: Icon(Icons.people),
-                                        iconSize: 25,
-                                        tooltip:
-                                            "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                (widget.room).roomName,
-                                        color: setIconTalkColor(1),
-                                        onPressed: () =>
-                                            handleTalk1(context)))),
-                            Center(
-                                child: Visibility(
-                                    visible: true,
-                                    child: IconButton(
-                                        icon: Icon(Icons.people),
-                                        iconSize: 25,
-                                        tooltip:
-                                            "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                (widget.room).roomName,
-                                        color: setIconTalkColor(2),
-                                        onPressed: () =>
-                                            handleTalk2(context)))),
-                          ],
+                            child: Align(
+                          alignment: Alignment(0.4, -2.8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Center(
+                                  child: Visibility(
+                                      visible: true,
+                                      child: IconButton(
+                                          icon: Icon(Icons.people),
+                                          iconSize: 25,
+                                          tooltip:
+                                              "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                  (widget.room).roomName,
+                                          color: setIconTalkColor(1),
+                                          onPressed: () =>
+                                              handleTalk1(context)))),
+                              Center(
+                                  child: Visibility(
+                                      visible: true,
+                                      child: IconButton(
+                                          icon: Icon(Icons.people),
+                                          iconSize: 25,
+                                          tooltip:
+                                              "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                  (widget.room).roomName,
+                                          color: setIconTalkColor(2),
+                                          onPressed: () =>
+                                              handleTalk2(context)))),
+                            ],
+                          ),
                         )),
                       ],
                     ))
                   ],
-                ))));
+                )))));
   }
 
   Widget buildTrial() {
@@ -192,7 +200,7 @@ class _RoomCardState extends State<RoomCard> {
     }
 
     return new Align(
-        alignment: Alignment(0, -2.8),
+        alignment: widget.room.infected?Alignment(-0.3, -2.8):Alignment(0.1, -2.8),
         child: new Stack(children: <Widget>[
           Container(
             height: 40,
@@ -221,6 +229,27 @@ class _RoomCardState extends State<RoomCard> {
           )
         ]));
   }
+
+
+Alignment titleAligmemt()
+{
+
+var showListIcon = (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||
+        loggedInUser
+            .userPermessions[BridgeOperation.CancelRoomInfectectionStatus]);
+
+  if(widget.room.infected  && showListIcon)
+
+            return Alignment(0.05, -0.75);
+            else if(!widget.room.infected  && showListIcon)
+            return Alignment(0.2, -0.75);
+
+            else if(widget.room.infected && !showListIcon)return Alignment(-0.2, -0.75);
+            else return Alignment(0.0, -0.75);
+
+
+}
+
 
   Widget buildLeading() {
     if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||
