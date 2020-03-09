@@ -53,7 +53,7 @@ class LandingPage extends StatelessWidget {
       var userType =  await crudObj.getUserRole(userId);
       AuthService.setUserInfo(userId , displayName, userType);
         User user = User.getInstance();
-    user.setUserId(userId);
+    user.setUID(userId);
     user.setUserName(displayName);
     user.setUserType(user.stringToUserTypeConvert(userType));
      user.populateUserPermessions();

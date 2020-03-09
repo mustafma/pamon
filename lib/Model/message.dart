@@ -5,7 +5,6 @@ class Message {
   String notificationId;
   String bedId;
   String bedName;
-  int notificationType;
   String notificationText;
   String roomId;
   String roomName;
@@ -15,11 +14,10 @@ class Message {
   String operation;
   String createdAt;
 
-  Message(notificationId, bedId, bedName, notificationType,notificationText,roomId,roomName, uid, displayName, departmentId, operation, createdAt) {
+  Message(notificationId, bedId, bedName,notificationText,roomId,roomName, uid, displayName, departmentId, operation, createdAt) {
     this.notificationId = notificationId;
     this.bedId = bedId;
     this.bedName = bedName;
-    this.notificationType = (notificationType as InstructionType).index;
     this.notificationText = notificationText;
     this.roomId = roomId;
     this.roomName = roomName;
@@ -35,7 +33,6 @@ class Message {
     'notificationId' : this.notificationId,
     'bedId' : this.bedId,
     'bedName' : this.bedName,
-    'notificationType' : this.notificationType,
     'notificationText' : this.notificationText,
     'roomId' : this.roomId,
     'roomName' : this.roomName,

@@ -62,7 +62,6 @@ class AuthService {
 
       case UserType.Doctor:
         _fcm.unsubscribeFromTopic('removeInstruction_topic');
-        _fcm.unsubscribeFromTopic('addInstruction_topic');
         _fcm.unsubscribeFromTopic("messagesFromAdmin_doc_topic");
 
         break;
@@ -86,7 +85,7 @@ class AuthService {
   static void setUserInfo(
       String userId, String displayName, String typeAsString) {
     User user = User.getInstance();
-    user.setUserId(userId);
+    user.setUID(userId);
     user.setUserName(displayName);
     user.setUserType(user.stringToUserTypeConvert(typeAsString));
      user.populateUserPermessions();

@@ -18,12 +18,19 @@ class User {
   void setUserType(UserType type) {
     _userType = type;
   }
+  String getUID()
+  {
+    return _userId;
+  }
 
-  void setUserId(String id) {
+  void setUID(String id) {
     _userId = id;
   }
   void setUserName(String displayName){
     _displayName = displayName;
+  }
+  String getUserName(){
+    return _displayName;
   }
   User._internal();
 

@@ -268,14 +268,14 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
           }
         }).then((_) {
           print("Success");
-          var auth = new AuthService();
-          var displayName = auth.getUser().displayName;
-          var uid = auth.getUser().uid;
+          var displayName = User.getInstance().getUserName();
+          if(displayName ==  null || displayName == "")
+            displayName = "admin";
+          var uid = User.getInstance().getUID();
           Message message = new Message(
               newInstruction.notificationId,
               bedId,
               bedId,
-              newInstruction.notificationType,
               newInstruction.notificationText,
               roomId,
               roomId,
@@ -296,7 +296,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     }
   }
 
-  Future<void> removeInstruction(roomId, bedId, instructionId) {
+  Future<void> removeInstruction(roomId, bedId, instructionId) async{
     if (isLoggedIn()) {
       dynamic removedInstruction;
       DocumentReference roomRef =
@@ -320,15 +320,15 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               break;
             }
           }
-          var auth = AuthService();
-          var displayName = auth.getUser().displayName;
-          var uid = auth.getUser().uid;
+          await tx.update(roomRef, <String, dynamic>{'beds': beds});
+
+          var displayName = User.getInstance().getUserName();
+          var uid = User.getInstance().getUID();
           await tx.update(roomRef, <String, dynamic>{'beds': beds});
           Message message = new Message(
               instructionId,
               bedId,
               bedId,
-              removedInstruction['notificationType'],
               removedInstruction['notificationText'],
               roomId,
               roomId,

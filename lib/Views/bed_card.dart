@@ -328,16 +328,16 @@ class _BedCardState extends State<BedCard> {
     switch(choice)
     {
       case InstructionType.IV : 
-      choiceText = "חדשה I.V נרשמה הוראת";
+      choiceText = "מתן עירוי תרופה" + " I.V";
       break;
       case InstructionType.PO : 
-      choiceText = "חדשה P.O נרשמה הוראת";
+      choiceText = "מתן תרופה מיוחדת" + " P.O" ;
       break;
       case InstructionType.SIV:
-        choiceText = "קיימת I.V הופסקה הוראת";
+        choiceText = "הפסקת עירוי" + " I.V";
       break;
       case InstructionType.SPO:
-      choiceText = "קיימת P.O הופסקה הוראת";
+      choiceText = "הפסקת תרופה" + " P.O";
       break;
     }
 

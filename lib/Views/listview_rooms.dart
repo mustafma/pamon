@@ -33,10 +33,8 @@ class _ListViewRoomsState extends State<ListViewRooms> {
         context: context,
         builder: (context) => AlertDialog(
           content: ListTile(
-              title: Text(message['notification']['title'] +
-                  "\n" +
-                  message['notification']['subtitle']),
-              subtitle: Text(message['notification']['body'])),
+              title: Text(message['notification']['title']),
+              subtitle: Text( message['notification']['body'])),
           actions: <Widget>[
             FlatButton(
               child: Text('Ok'),

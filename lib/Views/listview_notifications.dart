@@ -45,7 +45,8 @@ class _ListViewInstructionsState extends State<ListViewInstructions> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return LinearProgressIndicator();
-                  } else {
+                  }
+                  else {
                     List item = [];
 
                     snapshot.data.data['beds'].forEach((bed) => {
