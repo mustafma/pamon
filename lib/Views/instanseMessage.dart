@@ -1,9 +1,6 @@
-import 'package:BridgeTeam/Model/User.dart';
-import 'package:BridgeTeam/Model/enumTypes.dart';
+
 import 'package:BridgeTeam/services/auth.dart';
 import 'package:BridgeTeam/services/crud.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'appBar.dart';
@@ -69,8 +66,7 @@ class _InstanceMessage extends State<InstanceMessage> {
                               decoration: const InputDecoration(
                                 fillColor: Colors.white,
                                 // icon: const Icon(Icons.calendar_today),
-                                hintText:
-                                    'תוכן ההודעה',
+                                hintText: 'תוכן ההודעה',
                                 //labelText: "הודעה",
                               )),
                         )),
@@ -129,7 +125,7 @@ class _InstanceMessage extends State<InstanceMessage> {
                       height: 15.0,
                     ),
                     RaisedButton(
-                      onPressed: () => sendTextAsNotofocation(),
+                      onPressed: () => sendTextAsNotofocation(context),
                       child: Padding(
                           padding: EdgeInsets.all(15.0),
                           child: Text('שלח הודעה')),
@@ -161,20 +157,15 @@ class _InstanceMessage extends State<InstanceMessage> {
         bottomNavigationBar: BaseBottomBar());
   }
 
-  Future<void> sendTextAsNotofocation() async {
+  Future<void> sendTextAsNotofocation(context) async {
     String msgTxt = textController.text;
     CrudMethods crud = new CrudMethods();
     var topic = "";
-    if((sendDoctors && sendNurses) || sendAll)
-      {
-        topic = "messagesFromAdmin_all_topic";
-      }
-    else if(sendDoctors)
-      {
-        topic = "messagesFromAdmin_doc_topic";
-      }
-    else
-      {
+    if ((sendDoctors && sendNurses) || sendAll) {
+      topic = "messagesFromAdmin_all_topic";
+    } else if (sendDoctors) {
+      topic = "messagesFromAdmin_doc_topic";
+    } else {
       topic = "messagesFromAdmin_nurse_topic";
     }
     var auth = new AuthService();
@@ -183,9 +174,25 @@ class _InstanceMessage extends State<InstanceMessage> {
     dynamic resp = await crud.sendMessageFunction.call(<String, String>{
       'content': msgTxt,
       'userName': displayName,
-      'topic':topic
+      'topic': topic
     });
-    var t = 4+5;
- //Call Firebase method   XXXX(msgTxt,sendDoctors,sendNurses,sendAll)
+    var t = 4 + 5;
+
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: Text('שליחת הודעה'),
+          content: const Text('הודעה נשלחה בהצלחה'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('סגור'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ));
+
+    //Call Firebase method   XXXX(msgTxt,sendDoctors,sendNurses,sendAll)
   }
 }
