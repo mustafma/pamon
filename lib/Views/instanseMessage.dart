@@ -1,6 +1,5 @@
 
 import 'package:BridgeTeam/Model/User.dart';
-import 'package:BridgeTeam/services/auth.dart';
 import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 
