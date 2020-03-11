@@ -1,4 +1,5 @@
 
+import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
@@ -124,7 +125,7 @@ class _BedCardState extends State<BedCard> {
                       children: <Widget>[
                         if (widget.bed.dismissed)
                           new Icon(
-                            Icons.exit_to_app,
+                            PamonIcons.exit,
                             color: Colors.green,
                           ),
                         new Padding(padding: EdgeInsets.all(10.0)),
@@ -536,6 +537,7 @@ class _BedCardState extends State<BedCard> {
 
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
     IconData calcIcon;
+    String url;
     for (var stat in bedStatuses) {
       switch (stat) {
         case BedStatus.Cateter:
@@ -545,60 +547,71 @@ class _BedCardState extends State<BedCard> {
               "/" +
               (widget.bed.CatDate).year.toString();
           message = "החולה עם קטטר מתאריך " + cuttDate;
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-cateter.png';
           break;
         case BedStatus.CT:
           message = "CT החולה מתוכנן לו";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-yeredacog.png';
           break;
         case BedStatus.DiatentAid:
           message = "החולה זקוק להתערבות דיאטנית";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-ditanet.png';
           break;
         case BedStatus.Fasting:
           message = "החולה בצום";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-fasting.png';
           break;
         case BedStatus.Infected:
           message = "החולה עם זיהום";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-o2.png';
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-invasive.png';
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-o2.png';
           break;
         case BedStatus.Petsa:
           message = "החולה עם פצע לחץ";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-petsa.png';
           break;
         case BedStatus.PhysoAid:
           message = "החולה זקוק לפיזוטרפיה";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-phesotraphy.png';
           break;
         case BedStatus.SocialAid:
           message = "החולה זקוק לעזרה סוציאלית";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-social.png';
           break;
         case BedStatus.Pranola:
           message = "החולה זקוק לברנולה";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-pranola.png';
           break;
         case BedStatus.Seodi:
           message = "חולה סיעודי";
-          calcIcon = Icons.explore;
+          url = 'assets/pamon-seodi.png';
           break;
         case BedStatus.Cognitive:
           message = "חולה עם ירידה קוגניטיבית";
-          calcIcon = Icons.explore;
+           url = 'assets/pamon-yeredacog.png';
       }
       genList.add(new IconButton(
-        icon: Icon(calcIcon),
-        iconSize: 30,
-        color: Colors.yellow,
+        icon:  Container(
+          child: Image(
+            image: AssetImage(
+              url,
+            ),
+            fit: BoxFit.cover,
+            
+          ),
+          height: 32,
+          width: 32,
+         
+        ),
+        iconSize: 32,
+        //color: Colors.yellow,
         onPressed: () => alertDialog(context, getMessageToShow(stat), stat),
       ));
     }

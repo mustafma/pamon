@@ -52,8 +52,29 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
+  fonts:
+    - family: PamonIcons
+      fonts: 
+        - asset: assets/fonts/PamonIcons.ttf
   assets:
     - assets/images/loginlogo.png
+    - assets/pamon-cateter.png
+    - assets/pamon-yeredacog.png
+    - assets/pamon-bipap.png
+    - assets/pamon-ditanet.png
+    - assets/pamon-fasting.png
+    - assets/pamon-invasive.png
+    - assets/pamon-o2.png
+    - assets/pamon-petsa.png
+    - assets/pamon-phesotraphy.png
+    - assets/pamon-pranola.png
+    - assets/pamon-seodi.png
+    - assets/pamon-social.png
+    - assets/pamon-release.png
+
+
+
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

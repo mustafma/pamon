@@ -1,6 +1,7 @@
 import 'dart:async';
 //import 'dart:js';
 
+import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
 import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
@@ -139,8 +140,8 @@ class _RoomCardState extends State<RoomCard> {
                                   child: Visibility(
                                       visible: true,
                                       child: IconButton(
-                                          icon: Icon(Icons.people),
-                                          iconSize: 25,
+                                          icon: Icon(PamonIcons.pamon_teamtalk),
+                                          iconSize: 35,
                                           tooltip:
                                               "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                   (widget.room).roomName,
@@ -151,8 +152,8 @@ class _RoomCardState extends State<RoomCard> {
                                   child: Visibility(
                                       visible: true,
                                       child: IconButton(
-                                          icon: Icon(Icons.people),
-                                          iconSize: 25,
+                                          icon: Icon(PamonIcons.pamon_teamtalk),
+                                          iconSize: 35,
                                           tooltip:
                                               "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
                                                   (widget.room).roomName,
@@ -171,11 +172,12 @@ class _RoomCardState extends State<RoomCard> {
   Widget buildTrial() {
     return Visibility(
         visible: widget.room.infected,
-        child: IconButton(
+        child:  IconButton(
           // alignment: Alignment(10.0, 10.0),
-          icon: Icon(Icons.warning),
-          iconSize: 30,
+          icon: Icon(PamonIcons.pamon_infection), //Icons.warning),
+          iconSize: 40,
           color: Colors.red,
+          
           onPressed: () => {},
         ));
   }
