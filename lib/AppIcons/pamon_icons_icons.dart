@@ -20,7 +20,16 @@ class PamonIcons {
 
   static const _kFontFam = 'PamonIcons';
 
- static const IconData pamon_phsotraphy = IconData(0xe800, fontFamily: _kFontFam);
+  static const IconData pamon_phsotraphy = IconData(0xe800, fontFamily: _kFontFam);
   static const IconData pamon_infection = IconData(0xe801, fontFamily: _kFontFam);
   static const IconData pamon_teamtalk = IconData(0xe802, fontFamily: _kFontFam);
+  static const IconData pamon_smilyface = IconData(0xe803, fontFamily: _kFontFam);
+  static const IconData pamon_sadface = IconData(0xe804, fontFamily: _kFontFam);
+  static const IconData pamon_angryface = IconData(0xe805, fontFamily: _kFontFam);
+  static const IconData pamon_doctor = IconData(0xe806, fontFamily: _kFontFam);
+  static const IconData pamon_nurse = IconData(0xe807, fontFamily: _kFontFam);
+  static const IconData pamon_service = IconData(0xe808, fontFamily: _kFontFam);
+  static const IconData pamon_release = IconData(0xe809, fontFamily: _kFontFam);
+  static const IconData logout = IconData(0xe80a, fontFamily: _kFontFam);
+  static const IconData exit = IconData(0xe820, fontFamily: _kFontFam);
 }

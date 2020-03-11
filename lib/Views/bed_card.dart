@@ -1,4 +1,5 @@
 
+import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
@@ -124,7 +125,7 @@ class _BedCardState extends State<BedCard> {
                       children: <Widget>[
                         if (widget.bed.dismissed)
                           new Icon(
-                            Icons.exit_to_app,
+                            PamonIcons.exit,
                             color: Colors.green,
                           ),
                         new Padding(padding: EdgeInsets.all(10.0)),
