@@ -122,7 +122,7 @@ class BedInstruction {
   Map<String, dynamic> toMap() {
     return {
       'notificationId': this.notificationId,
-      'notificationText': StreamBuilder(initialData: this.notificationText),
+      'notificationText': this.notificationText,
       'notificationType': this.notificationType.index,
       'notificationStatus': this.notificationStatus,
       'createdAt': this.createdAt,
