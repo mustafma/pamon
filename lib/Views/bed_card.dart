@@ -48,7 +48,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל')),
+        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -58,7 +58,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child: Text('P.O מתן תרופה מיוחדת')),
+        title: Center(child: Text('P.O מתן תרופה מיוחדת',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
       ), 
     ),
     new PopupMenuItem<InstructionType>(
@@ -68,7 +68,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_3,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('P.O הפסקת תרופה ')),
+        title: Center(child:Text('P.O הפסקת תרופה ',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
       ),  
     ),
      new PopupMenuItem<InstructionType>(
@@ -78,7 +78,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_4,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-         title: Center(child:Text('I.V הפסקת עירוי')),
+         title: Center(child:Text('I.V הפסקת עירוי',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
       ),
 
       
@@ -328,7 +328,7 @@ class _BedCardState extends State<BedCard> {
     switch(choice)
     {
       case InstructionType.IV : 
-      choiceText = "מתן עירוי תרופה" + " I.V";
+      choiceText = new Text("  I.Vמתן עירוי תרופה",textAlign: TextAlign.justify,textDirection: TextDirection.rtl,).data;
       break;
       case InstructionType.PO : 
       choiceText = "מתן תרופה מיוחדת" + " P.O" ;

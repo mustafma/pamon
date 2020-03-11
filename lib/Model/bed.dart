@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -121,7 +122,7 @@ class BedInstruction {
   Map<String, dynamic> toMap() {
     return {
       'notificationId': this.notificationId,
-      'notificationText': this.notificationText,
+      'notificationText': StreamBuilder(initialData: this.notificationText),
       'notificationType': this.notificationType.index,
       'notificationStatus': this.notificationStatus,
       'createdAt': this.createdAt,

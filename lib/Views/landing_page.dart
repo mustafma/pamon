@@ -30,7 +30,7 @@ class LandingPage extends StatelessWidget {
               if(snapshot.hasData)
               return ListViewRooms();
               else
-              return CircularProgressIndicator();
+              return LinearProgressIndicator();
 
             }
 
@@ -39,7 +39,7 @@ class LandingPage extends StatelessWidget {
         } else {
           return Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              child: LinearProgressIndicator(),
             ),
           );
         }
