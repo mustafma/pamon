@@ -538,6 +538,7 @@ class _BedCardState extends State<BedCard> {
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
     IconData calcIcon;
     String url;
+    int  order;
     for (var stat in bedStatuses) {
       switch (stat) {
         case BedStatus.Cateter:
@@ -548,6 +549,7 @@ class _BedCardState extends State<BedCard> {
               (widget.bed.CatDate).year.toString();
           message = "החולה עם קטטר מתאריך " + cuttDate;
           url = 'assets/pamon-cateter.png';
+          order =3;
           break;
         case BedStatus.CT:
           message = "CT החולה מתוכנן לו";
@@ -556,6 +558,7 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.DiatentAid:
           message = "החולה זקוק להתערבות דיאטנית";
           url = 'assets/pamon-ditanet.png';
+          order =7;
           break;
         case BedStatus.Fasting:
           message = "החולה בצום";
@@ -564,10 +567,12 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Infected:
           message = "החולה עם זיהום";
           url = 'assets/pamon-o2.png';
+          order =9;
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
           url = 'assets/pamon-invasive.png';
+          order =8;
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
@@ -576,14 +581,17 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Petsa:
           message = "החולה עם פצע לחץ";
           url = 'assets/pamon-petsa.png';
+          order =4;
           break;
         case BedStatus.PhysoAid:
           message = "החולה זקוק לפיזוטרפיה";
           url = 'assets/pamon-phesotraphy.png';
+          order =5;
           break;
         case BedStatus.SocialAid:
           message = "החולה זקוק לעזרה סוציאלית";
           url = 'assets/pamon-social.png';
+          order =6;
           break;
         case BedStatus.Pranola:
           message = "החולה זקוק לברנולה";
@@ -592,10 +600,12 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Seodi:
           message = "חולה סיעודי";
           url = 'assets/pamon-seodi.png';
+          order =1;
           break;
         case BedStatus.Cognitive:
           message = "חולה עם ירידה קוגניטיבית";
            url = 'assets/pamon-yeredacog.png';
+           order =2;
       }
       genList.add(new IconButton(
         icon:  Container(
