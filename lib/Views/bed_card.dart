@@ -576,7 +576,7 @@ class _BedCardState extends State<BedCard> {
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
-          url = 'assets/pamon-o2.png';
+          url = 'assets/pamon-bipap.png';
           break;
         case BedStatus.Petsa:
           message = "החולה עם פצע לחץ";
