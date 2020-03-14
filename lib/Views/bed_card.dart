@@ -95,9 +95,13 @@ class _BedCardState extends State<BedCard> {
     else
       cardColor = Theme.of(context).cardColor;
 
+var listOfChosenIcons  = generateListOfIcons();
+bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
+
+
     // initState();
     return Container(
-        height: 135,
+        height: isExceed7Icons?190: 135,
         child: Card(
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -153,7 +157,7 @@ class _BedCardState extends State<BedCard> {
                     children: <Widget>[
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: generateListOfIcons()),
+                          children:isExceed7Icons?listOfChosenIcons.getRange(0,7).toList():listOfChosenIcons),
                       new Spacer(),
                       Container(
                           // margin: EdgeInsets.only(left: 310),
@@ -173,7 +177,29 @@ class _BedCardState extends State<BedCard> {
                                   })),
                     ],
                   ),
+                ),
+
+                 Container(
+                  decoration: BoxDecoration(
+                      // color: cardColor,
+                      border: new Border(
+                          top: new BorderSide(
+                              width: 1.5, color: const Color(0xFF428879)))),
+                  child: Visibility(
+                    visible: isExceed7Icons,
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:isExceed7Icons? listOfChosenIcons.getRange(7, listOfChosenIcons.length).toList():listOfChosenIcons),
+                      
+                    ],
+                  ),
+                  
+                  ) 
                 )
+
               ])),
         ));
   }
@@ -547,10 +573,12 @@ class _BedCardState extends State<BedCard> {
               "/" +
               (widget.bed.CatDate).year.toString();
           message = "החולה עם קטטר מתאריך " + cuttDate;
+          calcIcon = Icons.explore;
           url = 'assets/pamon-cateter.png';
           break;
         case BedStatus.CT:
           message = "CT החולה מתוכנן לו";
+          calcIcon = Icons.explore;
           url = 'assets/pamon-yeredacog.png';
           break;
         case BedStatus.DiatentAid:
@@ -559,11 +587,12 @@ class _BedCardState extends State<BedCard> {
           break;
         case BedStatus.Fasting:
           message = "החולה בצום";
+          calcIcon = Icons.explore;
           url = 'assets/pamon-fasting.png';
           break;
         case BedStatus.Infected:
           message = "החולה עם זיהום";
-          url = 'assets/pamon-o2.png';
+          url = 'assets/pamon-yeredacog.png';
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
