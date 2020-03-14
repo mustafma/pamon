@@ -95,9 +95,13 @@ class _BedCardState extends State<BedCard> {
     else
       cardColor = Theme.of(context).cardColor;
 
+var listOfChosenIcons  = generateListOfIcons();
+bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
+
+
     // initState();
     return Container(
-        height: 135,
+        height: isExceed7Icons?190: 135,
         child: Card(
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -153,7 +157,7 @@ class _BedCardState extends State<BedCard> {
                     children: <Widget>[
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: generateListOfIcons()),
+                          children:isExceed7Icons?listOfChosenIcons.getRange(0,7).toList():listOfChosenIcons),
                       new Spacer(),
                       Container(
                           // margin: EdgeInsets.only(left: 310),
@@ -173,7 +177,29 @@ class _BedCardState extends State<BedCard> {
                                   })),
                     ],
                   ),
+                ),
+
+                 Container(
+                  decoration: BoxDecoration(
+                      // color: cardColor,
+                      border: new Border(
+                          top: new BorderSide(
+                              width: 1.5, color: const Color(0xFF428879)))),
+                  child: Visibility(
+                    visible: isExceed7Icons,
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:isExceed7Icons? listOfChosenIcons.getRange(7, listOfChosenIcons.length).toList():listOfChosenIcons),
+                      
+                    ],
+                  ),
+                  
+                  ) 
                 )
+
               ])),
         ));
   }
@@ -536,9 +562,7 @@ class _BedCardState extends State<BedCard> {
     String message;
 
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
-    IconData calcIcon;
     String url;
-    int  order;
     for (var stat in bedStatuses) {
       switch (stat) {
         case BedStatus.Cateter:
@@ -549,7 +573,6 @@ class _BedCardState extends State<BedCard> {
               (widget.bed.CatDate).year.toString();
           message = "החולה עם קטטר מתאריך " + cuttDate;
           url = 'assets/pamon-cateter.png';
-          order =3;
           break;
         case BedStatus.CT:
           message = "CT החולה מתוכנן לו";
@@ -558,7 +581,6 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.DiatentAid:
           message = "החולה זקוק להתערבות דיאטנית";
           url = 'assets/pamon-ditanet.png';
-          order =7;
           break;
         case BedStatus.Fasting:
           message = "החולה בצום";
@@ -566,13 +588,11 @@ class _BedCardState extends State<BedCard> {
           break;
         case BedStatus.Infected:
           message = "החולה עם זיהום";
-          url = 'assets/pamon-o2.png';
-          order =9;
+          url="assets/pamon-o2.png";
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
-          url = 'assets/pamon-invasive.png';
-          order =8;
+          url="assets/pamon-invasive.png";
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
@@ -581,17 +601,14 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Petsa:
           message = "החולה עם פצע לחץ";
           url = 'assets/pamon-petsa.png';
-          order =4;
           break;
         case BedStatus.PhysoAid:
           message = "החולה זקוק לפיזוטרפיה";
           url = 'assets/pamon-phesotraphy.png';
-          order =5;
           break;
         case BedStatus.SocialAid:
           message = "החולה זקוק לעזרה סוציאלית";
           url = 'assets/pamon-social.png';
-          order =6;
           break;
         case BedStatus.Pranola:
           message = "החולה זקוק לברנולה";
@@ -600,12 +617,10 @@ class _BedCardState extends State<BedCard> {
         case BedStatus.Seodi:
           message = "חולה סיעודי";
           url = 'assets/pamon-seodi.png';
-          order =1;
           break;
         case BedStatus.Cognitive:
           message = "חולה עם ירידה קוגניטיבית";
            url = 'assets/pamon-yeredacog.png';
-           order =2;
       }
       genList.add(new IconButton(
         icon:  Container(
