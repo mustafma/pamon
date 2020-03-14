@@ -49,7 +49,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
+        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -59,7 +59,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child: Text('P.O מתן תרופה מיוחדת',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
+        title: Center(child: Text('P.O מתן תרופה מיוחדת')),
       ), 
     ),
     new PopupMenuItem<InstructionType>(
@@ -69,7 +69,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_3,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('P.O הפסקת תרופה ',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
+        title: Center(child:Text('P.O הפסקת תרופה ')),
       ),  
     ),
      new PopupMenuItem<InstructionType>(
@@ -79,7 +79,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_4,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-         title: Center(child:Text('I.V הפסקת עירוי',textAlign: TextAlign.justify,textDirection: TextDirection.rtl)),
+         title: Center(child:Text('I.V הפסקת עירוי')),
       ),
 
       
@@ -355,7 +355,7 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
     switch(choice)
     {
       case InstructionType.IV : 
-      choiceText = new Text("  I.Vמתן עירוי תרופה",textAlign: TextAlign.justify,textDirection: TextDirection.rtl,).data;
+      choiceText = new Text("  I.V מתן עירוי תרופה").data;
       break;
       case InstructionType.PO : 
       choiceText = "מתן תרופה מיוחדת" + " P.O" ;
@@ -562,7 +562,6 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
     String message;
 
     List<BedStatus> bedStatuses = widget.bed.listOfIcons();
-    IconData calcIcon;
     String url;
     for (var stat in bedStatuses) {
       switch (stat) {
@@ -573,12 +572,10 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
               "/" +
               (widget.bed.CatDate).year.toString();
           message = "החולה עם קטטר מתאריך " + cuttDate;
-          calcIcon = Icons.explore;
           url = 'assets/pamon-cateter.png';
           break;
         case BedStatus.CT:
           message = "CT החולה מתוכנן לו";
-          calcIcon = Icons.explore;
           url = 'assets/pamon-yeredacog.png';
           break;
         case BedStatus.DiatentAid:
@@ -587,20 +584,19 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
           break;
         case BedStatus.Fasting:
           message = "החולה בצום";
-          calcIcon = Icons.explore;
           url = 'assets/pamon-fasting.png';
           break;
         case BedStatus.Infected:
           message = "החולה עם זיהום";
-          url = 'assets/pamon-yeredacog.png';
+          url="assets/pamon-o2.png";
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
-          url = 'assets/pamon-invasive.png';
+          url="assets/pamon-invasive.png";
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
-          url = 'assets/pamon-o2.png';
+          url = 'assets/pamon-bipap.png';
           break;
         case BedStatus.Petsa:
           message = "החולה עם פצע לחץ";

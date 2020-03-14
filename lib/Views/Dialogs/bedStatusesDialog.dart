@@ -264,7 +264,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 var obj = new StatusTypeValue();
                                 obj.bedStatus = BedStatus.Fasting;
                                 obj.value = newValue;
-                                obj.dbFieldName = "fasting";
+                                obj.dbFieldName = "Fasting";
                                 obj.fieldType = FieldType.bool;
                                 statusTypesValues.add(obj);
                               }),

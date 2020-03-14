@@ -89,7 +89,7 @@ class _ListViewRoomsState extends State<ListViewRooms> {
                 stream: _firestoreRef.snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
-                    return LinearProgressIndicator();
+                    return CircularProgressIndicator();
                   } else {
                     List item = [];
 

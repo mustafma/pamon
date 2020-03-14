@@ -56,20 +56,39 @@ class Bed {
   List<BedStatus> listOfIcons() {
     List<BedStatus> bedStatuses = new List<BedStatus>();
 
-    if (Cateter) bedStatuses.add(BedStatus.Cateter);
-    if (CT) bedStatuses.add(BedStatus.CT);
-    if (Fasting) bedStatuses.add(BedStatus.Fasting);
 
-    if (SocialAid) bedStatuses.add(BedStatus.SocialAid);
-    if (PhysoAid) bedStatuses.add(BedStatus.PhysoAid);
-    if (Infected) bedStatuses.add(BedStatus.Infected);
-    if (DiatentAid) bedStatuses.add(BedStatus.DiatentAid);
-    if (O2) bedStatuses.add(BedStatus.O2);
-    if (Petsa) bedStatuses.add(BedStatus.Petsa);
-    if (Invasive) bedStatuses.add(BedStatus.Invasive);
-    if (pranola) bedStatuses.add(BedStatus.Pranola);
-    if (seodi) bedStatuses.add(BedStatus.Seodi);
-    if (cognitive) bedStatuses.add(BedStatus.Cognitive);
+    // Keep  Order in  list 
+    int index = 0;
+    if (seodi) bedStatuses.insert(index++,BedStatus.Seodi);
+    if (cognitive) bedStatuses.insert(index++,BedStatus.Cognitive);
+    if (Cateter) bedStatuses.insert(index++,BedStatus.Cateter);
+    if (Petsa) bedStatuses.insert(index++,BedStatus.Petsa);
+    if (PhysoAid) bedStatuses.insert(index++,BedStatus.PhysoAid);
+    if (SocialAid) bedStatuses.insert(index++,BedStatus.SocialAid);
+    if (DiatentAid) bedStatuses.insert(index++,BedStatus.DiatentAid);
+    if (Invasive) bedStatuses.insert(index++,BedStatus.Invasive);
+    if (O2) bedStatuses.insert(index++,BedStatus.O2);
+    if (Infected) bedStatuses.insert(index++,BedStatus.Infected);
+    if (Fasting) bedStatuses.insert(index++,BedStatus.Fasting);
+
+
+
+
+
+    
+    //if (CT) bedStatuses.add(BedStatus.CT);
+    //if (Fasting) bedStatuses.add(BedStatus.Fasting);
+
+   // if (SocialAid) bedStatuses.add(BedStatus.SocialAid);
+   // if (PhysoAid) bedStatuses.add(BedStatus.PhysoAid);
+   // if (Infected) bedStatuses.add(BedStatus.Infected);
+   // if (DiatentAid) bedStatuses.add(BedStatus.DiatentAid);
+   // if (O2) bedStatuses.add(BedStatus.O2);
+   // if (Petsa) bedStatuses.add(BedStatus.Petsa);
+   // if (Invasive) bedStatuses.add(BedStatus.Invasive);
+   // if (pranola) bedStatuses.add(BedStatus.Pranola);
+  //  if (seodi) bedStatuses.add(BedStatus.Seodi);
+  //  if (cognitive) bedStatuses.add(BedStatus.Cognitive);
 
     return bedStatuses;
   }
@@ -122,7 +141,7 @@ class BedInstruction {
   Map<String, dynamic> toMap() {
     return {
       'notificationId': this.notificationId,
-      'notificationText': StreamBuilder(initialData: this.notificationText),
+      'notificationText': this.notificationText,
       'notificationType': this.notificationType.index,
       'notificationStatus': this.notificationStatus,
       'createdAt': this.createdAt,
