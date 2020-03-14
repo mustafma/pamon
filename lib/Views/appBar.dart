@@ -71,7 +71,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                   }
                 },
               ),
+
             ]),
+
       ),
     );
   }
@@ -85,14 +87,25 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     _listOfType.add(new PopupMenuItem<int>(
       value: 1,
-      child: ListTile(
-        trailing: Icon(
-          Icons.person,
-          color: Color.fromRGBO(134, 165, 195, 9),
+        child:Container(
+          decoration: BoxDecoration( //                    <-- BoxDecoration
+            border: Border(bottom: BorderSide(color: Colors.grey)),
+          ),
+          child: ListTile(
+            trailing: Icon(
+            Icons.person,
+            color: Color.fromRGBO(134, 165, 195, 9),
+
           // color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('פרופיל'),
+
+        title:Align(
+          child: Text(loggedInUser.getUserName()),
+          alignment: Alignment(1.2, 0),
+        ),
+
       ),
+    )
     ));
 
     _listOfType.add(new PopupMenuItem<int>(
