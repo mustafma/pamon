@@ -207,6 +207,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               beds[i]["Fasting"] = false;
               beds[i]["CT"] = false;
               beds[i]["Inficted"] = false;
+              beds[i]["Infected"] = false;
               beds[i]["Cateter"] = false;
               beds[i]["SocialAid"] = false;
               beds[i]["PhysoAid"] = false;
