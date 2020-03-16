@@ -1,4 +1,4 @@
-import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/services/crud.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +9,8 @@ class UsersProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
 
 /* ------------------------------- NOTE Users ------------------------------- */
-  List<User2> _users = [];
-  List<User2> get users => _users;
+  List<User> _users = [];
+  List<User> get users => _users;
 
 
   UsersProvider()  {
@@ -37,16 +37,16 @@ class UsersProvider with ChangeNotifier {
     //});
   }
 
-  Future updateUser({@required User2 user, @required bool isRegistering}) async {
+  Future updateUser({@required User user, @required bool isRegistering}) async {
     //await UsersService.updateUser(user: user, isRegistering: isRegistering);
     print('runinng');
   }
 
-  Future updateUserPassword({User2 user}) async {
+  Future updateUserPassword({User user}) async {
     //await UsersService.updateUserPassword(user: user);
   }
 
-  Future<List<User2>> updateUSersList() async
+  Future<List<User>> updateUSersList() async
   {
 
     var crud = new CrudMethods();

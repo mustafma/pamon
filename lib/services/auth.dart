@@ -20,19 +20,7 @@ class AuthService {
   final FirebaseMessaging _fcm = FirebaseMessaging();
  
   
-  // sign in anony.
-  Future signInAnon() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously();
-      _userCached = result.user;
-      setUserInfo(
-          _userCached.uid, _userCached.displayName, "Dr"); // Set UserInfor
-      return _userCached;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+
 
   FirebaseUser getUser() {
     return _userCached;
@@ -48,7 +36,8 @@ class AuthService {
       _userCached = result.user;
       CrudMethods crudObj = new CrudMethods();
       setUserInfo(_userCached.uid, _userCached.displayName,
-          await crudObj.getUserRole(_userCached.uid)); // Set UserInfor
+          await crudObj.getUserRole(_userCached.uid),
+          await crudObj.isUserInShift(_userCached.uid)); // Set UserInfor
           regiterTokenOfLoggedInDevise(_userCached.uid);
       return _userCached;
     } catch (e) {
@@ -86,12 +75,13 @@ class AuthService {
   }
 
   static void setUserInfo(
-      String userId, String displayName, String typeAsString) {
+      String userId, String displayName, String typeAsString, shiftStatus) {
     User user = User.getInstance();
     user.setUID(userId);
     user.setUserName(displayName);
     user.setUserType(user.stringToUserTypeConvert(typeAsString));
      user.populateUserPermessions();
+     user.setUserInShift(shiftStatus);
   }
 
   Future<void> regiterTokenOfLoggedInDevise(uid) async {

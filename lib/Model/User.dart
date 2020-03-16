@@ -6,31 +6,56 @@ import 'package:flutter/material.dart';
 
 class User {
   @protected
-  String _userId;
-  String _displayName;
-  UserType _userType;
+  String uid;
+  String name;
+  String email;
+  String hospitalId;
+  String departmentId;
+  String documentID;
+  String password;
+  String title;
+  String role;
+  bool isInShift;
+  bool isAdmin;
+  UserType userole;
+
+
   Map<BridgeOperation,bool> userPermessions =  new Map();
 
   static User _instance;
-  UserType get loggedInUserType => _userType;
-  String get loggedInUserId => _userId;
+  UserType get loggedInUserType => userole;
+  String get loggedInUserId => uid;
 
+
+  User({
+    this.email,
+    this.hospitalId,
+    this.departmentId,
+    this.isAdmin,
+    this.name,
+    this.password,
+    this.uid,
+    this.role,
+    this.title,
+    this.isInShift,
+
+  });
   void setUserType(UserType type) {
-    _userType = type;
+    userole = type;
   }
   String getUID()
   {
-    return _userId;
+    return uid;
   }
 
   void setUID(String id) {
-    _userId = id;
+    uid = id;
   }
   void setUserName(String displayName){
-    _displayName = displayName;
+    name = displayName;
   }
   String getUserName(){
-    return _displayName;
+    return name;
   }
   User._internal();
 
@@ -65,14 +90,24 @@ class User {
 
   UserType getUserType()
   {
-    return _userType;
+    return userole;
+  }
+
+  bool isUserInShift()
+  {
+    return this.isInShift;
+  }
+
+  void setUserInShift(bool status)
+  {
+    isInShift = status;
   }
 
 
 
   void populateUserPermessions() async
   {
-    switch(_userType)
+    switch(this.userole)
     {
       case UserType.Doctor:
           userPermessions[BridgeOperation.CleanBed] = false;
@@ -158,6 +193,18 @@ class User {
 
     }
   }
+  User.fromMap(Map snapshot, String id):
 
+  // documentID =  id,
+        uid =  snapshot['uid'],
+        title =  snapshot['title'],
+        role =  snapshot['role'],
+        isInShift =  snapshot['isInShift'] ?? false,
+        email =  snapshot['email'] ?? '',
+        password =  snapshot['password'] ?? '',
+        name =  snapshot['name'] ?? '',
+        isAdmin =  snapshot['isAdmin'] ?? false,
+        hospitalId = snapshot['hospitalId'] ?? '',
+        departmentId = snapshot['departmentId'] ?? '';
 
 }

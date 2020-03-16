@@ -1,4 +1,4 @@
-import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/services/crud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,13 +55,13 @@ class _ShiftView extends State<ShiftView> {
                     } else {
                       List items = [];
                       items = snapshot.data.documents
-                          .map((doc) => User2.fromMap(
+                          .map((doc) => User.fromMap(
                               doc.data, doc.documentID.toString()))
                           .toList();
                       return ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (BuildContext context, int index) {
-                          User2 user = (items[index] as User2);
+                          User user = (items[index] as User);
 
                           return Visibility(
                               visible: true,

@@ -64,11 +64,11 @@ class LandingPage extends StatelessWidget {
   
       CrudMethods crudObj = new CrudMethods();
       var userType =  await crudObj.getUserRole(userId);
-      AuthService.setUserInfo(userId , displayName, userType);
+      var shiftStatus =  await crudObj.isUserInShift(userId);
+      AuthService.setUserInfo(userId , displayName != ""?displayName:"adamin", userType,shiftStatus);
         User user = User.getInstance();
     user.setUID(userId);
-    user.setUserName(displayName);
-    user.setUserType(user.stringToUserTypeConvert(userType));
+     user.setUserType(user.stringToUserTypeConvert(userType));
      user.populateUserPermessions();
          
       //AuthService.regiterTokenOfLoggedInDevise(userId);

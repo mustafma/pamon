@@ -385,8 +385,8 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
   @override
   void initState() {
  
-    allowedaddingInstruction =loggedInUser.userPermessions[BridgeOperation.AddInstruction];
-    allowedForBedStatus  = loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus];
+    allowedaddingInstruction =loggedInUser.userPermessions[BridgeOperation.AddInstruction] && loggedInUser.isInShift;
+    allowedForBedStatus  = loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus] && loggedInUser.isInShift;
 
     super.initState();
   }

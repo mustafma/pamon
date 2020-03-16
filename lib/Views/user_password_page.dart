@@ -1,13 +1,13 @@
 import 'package:BridgeTeam/Components/flat_button_custom.dart';
 import 'package:BridgeTeam/Components/page_header.dart';
 import 'package:BridgeTeam/Components/text_form_field_validation.dart';
-import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Views/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserPasswordPage extends StatefulWidget {
-  final User2 user;
+  final User user;
   UserPasswordPage({this.user, Key key}) : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class UserPasswordPage extends StatefulWidget {
 }
 
 class _UserPasswordPageState extends State<UserPasswordPage> {
-  User2 user;
+  User user;
   @override
   void initState() {
     user = widget.user;

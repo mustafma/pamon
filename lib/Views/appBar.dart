@@ -89,7 +89,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       value: 1,
         child:Container(
           decoration: BoxDecoration( //                    <-- BoxDecoration
-            border: Border(bottom: BorderSide(color: Colors.grey)),
+            border: Border(bottom: BorderSide(color: Colors.grey[200])),
           ),
           child: ListTile(
             trailing: Icon(

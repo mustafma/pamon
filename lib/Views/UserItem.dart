@@ -1,12 +1,12 @@
 import 'package:BridgeTeam/Components/shadow_container.dart';
-import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Views/user_details_page.dart';
 import 'package:BridgeTeam/Views/user_password_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserItem extends StatelessWidget {
-  final User2 user;
+  final User user;
   const UserItem({
     this.user,
     Key key,

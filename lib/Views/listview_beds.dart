@@ -55,7 +55,7 @@ class _ListViewBedsState extends State<ListViewBeds> {
                 stream: _firestoreRef.document(widget.roomId).snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
-                    return LinearProgressIndicator();
+                    return CircularProgressIndicator();
                   } else {
                     List item = [];
 

@@ -1,7 +1,8 @@
 
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Views/UserItem.dart';
 import 'package:BridgeTeam/Views/user_details_page.dart';
-import 'package:BridgeTeam/Model/User2.dart';
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _UsersDashboardPageState extends State<UsersDashboardPage> {
                 {
                   List items = [];
                   items = snapshot.data.documents
-                  .map((doc) => User2.fromMap(doc.data, doc.documentID.toString()))
+                  .map((doc) => User.fromMap(doc.data, doc.documentID.toString()))
                   .toList();
                   return ListView.builder(
                     itemCount: items.length,
