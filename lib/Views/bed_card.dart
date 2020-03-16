@@ -1,4 +1,3 @@
-
 import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +48,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('I.V מתן עירוי תרופה/נוזל')),
+        title: Center(child: Text('I.V מתן עירוי תרופה/נוזל')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -60,7 +59,7 @@ class _BedCardState extends State<BedCard> {
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
         title: Center(child: Text('P.O מתן תרופה מיוחדת')),
-      ), 
+      ),
     ),
     new PopupMenuItem<InstructionType>(
       value: InstructionType.SPO,
@@ -69,23 +68,20 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_3,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('P.O הפסקת תרופה ')),
-      ),  
+        title: Center(child: Text('P.O הפסקת תרופה ')),
+      ),
     ),
-     new PopupMenuItem<InstructionType>(
+    new PopupMenuItem<InstructionType>(
       value: InstructionType.SIV,
       child: ListTile(
         trailing: Icon(
           Icons.filter_4,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-         title: Center(child:Text('I.V הפסקת עירוי')),
+        title: Center(child: Text('I.V הפסקת עירוי')),
       ),
-
-      
     )
-
-  ];
+  ]; 
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +91,14 @@ class _BedCardState extends State<BedCard> {
     else
       cardColor = Theme.of(context).cardColor;
 
-var listOfChosenIcons  = generateListOfIcons();
-bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
-
-
+    var listOfChosenIcons = generateListOfIcons();
+   
+   double width = MediaQuery.of(context).size.width; 
+    var numOfIconsPerLine  = width > 360?7:6;
+     bool isExceed7Icons = listOfChosenIcons.length > numOfIconsPerLine ? true : false;
     // initState();
     return Container(
-        height: isExceed7Icons?190: 135,
+        height: isExceed7Icons ? 190 : 135,
         child: Card(
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -157,7 +154,9 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
                     children: <Widget>[
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:isExceed7Icons?listOfChosenIcons.getRange(0,7).toList():listOfChosenIcons),
+                          children: isExceed7Icons
+                              ? listOfChosenIcons.getRange(0, numOfIconsPerLine).toList()
+                              : listOfChosenIcons),
                       new Spacer(),
                       Container(
                           // margin: EdgeInsets.only(left: 310),
@@ -178,28 +177,27 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
                     ],
                   ),
                 ),
-
-                 Container(
-                  decoration: BoxDecoration(
-                      // color: cardColor,
-                      border: new Border(
-                          top: new BorderSide(
-                              width: 1.5, color: const Color(0xFF428879)))),
-                  child: Visibility(
-                    visible: isExceed7Icons,
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:isExceed7Icons? listOfChosenIcons.getRange(7, listOfChosenIcons.length).toList():listOfChosenIcons),
-                      
-                    ],
-                  ),
-                  
-                  ) 
-                )
-
+                Container(
+                    decoration: BoxDecoration(
+                        // color: cardColor,
+                        border: new Border(
+                            top: new BorderSide(
+                                width: 1.5, color: const Color(0xFF428879)))),
+                    child: Visibility(
+                      visible: isExceed7Icons,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: isExceed7Icons
+                                  ? listOfChosenIcons
+                                      .getRange(numOfIconsPerLine, listOfChosenIcons.length)
+                                      .toList()
+                                  : listOfChosenIcons),
+                        ],
+                      ),
+                    ))
               ])),
         ));
   }
@@ -304,71 +302,62 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
   }
 
   void _selectBedStatus(BedAction choice, BuildContext context) {
-  
-      switch (choice) {
-        case BedAction.Clean:
-          showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) {
-                return new CustomDialog(
-                    text: "לנקות מיטה",
-                    bedId: widget.bed.bedId,
-                    roomId: widget.roomId,
-                    operationName: "cleanbed");
-              });
+    switch (choice) {
+      case BedAction.Clean:
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return new CustomDialog(
+                  text: "לנקות מיטה",
+                  bedId: widget.bed.bedId,
+                  roomId: widget.roomId,
+                  operationName: "cleanbed");
+            });
 
-          break;
-        case BedAction.Move:
-          showDialog(
-              context: context,
-              builder: (context) {
-                return new MoveBedDialog(
-                    bed: widget.bed,
-                    rooms: widget.rooms,
-                    roomId: widget.roomId);
-              });
-          break;
-        case BedAction.Swap:
-          break;
-        case BedAction.Release:
-          showDialog(
-              context: context,
-              builder: (context) {
-                return new CustomDialog(
-                    text: "החולה לשחרור",
-                    bedId: widget.bed.bedId,
-                    roomId: widget.roomId,
-                    operationName: "releasebed");
-              });
-          break;
-      }
+        break;
+      case BedAction.Move:
+        showDialog(
+            context: context,
+            builder: (context) {
+              return new MoveBedDialog(
+                  bed: widget.bed, rooms: widget.rooms, roomId: widget.roomId);
+            });
+        break;
+      case BedAction.Swap:
+        break;
+      case BedAction.Release:
+        showDialog(
+            context: context,
+            builder: (context) {
+              return new CustomDialog(
+                  text: "החולה לשחרור",
+                  bedId: widget.bed.bedId,
+                  roomId: widget.roomId,
+                  operationName: "releasebed");
+            });
+        break;
+    }
   }
 
-
- 
   void addInstruction(InstructionType choice) {
     // Call Service to update DB  and Push  Notification
     String choiceText;
 
-
-    switch(choice)
-    {
-      case InstructionType.IV : 
-      choiceText = new Text("  I.V מתן עירוי תרופה").data;
-      break;
-      case InstructionType.PO : 
-      choiceText = "מתן תרופה מיוחדת" + " P.O" ;
-      break;
+    switch (choice) {
+      case InstructionType.IV:
+        choiceText = new Text("  I.V מתן עירוי תרופה").data;
+        break;
+      case InstructionType.PO:
+        choiceText = "מתן תרופה מיוחדת" + " P.O";
+        break;
       case InstructionType.SIV:
         choiceText = "הפסקת עירוי" + " I.V";
-      break;
+        break;
       case InstructionType.SPO:
-      choiceText = "הפסקת תרופה" + " P.O";
-      break;
+        choiceText = "הפסקת תרופה" + " P.O";
+        break;
     }
-
-
 
     widget.crudObj.addInstruction(
         widget.roomId, widget.bed.bedId, choice.index, choiceText);
@@ -384,9 +373,12 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
 
   @override
   void initState() {
- 
-    allowedaddingInstruction =loggedInUser.userPermessions[BridgeOperation.AddInstruction] && loggedInUser.isInShift;
-    allowedForBedStatus  = loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus] && loggedInUser.isInShift;
+    allowedaddingInstruction =
+        loggedInUser.userPermessions[BridgeOperation.AddInstruction] &&
+            loggedInUser.isInShift;
+    allowedForBedStatus =
+        loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus] &&
+            loggedInUser.isInShift;
 
     super.initState();
   }
@@ -588,11 +580,11 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
           break;
         case BedStatus.Infected:
           message = "החולה עם זיהום";
-          url="assets/pamon-o2.png";
+          url = "assets/pamon-o2.png";
           break;
         case BedStatus.Invasive:
           message = " החולה מונשם Invasive";
-          url="assets/pamon-invasive.png";
+          url = "assets/pamon-invasive.png";
           break;
         case BedStatus.O2:
           message = "החולה זקוק לחמצן";
@@ -620,20 +612,19 @@ bool isExceed7Icons  = listOfChosenIcons.length > 7 ? true : false;
           break;
         case BedStatus.Cognitive:
           message = "חולה עם ירידה קוגניטיבית";
-           url = 'assets/pamon-yeredacog.png';
+          url = 'assets/pamon-yeredacog.png';
       }
       genList.add(new IconButton(
-        icon:  Container(
+        
+        icon: Container(
           child: Image(
             image: AssetImage(
               url,
             ),
             fit: BoxFit.cover,
-            
           ),
           height: 32,
           width: 32,
-         
         ),
         iconSize: 32,
         //color: Colors.yellow,

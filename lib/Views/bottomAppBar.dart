@@ -1,3 +1,4 @@
+import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
@@ -90,18 +91,21 @@ class _BottomBarState extends State<BaseBottomBar> {
                                               mainAxisAlignment:MainAxisAlignment.center,
                                               children: <Widget>[
                                                 IconButton(
-                                                  icon: Icon(Icons.explore),
+                                                  icon: Icon(PamonIcons.pamon_angryface),
                                                   color: Colors.red,
+                                                  iconSize: 50,
                                                   onPressed: () {},
                                                 ),
                                                 IconButton(
-                                                  icon: Icon(Icons.explore),
+                                                  icon: Icon(PamonIcons.pamon_smilyface),
                                                   color: Colors.green,
+                                                  iconSize: 50,
                                                   onPressed: () {},
                                                 ),
                                                 IconButton(
-                                                  icon: Icon(Icons.explore),
+                                                  icon: Icon(PamonIcons.pamon_sadface),
                                                   color: Colors.yellow,
+                                                  iconSize: 50,
                                                   onPressed: () {},
                                                 ),
                                               ],
