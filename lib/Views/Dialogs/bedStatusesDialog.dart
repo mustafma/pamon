@@ -33,7 +33,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                 color: Color.fromRGBO(
                     134, 165, 195, 9), //Color.fromRGBO(64, 75, 96, 9),
                 child: Center(
-                  child: Text("בחר סוג התראה",
+                  child: Text( "Velg varslingstype",//"בחר סוג התראה",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -60,7 +60,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   statusTypesValues.add(obj);
                                 }),
                             new Padding(padding: EdgeInsets.all(1.0)),
-                            Text("חולה סיעודי",
+                            Text("Sykepleien pasient",//"חולה סיעודי",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12,
@@ -80,7 +80,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   statusTypesValues.add(obj);
                                 }),
                             new Padding(padding: EdgeInsets.all(1.0)),
-                            Text("חולה עם ירידה קוגניטיבית",
+                            Text("Pasient med kognitiv tilbakegang",//"חולה עם ירידה קוגניטיבית",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12,
@@ -102,7 +102,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                   if (newValue) _selectDate(context);
                                 }),
                             new Padding(padding: EdgeInsets.all(1.0)),
-                            Text('קטטר שתן',
+                            Text('Urinkateter' ,//'קטטר שתן',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 12,
@@ -122,7 +122,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('פצע לחץ ',
+                          Text('Trykk sår' , //'פצע לחץ ',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -143,7 +143,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('זקוק לפיזוטרפיה',
+                          Text(
+"Trenger fysioterapi",//'זקוק לפיזוטרפיה',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -164,7 +165,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('זקוק להערכה סוציאלית',
+                          Text("Trenger sosial vurdering" , //'זקוק להערכה סוציאלית',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -185,7 +186,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('זקוק להתערבות של דיאטנית',
+                          Text(
+"Trenger diettens intervensjon",//'זקוק להתערבות של דיאטנית',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -206,7 +208,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('מונשם Invasive ',
+                          Text(
+"Invasive Breathing" , //'מונשם Invasive ',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -227,7 +230,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('זקוק לחמצן BiPAP/CPAP ',
+                          Text('Trenger BiPAP / CPAP oksygen',//'זקוק לחמצן BiPAP/CPAP ',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -248,7 +251,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('זקוק לחמצן ביתי',
+                          Text("Trenger hjemme oksygen" , //'זקוק לחמצן ביתי',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -269,7 +272,7 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('צום',
+                          Text("fasting",//'צום',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -290,7 +293,8 @@ class _BedStatusDialog extends State<BedStatusDialog> {
                                 statusTypesValues.add(obj);
                               }),
                           new Padding(padding: EdgeInsets.all(1.0)),
-                          Text('החולה זקוק ל ברנולה',
+                          Text(
+'Pasient trenger Bernola' , //'החולה זקוק ל ברנולה',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,

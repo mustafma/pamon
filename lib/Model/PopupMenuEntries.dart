@@ -105,7 +105,8 @@ _listBedActions = [];
           Icons.clear,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('נקה מיטה'),
+        title: Text(
+'Ren seng' ), //נקה מיטה'),
       ),
     );
 
@@ -122,7 +123,7 @@ if (loggedInUser.userPermessions[BridgeOperation.MoveBed])
           Icons.move_to_inbox,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('החלף מיטות'),
+        title: Text("Bytte senger"),//Text('החלף מיטות'),
       ),
     );
     _listBedActions.add(popMenuItem2);
@@ -138,7 +139,7 @@ if (loggedInUser.userPermessions[BridgeOperation.ReleaseBed])
           Icons.exit_to_app,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Text('מיטה לשחרור'),
+        title: Text('Slipp seng'),//Text('מיטה לשחרור'),
       ),
     );
     _listBedActions.add(popMenuItem3);

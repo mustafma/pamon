@@ -21,7 +21,7 @@ class _CustomDialog extends State<CustomDialog> {
         textDirection: TextDirection.rtl,
         //return Container(
         child: AlertDialog(
-          title: new Text("הודעה",
+          title: new Text("innlegg",//"הודעה",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
