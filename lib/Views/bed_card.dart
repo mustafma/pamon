@@ -48,7 +48,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_1,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:Text('tilveiebringe medikament / væskeinfusjon I.V')),  //Text('I.V מתן עירוי תרופה/נוזל')),
+        title: Center(child: Text('I.V מתן עירוי תרופה/נוזל')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -58,7 +58,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_2,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:  Text('Special Cure P.O')),//Text('P.O מתן תרופה מיוחדת')),
+        title: Center(child: Text('P.O מתן תרופה מיוחדת')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -68,7 +68,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_3,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child:  Text('narkotikaopphør P.O')),//Text('P.O הפסקת תרופה ')),
+        title: Center(child: Text('P.O הפסקת תרופה ')),
       ),
     ),
     new PopupMenuItem<InstructionType>(
@@ -78,7 +78,7 @@ class _BedCardState extends State<BedCard> {
           Icons.filter_4,
           color: Color.fromRGBO(64, 75, 96, 9),
         ),
-        title: Center(child: Text('infusjonsstans I.V')),///Text('I.V הפסקת עירוי')),
+        title: Center(child: Text('I.V הפסקת עירוי')),
       ),
     )
   ]; 
@@ -273,7 +273,7 @@ class _BedCardState extends State<BedCard> {
     if (widget.bed.getNumberOfActiveNotifications() == 0) {
       return new Center(
           child: new Text(
-        "Ingen nye instruksjoner",//"אין הוראות חדשות",
+        "אין הוראות חדשות",
         style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         overflow: TextOverflow.fade,
@@ -281,7 +281,7 @@ class _BedCardState extends State<BedCard> {
         softWrap: true,
       ));
     } else {
-      String text2 =  "Ufullstendige instruksjoner";//"הוראות שלא בוצעו ";
+      String text2 = "הוראות שלא בוצעו ";
 
       String text3 =
           text2 + widget.bed.getNumberOfActiveNotifications().toString();
@@ -309,7 +309,7 @@ class _BedCardState extends State<BedCard> {
             context: context,
             builder: (context) {
               return new CustomDialog(
-                  text: "Rengjør en seng",//"לנקות מיטה",
+                  text: "לנקות מיטה",
                   bedId: widget.bed.bedId,
                   roomId: widget.roomId,
                   operationName: "cleanbed");
@@ -331,7 +331,7 @@ class _BedCardState extends State<BedCard> {
             context: context,
             builder: (context) {
               return new CustomDialog(
-                  text: "Pasienten for frigjøring",//"החולה לשחרור",
+                  text: "החולה לשחרור",
                   bedId: widget.bed.bedId,
                   roomId: widget.roomId,
                   operationName: "releasebed");
@@ -346,16 +346,16 @@ class _BedCardState extends State<BedCard> {
 
     switch (choice) {
       case InstructionType.IV:
-        choiceText =  "gi medikamentinfusjon I.V";//new Text("  I.V מתן עירוי תרופה").data;
+        choiceText = new Text("  I.V מתן עירוי תרופה").data;
         break;
       case InstructionType.PO:
-        choiceText =  "Gi en spesiell kur P.O";// "מתן תרופה מיוחדת" + " P.O";
+        choiceText = "מתן תרופה מיוחדת" + " P.O";
         break;
       case InstructionType.SIV:
-        choiceText = "Avslutning av infusjon I.V";//"הפסקת עירוי" + " I.V";
+        choiceText = "הפסקת עירוי" + " I.V";
         break;
       case InstructionType.SPO:
-        choiceText = "Narkotikaopphør P.O";//"הפסקת תרופה" + " P.O";
+        choiceText = "הפסקת תרופה" + " P.O";
         break;
     }
 
@@ -464,56 +464,43 @@ class _BedCardState extends State<BedCard> {
             (widget.bed.CatDate).month.toString() +
             "/" +
             (widget.bed.CatDate).year.toString();
-       // message = "החולה עם קטטר מתאריך " + cuttDate;
-       message =  "Pasienten med et kateter er datert"+ cuttDate;
+        message = "החולה עם קטטר מתאריך " + cuttDate;
         break;
       case BedStatus.CT:
-        //message = "CT החולה מתוכנן לו";
-         message = "pasienten er planlagt for ham CT"; 
+        message = "CT החולה מתוכנן לו";
         break;
       case BedStatus.DiatentAid:
-       // message = "החולה זקוק להתערבות דיאטנית";
-        message =  "Pasienten trenger et dietetisk inngrep";
+        message = "החולה זקוק להתערבות דיאטנית";
         break;
       case BedStatus.Fasting:
-       // message = "החולה בצום";
-         message = "Pasienten er fastende";
+        message = "החולה בצום";
         break;
       case BedStatus.Infected:
-       // message = "החולה זקוק לחמצן ביתי";
-        message = "Pasienten trenger oksygen";
+        message = "החולה זקוק לחמצן ביתי";
         break;
       case BedStatus.Invasive:
-       // message = " החולה מונשם Invasive";
-         message = "Pasienten er invasiv";
+        message = " החולה מונשם Invasive";
         break;
       case BedStatus.O2:
-        //message = "החולה זקוק לחמצן";
-          message = "Pasienten trenger oksygen";
+        message = "החולה זקוק לחמצן";
         break;
       case BedStatus.Petsa:
-       // message = "החולה עם פצע לחץ";
-        message =  "Pasienten med et trykksår";
+        message = "החולה עם פצע לחץ";
         break;
       case BedStatus.PhysoAid:
-        //message = "החולה זקוק לפיזוטרפיה";
-         message = "Pasient trenger fysioterapi";
+        message = "החולה זקוק לפיזוטרפיה";
         break;
       case BedStatus.SocialAid:
-      //  message = "החולה זקוק לעזרה סוציאלית";
-       message ="Pasienten trenger sosialhjelp";
+        message = "החולה זקוק לעזרה סוציאלית";
         break;
       case BedStatus.Pranola:
-       // message = "החולה זקוק לברנולה";
-          message = "Pasient trenger Bernola";
+        message = "החולה זקוק לברנולה";
         break;
       case BedStatus.Seodi:
-        //message = "חולה סיעודי";
-        message = "Sykepleierpasient";
+        message = "חולה סיעודי";
         break;
       case BedStatus.Cognitive:
-       // message = "חולה עם ירידה קוגניטיבית";
-        message = "En pasient med kognitiv tilbakegang";
+        message = "חולה עם ירידה קוגניטיבית";
         break;
     }
     return message;
@@ -525,7 +512,7 @@ class _BedCardState extends State<BedCard> {
     var alert = new Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: new Text("innlegg",//"הודעה",
+          title: new Text("הודעה",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -576,55 +563,55 @@ class _BedCardState extends State<BedCard> {
               (widget.bed.CatDate).month.toString() +
               "/" +
               (widget.bed.CatDate).year.toString();
-          message =  "Pasienten med et kateter er datert"+ cuttDate;//"החולה עם קטטר מתאריך " + cuttDate;
+          message = "החולה עם קטטר מתאריך " + cuttDate;
           url = 'assets/pamon-cateter.png';
           break;
         case BedStatus.CT:
-          message = "pasienten er planlagt for ham CT"; //"CT החולה מתוכנן לו";
+          message = "CT החולה מתוכנן לו";
           url = 'assets/pamon-yeredacog.png';
           break;
         case BedStatus.DiatentAid:
-          message =  "Pasienten trenger et dietetisk inngrep"; //"החולה זקוק להתערבות דיאטנית";
+          message = "החולה זקוק להתערבות דיאטנית";
           url = 'assets/pamon-ditanet.png';
           break;
         case BedStatus.Fasting:
-          message = "Pasienten er fastende"; //"החולה בצום";
+          message = "החולה בצום";
           url = 'assets/pamon-fasting.png';
           break;
         case BedStatus.Infected:
-          message = "Pasienten med infeksjon";//"החולה עם זיהום";
+          message = "החולה עם זיהום";
           url = "assets/pamon-o2.png";
           break;
         case BedStatus.Invasive:
-          message = "Pasienten er invasiv";//" החולה מונשם Invasive";
+          message = " החולה מונשם Invasive";
           url = "assets/pamon-invasive.png";
           break;
         case BedStatus.O2:
-          message = "Pasienten trenger oksygen";//"החולה זקוק לחמצן";
+          message = "החולה זקוק לחמצן";
           url = 'assets/pamon-bipap.png';
           break;
         case BedStatus.Petsa:
-          message =  "Pasienten med et trykksår"; //"החולה עם פצע לחץ";
+          message = "החולה עם פצע לחץ";
           url = 'assets/pamon-petsa.png';
           break;
         case BedStatus.PhysoAid:
-          message = "Pasient trenger fysioterapi";//החולה זקוק לפיזוטרפיה";
+          message = "החולה זקוק לפיזוטרפיה";
           url = 'assets/pamon-phesotraphy.png';
           break;
         case BedStatus.SocialAid:
-          message ="Pasienten trenger sosialhjelp";// "החולה זקוק לעזרה סוציאלית";
+          message = "החולה זקוק לעזרה סוציאלית";
           url = 'assets/pamon-social.png';
           break;
         case BedStatus.Pranola:
-          message = "Pasient trenger Bernola"; // "החולה זקוק לברנולה";
+          message = "החולה זקוק לברנולה";
           url = 'assets/pamon-pranola.png';
           break;
         case BedStatus.Seodi:
-          message = "Sykepleierpasient"; //"חולה סיעודי";
+          message = "חולה סיעודי";
           url = 'assets/pamon-seodi.png';
           break;
         case BedStatus.Cognitive:
-          message = "En pasient med kognitiv tilbakegang";//"חולה עם ירידה קוגניטיבית";
+          message = "חולה עם ירידה קוגניטיבית";
           url = 'assets/pamon-yeredacog.png';
       }
       genList.add(new IconButton(

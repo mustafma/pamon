@@ -118,7 +118,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           //  ),
           // onPressed: () {},
         ),
-        title: Text("innstillinger"),//Text('הגדרות'),
+        title: Text('הגדרות'),
       ),
     ));
 
@@ -131,7 +131,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Color.fromRGBO(134, 165, 195, 9),
             // color: Color.fromRGBO(64, 75, 96, 9),
           ),
-          title:  Text('PA') , //Text('כריזה'),
+          title: Text('כריזה'),
         ),
       ));
     }
@@ -144,7 +144,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
             Icons.control_point_duplicate,
             color: Color.fromRGBO(134, 165, 195, 9),
           ),
-          title: Text( 'Brukeradministrasjon'),//'ניהול משתמשים'),
+          title: Text('ניהול משתמשים'),
         ),
       ));
     }
@@ -158,7 +158,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
             Icons.control_point_duplicate,
             color: Color.fromRGBO(134, 165, 195, 9),
           ),
-          title: Text('Skiftledelse'),//'ניהול משמרת'),
+          title: Text('ניהול משמרת'),
         ),
       ));
     }
@@ -170,7 +170,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.contact_phone,
           color: Color.fromRGBO(134, 165, 195, 9),
         ),
-        title: Text('Kontakt oss' ), //'צור קשר'),
+        title: Text('צור קשר'),
       ),
     ));
 
@@ -181,7 +181,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.exit_to_app,
           color: Color.fromRGBO(134, 165, 195, 9),
         ),
-        title: Text('Utgang'),//'יציאה'),
+        title: Text('יציאה'),
       ),
     ));
     return _listOfType;

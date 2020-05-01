@@ -38,8 +38,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
     return new Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: new Text(//"העבר מיטה "  
-"Flytt en seng" + widget.bed.name,
+          title: new Text("העבר מיטה " + widget.bed.name,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -53,8 +52,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        new Text(//"אל חדר",
-"Til rommet",
+                        new Text("אל חדר",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -81,8 +79,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                     ),
                     Row(
                       children: <Widget>[
-                        new Text(//"אל מיטה", 
-"I seng",
+                        new Text("אל מיטה",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -118,8 +115,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                     widget._selectedRoom.roomId,
                     widget._selectedBed.bedId);
               },
-              child: new Text(//"אישור", 
-"bekreftelse",
+              child: new Text("אישור",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             new FlatButton(
@@ -127,8 +123,7 @@ class _MoveBedDialog extends State<MoveBedDialog> {
                 Navigator.of(context).pop();
                 //handleIconStatusSelection(status, isSwitched);
               },
-              child: new Text(//"ביטול",
-               "Avbestillings",
+              child: new Text("ביטול",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ],
