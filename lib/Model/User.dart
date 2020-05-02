@@ -72,13 +72,17 @@ class User {
   {
     switch (typeAsString.toLowerCase()) {
     case "dr":
+    case "Doctor":
       return UserType.Doctor;
     case "nr":
+    case "Nurse":
       return UserType.Nurse;
     case "drm":
+    case "DepartmentManager":
     return UserType.DepartmentManager;
 
     case "nrm":
+    case "NurseShiftManager":
     return UserType.NurseShiftManager;
 
     case "other":

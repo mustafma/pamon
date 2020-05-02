@@ -12,6 +12,8 @@ import 'package:flutter/rendering.dart';
 import 'package:BridgeTeam/Model/room.dart';
 import 'package:BridgeTeam/Views/listview_beds.dart';
 
+import 'Dialogs/roomCrewDialog.dart';
+
 class RoomCard extends StatefulWidget {
   final Room room;
   List rooms = [];
@@ -41,143 +43,168 @@ class _RoomCardState extends State<RoomCard> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.rtl,
-      child:Container(
-
- 
-
-        height: 210,
-        child: Card(
-            elevation: 8.0,
-            margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-            //color: cardColor,
-            child: Container(
-                decoration: new BoxDecoration(
-                    gradient: new LinearGradient(
-                        colors: [
-                          const Color(0xFF144464),
-                          const Color(0xFF546C7D)
-                        ],
-                        begin: FractionalOffset.topLeft,
-                        end: FractionalOffset.bottomRight,
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.clamp)),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        height: 105,
-
-                        // decoration:
-                        //BoxDecoration(color: Theme.of(context).cardColor),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 6.0),
-                          leading: buildLeading(),
-                          title: Align(
-                            alignment: titleAligmemt(),
-                            child: Text(
-                              widget.room.roomName,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                          ),
-                          subtitle: buildSubTrial(),
-                          trailing: buildTrial(),
-                          onTap: () => onTapBrowseToBeds(context),
-                        )),
-                    Container(
-                      decoration: new BoxDecoration(
-                          gradient: new LinearGradient(
-                              colors: [
-                                const Color(0xFF003C64),
-                                const Color(0xFF428879)
-                              ],
-                              begin: FractionalOffset.topLeft,
-                              end: FractionalOffset.bottomRight,
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
-                          border: new Border(
-                              top: new BorderSide(
-                                  width: 1.5, color: const Color(0xFF428879)))),
-                    ),
-
-                    // decoration: BoxDecoration(
-                    //   color: (widget.room.getTotalNumberOfNotifications() == 0)
-                    //       ? Theme.of(context).cardColor
-                    //      : Colors.red,
-                    // border: new Border(
-                    //      top: new BorderSide(
-                    //          width: 3.0, color: Colors.orange))),
-                    //    ),
-                    Container(
-                        child: Column(
-                      children: [
-                        Container(
-                          child: Text(
-                              "רופא/ה:" + (widget.room).responsibleDoctor,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Container(
-                          child: Text(
-                              "אח/אחות:" + (widget.room).responsibleNurse,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        Container(
-                            child: Align(
-                          alignment: Alignment(0.4, -2.8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Center(
-                                  child: Visibility(
-                                      visible: true,
-                                      child: IconButton(
-                                          icon: Icon(PamonIcons.pamon_teamtalk),
-                                          iconSize: 35,
-                                          tooltip:
-                                              "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                  (widget.room).roomName,
-                                          color: setIconTalkColor(1),
-                                          onPressed: () =>
-                                              handleTalk1(context)))),
-                              Center(
-                                  child: Visibility(
-                                      visible: true,
-                                      child: IconButton(
-                                          icon: Icon(PamonIcons.pamon_teamtalk),
-                                          iconSize: 35,
-                                          tooltip:
-                                              "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
-                                                  (widget.room).roomName,
-                                          color: setIconTalkColor(2),
-                                          onPressed: () =>
-                                              handleTalk2(context)))),
+        textDirection: TextDirection.rtl,
+        child: Container(
+            height: 219,
+            child: Card(
+                elevation: 8.0,
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                //color: cardColor,
+                child: Container(
+                    decoration: new BoxDecoration(
+                        gradient: new LinearGradient(
+                            colors: [
+                              const Color(0xFF144464),
+                              const Color(0xFF546C7D)
                             ],
-                          ),
-                        )),
+                            begin: FractionalOffset.topLeft,
+                            end: FractionalOffset.bottomRight,
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp)),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                            height: 105,
+
+                            // decoration:
+                            //BoxDecoration(color: Theme.of(context).cardColor),
+                            child: ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 6.0),
+                              leading: buildLeading(),
+                              title: Align(
+                                alignment: titleAligmemt(),
+                                child: Text(
+                                  widget.room.roomName,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                              ),
+                              subtitle: buildSubTrial(),
+                              trailing: buildTrial(),
+                              onTap: () => onTapBrowseToBeds(context),
+                            )),
+                        Container(
+                          decoration: new BoxDecoration(
+                              gradient: new LinearGradient(
+                                  colors: [
+                                    const Color(0xFF003C64),
+                                    const Color(0xFF428879)
+                                  ],
+                                  begin: FractionalOffset.topLeft,
+                                  end: FractionalOffset.bottomRight,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp),
+                              border: new Border(
+                                  top: new BorderSide(
+                                      width: 1.5,
+                                      color: const Color(0xFF428879)))),
+                        ),
+
+                        // decoration: BoxDecoration(
+                        //   color: (widget.room.getTotalNumberOfNotifications() == 0)
+                        //       ? Theme.of(context).cardColor
+                        //      : Colors.red,
+                        // border: new Border(
+                        //      top: new BorderSide(
+                        //          width: 3.0, color: Colors.orange))),
+                        //    ),
+                        Container(
+                            child: Column(
+                          children: [
+                            Container(
+                              child: Center(
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                    /*   FlatButton(
+                                  padding: const EdgeInsets.all(4.0),
+                                 // color: Colors.brown,
+                                  child: Text("אני עובד בחדר זה",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                  onPressed: () => {},
+                                ),
+                                  SizedBox(
+                  height: 16.0,
+                  width: 10,
+                ),*/
+                                    FlatButton(
+                                      padding: const EdgeInsets.all(1.0),
+                                      // color: Colors.red,
+                                      child: Text("  מי מהצוות עובד כאן?",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16)),
+                                      onPressed: () => {
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return new RoomCrewDialog(
+                                                  room: widget.room);
+                                            })
+                                      },
+                                    )
+                                  ])),
+                            ),
+                            Container(
+                                child: Align(
+                              alignment: Alignment(0.4, -2.8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Center(
+                                      child: Visibility(
+                                          visible: true,
+                                          child: IconButton(
+                                              icon: Icon(
+                                                  PamonIcons.pamon_teamtalk),
+                                              iconSize: 35,
+                                              tooltip:
+                                                  "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                      (widget.room).roomName,
+                                              color: setIconTalkColor(1),
+                                              onPressed: () =>
+                                                  handleTalk1(context)))),
+                                  Center(
+                                      child: Visibility(
+                                          visible: true,
+                                          child: IconButton(
+                                              icon: Icon(
+                                                  PamonIcons.pamon_teamtalk),
+                                              iconSize: 35,
+                                              tooltip:
+                                                  "זמן לדבר ולהתעדכן על  הסטאטוס של חדר " +
+                                                      (widget.room).roomName,
+                                              color: setIconTalkColor(2),
+                                              onPressed: () =>
+                                                  handleTalk2(context)))),
+                                ],
+                              ),
+                            )),
+                          ],
+                        ))
                       ],
-                    ))
-                  ],
-                )))));
+                    )))));
   }
 
   Widget buildTrial() {
     return Visibility(
         visible: widget.room.infected,
-        child:  IconButton(
+        child: IconButton(
           // alignment: Alignment(10.0, 10.0),
           icon: Icon(PamonIcons.pamon_infection), //Icons.warning),
           iconSize: 40,
           color: Colors.red,
-          
+
           onPressed: () => {},
         ));
   }
@@ -202,7 +229,8 @@ class _RoomCardState extends State<RoomCard> {
     }
 
     return new Align(
-        alignment: widget.room.infected?Alignment(-0.3, -2.8):Alignment(0.1, -2.8),
+        alignment:
+            widget.room.infected ? Alignment(-0.3, -2.8) : Alignment(0.1, -2.8),
         child: new Stack(children: <Widget>[
           Container(
             height: 40,
@@ -232,26 +260,21 @@ class _RoomCardState extends State<RoomCard> {
         ]));
   }
 
+  Alignment titleAligmemt() {
+    var showListIcon =
+        (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||
+            loggedInUser
+                .userPermessions[BridgeOperation.CancelRoomInfectectionStatus]);
 
-Alignment titleAligmemt()
-{
-
-var showListIcon = (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||
-        loggedInUser
-            .userPermessions[BridgeOperation.CancelRoomInfectectionStatus]);
-
-  if(widget.room.infected  && showListIcon)
-
-            return Alignment(0.05, -0.75);
-            else if(!widget.room.infected  && showListIcon)
-            return Alignment(0.2, -0.75);
-
-            else if(widget.room.infected && !showListIcon)return Alignment(-0.2, -0.75);
-            else return Alignment(0.0, -0.75);
-
-
-}
-
+    if (widget.room.infected && showListIcon)
+      return Alignment(0.05, -0.75);
+    else if (!widget.room.infected && showListIcon)
+      return Alignment(0.2, -0.75);
+    else if (widget.room.infected && !showListIcon)
+      return Alignment(-0.2, -0.75);
+    else
+      return Alignment(0.0, -0.75);
+  }
 
   Widget buildLeading() {
     if (loggedInUser.userPermessions[BridgeOperation.SetRoomAsInfected] ||

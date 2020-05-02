@@ -1,4 +1,5 @@
 import 'package:BridgeTeam/Model/bed.dart';
+import 'package:BridgeTeam/Model/crewmember.dart';
 
 import 'enumTypes.dart';
 
@@ -15,9 +16,11 @@ class Room {
   bool timeforUpdate2;
   bool docAcceptedTalk2;
   bool nurseAcceptedTalk2;
-bool infected;
+  bool infected;
 
   List<dynamic> beds = new List<Bed>();
+  List<dynamic> crew = new List<CrewMember>();
+
   Room({this.roomId, this.roomName, this.beds});
 
   Room.fromMap(Map snapshot, String id)
@@ -38,9 +41,11 @@ infected = snapshot['infected'] ?? false,
 
         beds = snapshot['beds']
             .map((map) => new Bed.fromMap(map, map['bedId']))
-            .toList();//.sort((a,b) =>  (a as Bed).bedId.compareTo((b as Bed).bedId) );
+            .toList(),//.sort((a,b) =>  (a as Bed).bedId.compareTo((b as Bed).bedId) );
 
-       
+       crew = snapshot['crew']
+            .map((map) => new CrewMember.fromMap(map, map['id']))
+            .toList();
 
   //map(((doc) =>doc.get().then(Bed.fromMap(doc.value, doc.value.documentID.toString())))).toList() ?? null;
 
@@ -49,6 +54,7 @@ infected = snapshot['infected'] ?? false,
       "name": roomName,
       "beds": beds,
       "departmentID": departmentID,
+      "crew": crew,
     };
   }
 

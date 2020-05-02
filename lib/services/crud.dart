@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Model/crewmember.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/Model/message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,59 +20,50 @@ class CrudMethods {
   }
 
   final HttpsCallable sendMessageFunction =
-  CloudFunctions.instance.getHttpsCallable(
+      CloudFunctions.instance.getHttpsCallable(
     functionName: 'sendMessageFunction',
   );
 
   final HttpsCallable addInstructionFunction =
-  CloudFunctions.instance.getHttpsCallable(
+      CloudFunctions.instance.getHttpsCallable(
     functionName: 'addInstructionFunction',
   );
 
-
-
-
-Future<void> updateRoomField( roomId , field , value ) async
-{
-  try {
-    if (isLoggedIn()) {
-      DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
-      if (field != null && value != null) {
-        roomRef.updateData({field: value});
-        return;
+  Future<void> updateRoomField(roomId, field, value) async {
+    try {
+      if (isLoggedIn()) {
+        DocumentReference roomRef =
+            Firestore.instance.collection("rooms").document(roomId);
+        if (field != null && value != null) {
+          roomRef.updateData({field: value});
+          return;
+        }
       }
-      
-    }
-  }
-  catch (e) {
+    } catch (e) {
       print('error caught: $e');
     }
-}
-
-
-Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
-{
-  try {
-    if (isLoggedIn()) {
-      DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
-      if (field != null && value != null) {
-        roomRef.updateData({field: value});
-        return;
-      }
-      if (reset) {
-        roomRef.updateData({'docAcceptedTalk': false});
-        roomRef.updateData({'docAcceptedTalk2': false});
-        roomRef.updateData({'nurseAcceptedTalk': false});
-        roomRef.updateData({'nurseAcceptedTalk2': false});
-      }
-    }
   }
-  catch (e) {
+
+  Future<void> updateRoomTalkUpdates(roomId, field, value, reset) async {
+    try {
+      if (isLoggedIn()) {
+        DocumentReference roomRef =
+            Firestore.instance.collection("rooms").document(roomId);
+        if (field != null && value != null) {
+          roomRef.updateData({field: value});
+          return;
+        }
+        if (reset) {
+          roomRef.updateData({'docAcceptedTalk': false});
+          roomRef.updateData({'docAcceptedTalk2': false});
+          roomRef.updateData({'nurseAcceptedTalk': false});
+          roomRef.updateData({'nurseAcceptedTalk2': false});
+        }
+      }
+    } catch (e) {
       print('error caught: $e');
     }
-}
+  }
 
   Future<void> addBed(roomId, bed) {
     if (isLoggedIn()) {
@@ -87,7 +79,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -110,7 +102,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -120,7 +112,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               List<String> list = (flag as String).split(";");
 
               list.forEach(
-                      (x) => {if (x != null && x != "") beds[i][x] = status});
+                  (x) => {if (x != null && x != "") beds[i][x] = status});
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
@@ -132,30 +124,29 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     }
   }
 
-  Future<void> updateListOfBedStatusesAndDates(roomId, bedId,
-      List<StatusTypeValue> listOfbedStatuses) async {
+  Future<void> updateListOfBedStatusesAndDates(
+      roomId, bedId, List<StatusTypeValue> listOfbedStatuses) async {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
           var beds = postSnapshot.data['beds'];
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
-              listOfbedStatuses.forEach((x) =>
-              {
-                if (x != null)
-                  {
-                    if(x.fieldType == FieldType.bool)
-                      beds[i][x.dbFieldName] = x.value
-                    else
-                      if(x.fieldType == FieldType.DateTime)
-                        beds[i][x.dbFieldName] =
-                            Timestamp.fromDate(x.datetimeVal)
-                  }});
+              listOfbedStatuses.forEach((x) => {
+                    if (x != null)
+                      {
+                        if (x.fieldType == FieldType.bool)
+                          beds[i][x.dbFieldName] = x.value
+                        else if (x.fieldType == FieldType.DateTime)
+                          beds[i][x.dbFieldName] =
+                              Timestamp.fromDate(x.datetimeVal)
+                      }
+                  });
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
@@ -167,13 +158,13 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     }
   }
 
-  Future<void> updateListOfBedStatuses(roomId, bedId,
-      List<StatusTypeValue> listOfbedStatuses) async {
+  Future<void> updateListOfBedStatuses(
+      roomId, bedId, List<StatusTypeValue> listOfbedStatuses) async {
     if (isLoggedIn()) {
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -181,7 +172,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
           for (int i = 0; i < beds.length; i++) {
             if (beds[i]['bedId'] == bedId) {
               listOfbedStatuses.forEach(
-                      (x) => {if (x != null) beds[i][x.dbFieldName] = x.value});
+                  (x) => {if (x != null) beds[i][x.dbFieldName] = x.value});
             }
           }
           //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
@@ -196,7 +187,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
   Future<void> cleanBed(roomId, bedId) {
     if (isLoggedIn()) {
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -221,7 +212,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
               beds[i]["pranola"] = false;
 
               List notifications =
-              List.from(postSnapshot.data['beds'][i]['notifications']);
+                  List.from(postSnapshot.data['beds'][i]['notifications']);
               for (int i = 0; i < notifications.length; i++) {
                 notifications[i]['notificationStatus'] = "executed";
               }
@@ -239,15 +230,104 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     }
   }
 
-  Future<void> addInstruction(roomId, bedId, instructionType,
-      instructionText) async {
+
+  Future<void> removeCrewMemberFromRoom(roomId) async {
     try {
       if (isLoggedIn()) {
-        BedInstruction newInstruction =
-        new BedInstruction(instructionText, instructionType, bedId, "active");
+        var loggedInUserID = User.getInstance().getUID();
 
         DocumentReference roomRef =
-        Firestore.instance.collection("rooms").document(roomId);
+            Firestore.instance.collection("rooms").document(roomId);
+
+        Firestore.instance.runTransaction((Transaction tx) async {
+          DocumentSnapshot postSnapshot = await tx.get(roomRef);
+          if (postSnapshot.exists) {
+            List crew = List.from(postSnapshot.data['crew']);
+            var removeMember = false;
+
+            for (int i = 0; i < crew.length; i++) {
+              if (crew[i]['id'] == loggedInUserID) {
+                crew.removeAt(i);
+                removeMember = true;
+                break;
+              }
+            }
+            if (removeMember) {
+              postSnapshot.data['crew'] = crew;
+            }
+
+            if (removeMember)
+              await tx.update(roomRef, <String, dynamic>{'crew': crew});
+          }
+        }).then((_) {
+          print("Success");
+        }).catchError((e) {
+          print('error runningbtransaction: $e');
+          return null;
+        });
+      }
+    } catch (e) {
+      print('error caught: $e');
+    }
+  }
+
+
+
+  Future<void> addCrewMemberToroom(roomId) async {
+    try {
+      if (isLoggedIn()) {
+        var loggedInUserName = User.getInstance().getUserName();
+        var loggedInUserType = User.getInstance().getUserType();
+        var loggedInUserID = User.getInstance().getUID();
+              CrewMember newMember = new CrewMember(
+                  loggedInUserName, loggedInUserType, loggedInUserID);
+        DocumentReference roomRef =
+            Firestore.instance.collection("rooms").document(roomId);
+
+        Firestore.instance.runTransaction((Transaction tx) async {
+          DocumentSnapshot postSnapshot = await tx.get(roomRef);
+          if (postSnapshot.exists) {
+            List crew = List.from(postSnapshot.data['crew']);
+            var addMember = true;
+
+            for (int i = 0; i < crew.length; i++) {
+              if (crew[i]['id'] == loggedInUserID) {
+                addMember = false;
+                break;
+              }
+            }
+            if (addMember) {
+
+
+              dynamic memberMap = newMember.toMap();
+              crew.add(memberMap);
+              postSnapshot.data['crew'] = crew;
+            }
+
+            if (addMember)
+              await tx.update(roomRef, <String, dynamic>{'crew': crew});
+          }
+        }).then((_) {
+          print("Success");
+        }).catchError((e) {
+          print('error runningbtransaction: $e');
+          return null;
+        });
+      }
+    } catch (e) {
+      print('error caught: $e');
+    }
+  }
+
+  Future<void> addInstruction(
+      roomId, bedId, instructionType, instructionText) async {
+    try {
+      if (isLoggedIn()) {
+        BedInstruction newInstruction = new BedInstruction(
+            instructionText, instructionType, bedId, "active");
+
+        DocumentReference roomRef =
+            Firestore.instance.collection("rooms").document(roomId);
 
         Firestore.instance.runTransaction((Transaction tx) async {
           DocumentSnapshot postSnapshot = await tx.get(roomRef);
@@ -256,7 +336,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
             for (int i = 0; i < beds.length; i++) {
               if (beds[i]['bedId'] == bedId) {
                 List notifications =
-                List.from(postSnapshot.data['beds'][i]['notifications']);
+                    List.from(postSnapshot.data['beds'][i]['notifications']);
 
                 dynamic instructionMap = newInstruction.toMap();
                 notifications.add(instructionMap);
@@ -269,8 +349,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
         }).then((_) {
           print("Success");
           var displayName = User.getInstance().getUserName();
-          if(displayName ==  null || displayName == "")
-            displayName = "admin";
+          if (displayName == null || displayName == "") displayName = "admin";
           var uid = User.getInstance().getUID();
           Message message = new Message(
               newInstruction.notificationId,
@@ -290,17 +369,16 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
           return null;
         });
       }
-    }
-    catch (e) {
+    } catch (e) {
       print('error caught: $e');
     }
   }
 
-  Future<void> removeInstruction(roomId, bedId, instructionId) async{
+  Future<void> removeInstruction(roomId, bedId, instructionId) async {
     if (isLoggedIn()) {
       dynamic removedInstruction;
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -353,7 +431,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
-      Firestore.instance.collection("rooms").document(roomId);
+          Firestore.instance.collection("rooms").document(roomId);
       Firestore.instance.runTransaction((Transaction tx) async {
         DocumentSnapshot postSnapshot = await tx.get(roomRef);
         if (postSnapshot.exists) {
@@ -380,9 +458,9 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     FutureOr<dynamic> _toMap;
     if (isLoggedIn()) {
       DocumentReference fromRoomRef =
-      Firestore.instance.collection("rooms").document(fromRoomId);
+          Firestore.instance.collection("rooms").document(fromRoomId);
       DocumentReference toRoomRef =
-      Firestore.instance.collection("rooms").document(toRoomId);
+          Firestore.instance.collection("rooms").document(toRoomId);
 
       final TransactionHandler createTransaction = (Transaction tx) async {
         final DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
@@ -396,7 +474,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
         for (int i = 0; i < beds.length; i++) {
           if (beds[i]['bedId'] == bedId) {
             movingBed = fromPostSnapshot.data['beds'][
-            i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             toBeds.add(movingBed);
@@ -424,9 +502,9 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
     FutureOr<dynamic> _toMap;
     if (isLoggedIn()) {
       DocumentReference fromRoomRef =
-      Firestore.instance.collection("rooms").document(fromRoomId);
+          Firestore.instance.collection("rooms").document(fromRoomId);
       DocumentReference toRoomRef =
-      Firestore.instance.collection("rooms").document(toRoomId);
+          Firestore.instance.collection("rooms").document(toRoomId);
 
       final TransactionHandler createTransaction = (Transaction tx) async {
         final DocumentSnapshot fromPostSnapshot = await tx.get(fromRoomRef);
@@ -442,13 +520,13 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
         for (int i = 0; i < fromBeds.length; i++) {
           if (fromBeds[i]['bedId'] == firstBedId) {
             firstmovingBed = fromPostSnapshot.data['beds'][
-            i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+                i]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
 
             toBeds = List.from(toPostSnapshot.data['beds']);
             for (int j = 0; j < toBeds.length; j++) {
               if (toBeds[j]['bedId'] == secondBedId) {
                 secondmovingBed = toPostSnapshot.data['beds'][
-                j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
+                    j]; //Bed.fromMap(fromPostSnapshot.data['beds'][i],fromPostSnapshot.data['beds'][i]['bedId']);
                 tempBed = new Map.from(secondmovingBed);
                 secondmovingBed["Fasting"] = firstmovingBed['Fasting'];
                 secondmovingBed["CT"] = firstmovingBed['CT'];
@@ -519,7 +597,7 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
           (await usersRef.where('uid', isEqualTo: uid).getDocuments())
               .documents;
 
-       //        
+      //
       return docs[0].data['role'];
     }
   }
@@ -527,11 +605,11 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
   Future<List<User>> getUsers(hospitalId, departmentId) async {
     if (isLoggedIn()) {
       var usersRef = Firestore.instance.collection("users");
-      List<DocumentSnapshot> docs =
-          (await usersRef.where('departmentId', isEqualTo: departmentId).where(
-              'hospitalId', isEqualTo: hospitalId).
-          getDocuments())
-              .documents;
+      List<DocumentSnapshot> docs = (await usersRef
+              .where('departmentId', isEqualTo: departmentId)
+              .where('hospitalId', isEqualTo: hospitalId)
+              .getDocuments())
+          .documents;
 
       List<User> _users = new List<User>();
       for (int i = 0; i < docs.length; i++) {
@@ -556,27 +634,25 @@ Future<void> updateRoomTalkUpdates( roomId , field , value , reset) async
             'title': user.title,
             'role': user.role,
             'departmentId': user.departmentId,
-            'hospitalId' : user.hospitalId
+            'hospitalId': user.hospitalId
           },
         );
       } else {
         // updating206
-         Firestore.instance.collection('users').document(user.uid).setData(
-            {
-              'uid':user.uid,
-              'email': user.email,
-              'isInShift': user.isInShift,
-              'name': user.name,
-              'password': user.password,
-              'title': user.title,
-              'role': user.role,
-              'departmentId': user.departmentId,
-              'hospitalId' : user.hospitalId
-            }, merge: true);
+        Firestore.instance.collection('users').document(user.uid).setData({
+          'uid': user.uid,
+          'email': user.email,
+          'isInShift': user.isInShift,
+          'name': user.name,
+          'password': user.password,
+          'title': user.title,
+          'role': user.role,
+          'departmentId': user.departmentId,
+          'hospitalId': user.hospitalId
+        }, merge: true);
       }
     }
   }
-
 
   Future<bool> isUserInShift(uid) async {
     if (isLoggedIn()) {

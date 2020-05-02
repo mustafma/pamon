@@ -28,7 +28,7 @@ enum RoomAction {
    CancelInfection
   }
 
-  enum UserType { /*RoomDoctorSuperviosor  , NurseRoomsupervisor,*/  Doctor, Nurse, NurseShiftManager, DepartmentManager, Other}
+  enum UserType { Doctor , Nurse, NurseShiftManager, DepartmentManager, Other}
 
 
   
