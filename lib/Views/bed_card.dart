@@ -35,6 +35,7 @@ class _BedCardState extends State<BedCard> {
   int count = 0;
   bool allowedForBedStatus = false;
   bool allowedaddingInstruction = false;
+  bool allowchangeIconsstatus = false;
 
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
   User loggedInUser = User.getInstance();
@@ -81,7 +82,7 @@ class _BedCardState extends State<BedCard> {
         title: Center(child: Text('I.V הפסקת עירוי')),
       ),
     )
-  ]; 
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +93,11 @@ class _BedCardState extends State<BedCard> {
       cardColor = Theme.of(context).cardColor;
 
     var listOfChosenIcons = generateListOfIcons();
-   
-   double width = MediaQuery.of(context).size.width; 
-    var numOfIconsPerLine  = width > 360?7:6;
-     bool isExceed7Icons = listOfChosenIcons.length > numOfIconsPerLine ? true : false;
+
+    double width = MediaQuery.of(context).size.width;
+    var numOfIconsPerLine = width > 360 ? 7 : 6;
+    bool isExceed7Icons =
+        listOfChosenIcons.length > numOfIconsPerLine ? true : false;
     // initState();
     return Container(
         height: isExceed7Icons ? 190 : 135,
@@ -155,7 +157,9 @@ class _BedCardState extends State<BedCard> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: isExceed7Icons
-                              ? listOfChosenIcons.getRange(0, numOfIconsPerLine).toList()
+                              ? listOfChosenIcons
+                                  .getRange(0, numOfIconsPerLine)
+                                  .toList()
                               : listOfChosenIcons),
                       new Spacer(),
                       Container(
@@ -163,7 +167,7 @@ class _BedCardState extends State<BedCard> {
 
                           child: IconButton(
                               icon: Icon(Icons.list),
-                              onPressed: () => {
+                              onPressed: allowchangeIconsstatus? () => {
                                     showDialog(
                                         barrierDismissible: false,
                                         context: context,
@@ -173,7 +177,7 @@ class _BedCardState extends State<BedCard> {
                                             roomId: widget.roomId,
                                           );
                                         })
-                                  })),
+                                  }:null)),
                     ],
                   ),
                 ),
@@ -192,7 +196,8 @@ class _BedCardState extends State<BedCard> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: isExceed7Icons
                                   ? listOfChosenIcons
-                                      .getRange(numOfIconsPerLine, listOfChosenIcons.length)
+                                      .getRange(numOfIconsPerLine,
+                                          listOfChosenIcons.length)
                                       .toList()
                                   : listOfChosenIcons),
                         ],
@@ -211,7 +216,7 @@ class _BedCardState extends State<BedCard> {
           color: Colors.white,
         ),
         // enabled: popMenueBtnEnaled1,
-        onSelected: (value) => _selectBedStatus(value, context),
+        onSelected: allowedForBedStatus ?(value) => _selectBedStatus(value, context):null,
         itemBuilder: (BuildContext context) {
           return PamonMenus.BedActions;
         },
@@ -230,7 +235,7 @@ class _BedCardState extends State<BedCard> {
             color: Colors.white,
           ),
           //enabled: popMenueBtnEnaled,
-          onSelected: (value) => _select(value),
+          onSelected: allowedaddingInstruction?(value) => _select(value):null,
           itemBuilder: (BuildContext context) {
             return _listOfType;
           },
@@ -251,7 +256,7 @@ class _BedCardState extends State<BedCard> {
               ),
               color: Colors.white,
               //enabled: popMenueBtnEnaled,
-              onSelected: (value) => _select(value),
+              onSelected: allowedaddingInstruction?(value) => _select(value):null,
               itemBuilder: (BuildContext context) {
                 return _listOfType;
               },
@@ -373,14 +378,16 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
-    allowedaddingInstruction =
-        loggedInUser.userPermessions[BridgeOperation.AddInstruction] &&
-            loggedInUser.isInShift;
-    allowedForBedStatus =
-        loggedInUser.userPermessions[BridgeOperation.ChangeBedStatus] &&
-            loggedInUser.isInShift;
-
+    checkUserPermessions(loggedInUser);
     super.initState();
+  }
+
+  void checkUserPermessions(User user) {
+    allowchangeIconsstatus = user.isInShift &&  user.getUserType() != UserType.Other;
+    allowedaddingInstruction =
+        user.userPermessions[BridgeOperation.AddInstruction] && user.isInShift &&  user.getUserType() != UserType.Other;
+    allowedForBedStatus = 
+        user.userPermessions[BridgeOperation.ChangeBedStatus] && user.isInShift && user.getUserType() != UserType.Other;
   }
 
   void onTapBrowseToBedInstructions(BuildContext context) {
@@ -525,11 +532,11 @@ class _BedCardState extends State<BedCard> {
           actions: <Widget>[
             new Switch(
               value: isSwitched,
-              onChanged: (value) {
+              onChanged: allowchangeIconsstatus ?(value) {
                 setState(() {
                   isSwitched = value;
                 });
-              },
+              } : null,
             ),
             new FlatButton(
               onPressed: () {
@@ -615,7 +622,6 @@ class _BedCardState extends State<BedCard> {
           url = 'assets/pamon-yeredacog.png';
       }
       genList.add(new IconButton(
-        
         icon: Container(
           child: Image(
             image: AssetImage(
