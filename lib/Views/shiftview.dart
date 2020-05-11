@@ -89,7 +89,7 @@ class _ShiftView extends State<ShiftView> {
                   ),
             )))),
         floatingActionButton: Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(right: 220),
             child: FloatingActionButton.extended(
                 backgroundColor: Colors.orange,
                 onPressed: (
