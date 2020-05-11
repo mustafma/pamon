@@ -1,5 +1,6 @@
 import 'package:BridgeTeam/AppIcons/pamon_icons_icons.dart';
 import 'package:BridgeTeam/Views/Dialogs/moveBed.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:BridgeTeam/Model/PopupMenuEntries.dart';
@@ -40,7 +41,7 @@ class _BedCardState extends State<BedCard> {
 
   IconData bedIconBystatus = Icons.airline_seat_individual_suite;
   User loggedInUser = User.getInstance();
-
+  bool  isLoggedUserInShift = true;
   //List rooms =  widget.rooms;
   List<PopupMenuEntry<InstructionType>> _listOfType = [
     new PopupMenuItem<InstructionType>(
@@ -88,17 +89,15 @@ class _BedCardState extends State<BedCard> {
   @override
   Widget build(BuildContext context) {
     count = this.widget.bed.getNumberOfActiveNotifications();
+    var _firestoreRef = Firestore.instance.collection('users');
 
-       var userC=
-        Provider.of<User>(context).getUID();
-        
     if (count > 0)
       cardColor = Colors.red;
     else
       cardColor = Theme.of(context).cardColor;
 
     var listOfChosenIcons = generateListOfIcons();
-
+ 
     double width = MediaQuery.of(context).size.width;
     var numOfIconsPerLine = width > 360 ? 7 : 6;
     bool isExceed7Icons =
@@ -106,114 +105,134 @@ class _BedCardState extends State<BedCard> {
     // initState();
     return Container(
         height: isExceed7Icons ? 190 : 135,
-        child: Card(
-          elevation: 8.0,
-          margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-          child: Container(
-              decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [
-                        const Color(0xFF003C64), const Color(0xFF428879)
-                        //const Color(0xFF003C64),
-                        //const Color(0xFF00885A)
-                      ],
-                      begin: FractionalOffset.topLeft,
-                      end: FractionalOffset.bottomRight,
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp)),
-              child: Column(children: <Widget>[
-                Container(
-                    //decoration: BoxDecoration(color: cardColor),
-                    child: ListTile(
-                  leading: buildLeading(),
-                  title: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        if (widget.bed.dismissed)
-                          new Icon(
-                            PamonIcons.exit,
-                            color: Colors.green,
-                          ),
-                        new Padding(padding: EdgeInsets.all(10.0)),
-                        Text(widget.bed.name,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ),
-                  subtitle: buildSubTrial(),
-                  trailing: buildTrial(),
-                  onTap: () => onTapBrowseToBedInstructions(context),
-                  //onLongPress: () => moveBed(context),
-                )),
-                Container(
-                  decoration: BoxDecoration(
-                      // color: cardColor,
-                      border: new Border(
-                          top: new BorderSide(
-                              width: 1.5, color: const Color(0xFF428879)))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: isExceed7Icons
-                              ? listOfChosenIcons
-                                  .getRange(0, numOfIconsPerLine)
-                                  .toList()
-                              : listOfChosenIcons),
-                      new Spacer(),
-                      Container(
-                          // margin: EdgeInsets.only(left: 310),
+        child: StreamBuilder(
+            stream: _firestoreRef.document(User.getInstance().uid).snapshots(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data == null) {
+                return CircularProgressIndicator();
+              } else {
+                   var item = snapshot.data.data['isInShift'];         
+                return Card(
+                  elevation: 8.0,
+                  margin:
+                      new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  child: Container(
 
-                          child: IconButton(
-                              icon: Icon(Icons.list),
-                              onPressed: allowchangeIconsstatus? () => {
-                                    showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) {
-                                          return new BedStatusDialog(
-                                            bed: widget.bed,
-                                            roomId: widget.roomId,
-                                          );
-                                        })
-                                  }:null)),
-                    ],
-                  ),
-                ),
-                Container(
-                    decoration: BoxDecoration(
-                        // color: cardColor,
-                        border: new Border(
-                            top: new BorderSide(
-                                width: 1.5, color: const Color(0xFF428879)))),
-                    child: Visibility(
-                      visible: isExceed7Icons,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
+                      decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                              colors: [
+                                const Color(0xFF003C64), const Color(0xFF428879)
+                              ],
+                              begin: FractionalOffset.topLeft,
+                              end: FractionalOffset.bottomRight,
+                              stops: [0.0, 1.0],
+                              tileMode: TileMode.clamp)),
+                      child: Column(children: <Widget>[
+                        Container(
+                            //decoration: BoxDecoration(color: cardColor),
+                            child: ListTile(
+                          leading: item?buildLeading(true):buildLeading(false),
+                          title: Center(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: isExceed7Icons
-                                  ? listOfChosenIcons
-                                      .getRange(numOfIconsPerLine,
-                                          listOfChosenIcons.length)
-                                      .toList()
-                                  : listOfChosenIcons),
-                        ],
-                      ),
-                    ))
-              ])),
-        ));
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                if (widget.bed.dismissed)
+                                  new Icon(
+                                    PamonIcons.exit,
+                                    color: Colors.green,
+                                  ),
+                                new Padding(padding: EdgeInsets.all(10.0)),
+                                Text(widget.bed.name,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                          ),
+                          subtitle: buildSubTrial(),
+                          trailing: item?buildTrial(true):buildTrial(false),
+                          onTap: () => onTapBrowseToBedInstructions(context),
+                          //onLongPress: () => moveBed(context),
+                        )),
+                        Container(
+                          decoration: BoxDecoration(
+                              // color: cardColor,
+                              border: new Border(
+                                  top: new BorderSide(
+                                      width: 1.5,
+                                      color: const Color(0xFF428879)))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: isExceed7Icons
+                                      ? listOfChosenIcons
+                                          .getRange(0, numOfIconsPerLine)
+                                          .toList()
+                                      : listOfChosenIcons),
+                              new Spacer(),
+                              Container(
+                                  // margin: EdgeInsets.only(left: 310),
+
+                                  child: IconButton(
+                                      icon: Icon(Icons.list),
+                                      onPressed: allowchangeIconsstatus && item
+                                          ? () => {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return new BedStatusDialog(
+                                                        bed: widget.bed,
+                                                        roomId: widget.roomId,
+                                                      );
+                                                    })
+                                              }
+                                          : null)),
+                            ],
+                          ),
+                        ),
+                        Container(
+                            decoration: BoxDecoration(
+                                // color: cardColor,
+                                border: new Border(
+                                    top: new BorderSide(
+                                        width: 1.5,
+                                        color: const Color(0xFF428879)))),
+                            child: Visibility(
+                              visible: isExceed7Icons,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: isExceed7Icons
+                                          ? listOfChosenIcons
+                                              .getRange(numOfIconsPerLine,
+                                                  listOfChosenIcons.length)
+                                              .toList()
+                                          : listOfChosenIcons),
+                                ],
+                              ),
+                            ))
+                      ])),
+                );
+              }
+            }));
   }
 
-  Widget buildLeading() {
-    if (allowedForBedStatus) {
+
+
+
+
+  Widget buildLeading(bool inShift) {
+    checkUserPermessions(User.getInstance(),inShift);
+  
+    if (allowedForBedStatus && inShift) {
       return new PopupMenuButton(
         color: Theme.of(context).popupMenuTheme.color,
         icon: Icon(
@@ -221,7 +240,9 @@ class _BedCardState extends State<BedCard> {
           color: Colors.white,
         ),
         // enabled: popMenueBtnEnaled1,
-        onSelected: allowedForBedStatus ?(value) => _selectBedStatus(value, context):null,
+        onSelected: allowedForBedStatus
+            ? (value) => _selectBedStatus(value, context)
+            : null,
         itemBuilder: (BuildContext context) {
           return PamonMenus.BedActions;
         },
@@ -230,8 +251,8 @@ class _BedCardState extends State<BedCard> {
     return null;
   }
 
-  Widget buildTrial() {
-    if (allowedaddingInstruction) {
+  Widget buildTrial(bool inShift) {
+    if (allowedaddingInstruction && inShift) {
       if (widget.bed.getNumberOfActiveNotifications() == 0)
         return new PopupMenuButton(
           color: Theme.of(context).popupMenuTheme.color,
@@ -240,7 +261,8 @@ class _BedCardState extends State<BedCard> {
             color: Colors.white,
           ),
           //enabled: popMenueBtnEnaled,
-          onSelected: allowedaddingInstruction?(value) => _select(value):null,
+          onSelected:
+              allowedaddingInstruction && inShift ? (value) => _select(value) : null,
           itemBuilder: (BuildContext context) {
             return _listOfType;
           },
@@ -261,7 +283,8 @@ class _BedCardState extends State<BedCard> {
               ),
               color: Colors.white,
               //enabled: popMenueBtnEnaled,
-              onSelected: allowedaddingInstruction?(value) => _select(value):null,
+              onSelected:
+                  allowedaddingInstruction && inShift ? (value) => _select(value) : null,
               itemBuilder: (BuildContext context) {
                 return _listOfType;
               },
@@ -383,17 +406,21 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
-
-    checkUserPermessions(loggedInUser);
+    checkUserPermessions(loggedInUser , loggedInUser.isInShift);
     super.initState();
   }
 
-  void checkUserPermessions(User user) {
-    allowchangeIconsstatus = user.isInShift &&  user.getUserType() != UserType.Other;
+  void checkUserPermessions(User user , bool isInShift) {
+    allowchangeIconsstatus =
+         user.getUserType() != UserType.Other && isInShift;
     allowedaddingInstruction =
-        user.userPermessions[BridgeOperation.AddInstruction] && user.isInShift &&  user.getUserType() != UserType.Other;
-    allowedForBedStatus = 
-        user.userPermessions[BridgeOperation.ChangeBedStatus] && user.isInShift && user.getUserType() != UserType.Other;
+        user.userPermessions[BridgeOperation.AddInstruction] &&
+         //   user.isInShift &&
+            user.getUserType() != UserType.Other;
+    allowedForBedStatus =
+        user.userPermessions[BridgeOperation.ChangeBedStatus] &&
+           // user.isInShift &&
+            user.getUserType() != UserType.Other;
   }
 
   void onTapBrowseToBedInstructions(BuildContext context) {
@@ -538,11 +565,13 @@ class _BedCardState extends State<BedCard> {
           actions: <Widget>[
             new Switch(
               value: isSwitched,
-              onChanged: allowchangeIconsstatus ?(value) {
-                setState(() {
-                  isSwitched = value;
-                });
-              } : null,
+              onChanged: allowchangeIconsstatus
+                  ? (value) {
+                      setState(() {
+                        isSwitched = value;
+                      });
+                    }
+                  : null,
             ),
             new FlatButton(
               onPressed: () {

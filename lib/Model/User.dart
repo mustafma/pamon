@@ -101,7 +101,7 @@ class User with ChangeNotifier {
   }
 
   void populateUserPermessions() async {
-    if (!isInShift) {
+   /* if (!isInShift) {
       userPermessions[BridgeOperation.CleanBed] = false;
       userPermessions[BridgeOperation.ReleaseBed] = false;
       userPermessions[BridgeOperation.MoveBed] = false;
@@ -126,7 +126,7 @@ class User with ChangeNotifier {
         userPermessions[BridgeOperation.UserManagment] = false;
       userPermessions[BridgeOperation.SetRoomAsInfected] = false;
       userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
-    } else {
+    } else {*/
       switch (this.userole) {
         case UserType.Doctor:
           userPermessions[BridgeOperation.CleanBed] = false;
@@ -206,7 +206,7 @@ class User with ChangeNotifier {
           userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
           break;
       }
-    }
+    //}
   }
 
   User.fromMap(Map snapshot, String id)
