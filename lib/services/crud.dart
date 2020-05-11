@@ -99,27 +99,51 @@ class CrudMethods {
 
   Future<void> updateBedStatus(roomId, bedId, flag, status) async {
     if (isLoggedIn()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       //var roomRef = Firestore.instance.collection("rooms").document(roomId);
 
       DocumentReference roomRef =
           Firestore.instance.collection("rooms").document(roomId);
-      Firestore.instance.runTransaction((Transaction tx) async {
-        DocumentSnapshot postSnapshot = await tx.get(roomRef);
-        if (postSnapshot.exists) {
-          var beds = postSnapshot.data['beds'];
-          for (int i = 0; i < beds.length; i++) {
-            if (beds[i]['bedId'] == bedId) {
-              List<String> list = (flag as String).split(";");
 
-              list.forEach(
-                  (x) => {if (x != null && x != "") beds[i][x] = status});
-            }
+      Firestore.instance.runTransaction((Transaction tx) async {
+        var list;
+        return tx.get(roomRef).then((postSnapshot) => {
+        if (postSnapshot.exists) {
+
+            for (int i = 0; i < postSnapshot.data['beds'].length; i++) {
+          if (postSnapshot.data['beds'][i]['bedId'] == bedId) {
+             list = (flag as String).split(";"),
+
+            list.forEach(
+                    (x) => {if (x != null && x != "") postSnapshot.data['beds'][i][x] = status})
           }
-          //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
-          await tx.update(roomRef, <String, dynamic>{'beds': beds});
-        }
+        },
+        //await tx.update(postRef, <String, dynamic>{'likesCount': postSnapshot.data['likesCount'] + 1});
+         tx.update(roomRef, <String, dynamic>{'beds': postSnapshot.data['beds']})
+      }
+        });
+
+
       }).then((_) {
         print("Success");
+      }).catchError((_) {
+        print("Failed");
       });
     }
   }
