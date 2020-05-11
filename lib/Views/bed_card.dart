@@ -230,8 +230,7 @@ class _BedCardState extends State<BedCard> {
 
 
   Widget buildLeading(bool inShift) {
-    checkUserPermessions(User.getInstance(),inShift);
-  
+    checkUserPermessions(User.getInstance(),inShift); 
     if (allowedForBedStatus && inShift) {
       return new PopupMenuButton(
         color: Theme.of(context).popupMenuTheme.color,
