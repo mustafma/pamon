@@ -7,6 +7,7 @@ import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Model/bed.dart';
 import 'package:BridgeTeam/Model/enumTypes.dart';
 import 'package:BridgeTeam/services/crud.dart';
+import 'package:provider/provider.dart';
 
 import 'Dialogs/GeneralDialogs.dart';
 import 'Dialogs/bedStatusesDialog.dart';
@@ -87,6 +88,10 @@ class _BedCardState extends State<BedCard> {
   @override
   Widget build(BuildContext context) {
     count = this.widget.bed.getNumberOfActiveNotifications();
+
+       var userC=
+        Provider.of<User>(context).getUID();
+        
     if (count > 0)
       cardColor = Colors.red;
     else
@@ -378,6 +383,7 @@ class _BedCardState extends State<BedCard> {
 
   @override
   void initState() {
+
     checkUserPermessions(loggedInUser);
     super.initState();
   }

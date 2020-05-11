@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 
-class User {
+class User with ChangeNotifier{
   @protected
   String uid;
   String name;
@@ -105,6 +105,7 @@ class User {
   void setUserInShift(bool status)
   {
     isInShift = status;
+    notifyListeners();
   }
 
 
@@ -118,6 +119,9 @@ class User {
           userPermessions[BridgeOperation.MoveBed] = false;
           userPermessions[BridgeOperation.AddInstruction] = false;
           userPermessions[BridgeOperation.RemoveInstruction] = false;
+         if (this.userole == UserType.DepartmentManager || this.userole == UserType.NurseShiftManager) 
+          userPermessions[BridgeOperation.BuildNursesShift] = true;
+          else
           userPermessions[BridgeOperation.BuildNursesShift] = false;
           userPermessions[BridgeOperation.BuildDoctorsShift] = false;
           userPermessions[BridgeOperation.SendMessages] = false;

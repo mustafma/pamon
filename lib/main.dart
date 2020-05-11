@@ -1,8 +1,12 @@
+
+
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:BridgeTeam/Views/shiftview.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Views/ui_login.dart';
 import 'package:BridgeTeam/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'Views/UserDashboard.dart';
 import 'Views/instanseMessage.dart';
@@ -20,7 +24,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => User.getInstance(),
+      child: MaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
         ],
@@ -52,6 +58,8 @@ class MyApp extends StatelessWidget {
         )
 
         //home: LoginWidget(),//ListViewRooms(),
-        );
+        ) ,
+    
+    );
   }
 }

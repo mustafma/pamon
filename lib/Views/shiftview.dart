@@ -96,7 +96,7 @@ class _ShiftView extends State<ShiftView> {
                     // Save mashmeret
 
                     ) {
-                  updatedUsers.forEach((u) => {crud.addUser(u, false)});
+                  updatedUsers.forEach((u) => {crud.addUser(u, false) , (u as User ).setUserInShift((u as User ).isInShift)});
 
                   showDialog(
                       context: context,
