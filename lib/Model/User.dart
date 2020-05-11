@@ -111,7 +111,23 @@ class User {
 
   void populateUserPermessions() async
   {
-    switch(this.userole)
+    if(!isInShift)
+    {
+          userPermessions[BridgeOperation.CleanBed] = false;
+          userPermessions[BridgeOperation.ReleaseBed] = false;
+          userPermessions[BridgeOperation.MoveBed] = false;
+          userPermessions[BridgeOperation.AddInstruction] = false;
+          userPermessions[BridgeOperation.RemoveInstruction] = false;
+          userPermessions[BridgeOperation.BuildNursesShift] = false;
+          userPermessions[BridgeOperation.BuildDoctorsShift] = false;
+          userPermessions[BridgeOperation.SendMessages] = false;
+          userPermessions[BridgeOperation.ChangeBedStatus] = false;
+          userPermessions[BridgeOperation.UserManagment] = false;
+          userPermessions[BridgeOperation.SetRoomAsInfected] = false;
+          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
+    }
+    else{
+      switch(this.userole)
     {
       case UserType.Doctor:
           userPermessions[BridgeOperation.CleanBed] = false;
@@ -196,6 +212,9 @@ class User {
 
 
     }
+
+    }
+    
   }
   User.fromMap(Map snapshot, String id):
 
