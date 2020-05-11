@@ -123,9 +123,15 @@ class User with ChangeNotifier{
           userPermessions[BridgeOperation.BuildNursesShift] = true;
           else
           userPermessions[BridgeOperation.BuildNursesShift] = false;
+          if (this.userole == UserType.DepartmentManager || this.userole == UserType.NurseShiftManager) 
+          userPermessions[BridgeOperation.BuildDoctorsShift] = true;
+          else
           userPermessions[BridgeOperation.BuildDoctorsShift] = false;
           userPermessions[BridgeOperation.SendMessages] = false;
           userPermessions[BridgeOperation.ChangeBedStatus] = false;
+          if (this.userole == UserType.DepartmentManager || this.userole == UserType.NurseShiftManager) 
+          userPermessions[BridgeOperation.UserManagment] = true;
+          else
           userPermessions[BridgeOperation.UserManagment] = false;
           userPermessions[BridgeOperation.SetRoomAsInfected] = false;
           userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
