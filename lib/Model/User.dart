@@ -165,7 +165,7 @@ class User with ChangeNotifier {
           userPermessions[BridgeOperation.ReleaseBed] = true;
           userPermessions[BridgeOperation.MoveBed] = true;
           userPermessions[BridgeOperation.AddInstruction] = true;
-          userPermessions[BridgeOperation.RemoveInstruction] = true;
+          userPermessions[BridgeOperation.RemoveInstruction] = false;
           userPermessions[BridgeOperation.BuildNursesShift] = true;
           userPermessions[BridgeOperation.BuildDoctorsShift] = true;
           userPermessions[BridgeOperation.SendMessages] = true;
@@ -180,7 +180,7 @@ class User with ChangeNotifier {
           userPermessions[BridgeOperation.CleanBed] = true;
           userPermessions[BridgeOperation.ReleaseBed] = true;
           userPermessions[BridgeOperation.MoveBed] = true;
-          userPermessions[BridgeOperation.AddInstruction] = true;
+          userPermessions[BridgeOperation.AddInstruction] = false;
           userPermessions[BridgeOperation.RemoveInstruction] = true;
           userPermessions[BridgeOperation.BuildNursesShift] = true;
           userPermessions[BridgeOperation.BuildDoctorsShift] = true;
