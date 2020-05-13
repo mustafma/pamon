@@ -70,7 +70,7 @@ class AuthService {
         _fcm.unsubscribeFromTopic('addInstruction_topic');
         _fcm.unsubscribeFromTopic('removeInstruction_topic');
         _fcm.unsubscribeFromTopic("messagesFromAdmin_nurse_topic");
-        _fcm.unsubscribeFromTopic("messagesFromAdmin_doc_topic");
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_all_topic");
       break;
       case UserType.Other:
         // TODO: Handle this case.
