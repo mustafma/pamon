@@ -100,7 +100,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
 
         title:Align(
-          child: Text(loggedInUser.getUserName()),
+          child: Text(loggedInUser.getUserName() == null ? "." : loggedInUser.getUserName()),
           alignment: Alignment(1.2, 0),
         ),
 

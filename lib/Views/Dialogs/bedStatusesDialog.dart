@@ -318,13 +318,9 @@ class _BedStatusDialog extends State<BedStatusDialog> {
   }
 
   void handleIconStatusSelection2(BuildContext context) {
-    if (statusTypesValues != null && statusTypesValues.length > 0) {
+    if ( statusTypesValues != null && statusTypesValues.length > 0) {
       widget.crudObj.updateListOfBedStatusesAndDates(
           widget.roomId, widget.bed.bedId, statusTypesValues);
-
-      // if (cateterOptionSelected)
-      //widget.crudObj.updateBedDateField(
-      //  widget.roomId, widget.bed.bedId, "CatDate", selectedDate);
     }
   }
 

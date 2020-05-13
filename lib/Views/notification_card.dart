@@ -115,7 +115,7 @@ class _NotificationCard extends State<NotificationCard> {
     timer = Timer.periodic(
         Duration(seconds: 60), (Timer t) => calculatePassedTime());
 
-    allowChangeInstrStatus = loggedInUser.userPermessions[BridgeOperation.RemoveInstruction];
+    allowChangeInstrStatus = loggedInUser.userPermessions[BridgeOperation.RemoveInstruction] ;
 
     calculatePassedTime();
     super.initState();
@@ -137,7 +137,7 @@ class _NotificationCard extends State<NotificationCard> {
   }
 
   void doAction(BuildContext context) {
-    if (allowChangeInstrStatus) {
+    if (allowChangeInstrStatus && User.getInstance().isInShift) {
       alertDialog(context);
     }
   }
