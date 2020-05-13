@@ -112,6 +112,8 @@ class AuthService {
         _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
         break;
       case UserType.DepartmentManager:
+        _fcm.subscribeToTopic('addInstruction_topic');
+        _fcm.subscribeToTopic('removeInstruction_topic');
         _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
      /* case UserType.RoomDoctorSuperviosor:
