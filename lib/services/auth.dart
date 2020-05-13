@@ -58,12 +58,19 @@ class AuthService {
 
         break;
       case UserType.Nurse:
-      case UserType.NurseShiftManager:
         _fcm.unsubscribeFromTopic('addInstruction_topic');
         _fcm.unsubscribeFromTopic("messagesFromAdmin_nurse_topic");
         break;
+      case UserType.NurseShiftManager:
+        _fcm.unsubscribeFromTopic('addInstruction_topic');
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_nurse_topic");
+        _fcm.unsubscribeFromTopic('removeInstruction_topic');
+        break;
       case UserType.DepartmentManager:
-
+        _fcm.unsubscribeFromTopic('addInstruction_topic');
+        _fcm.unsubscribeFromTopic('removeInstruction_topic');
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_nurse_topic");
+        _fcm.unsubscribeFromTopic("messagesFromAdmin_doc_topic");
       break;
       case UserType.Other:
         // TODO: Handle this case.
@@ -107,8 +114,12 @@ class AuthService {
         _fcm.subscribeToTopic("messagesFromAdmin_doc_topic");
         break;
       case UserType.Nurse:
+        _fcm.subscribeToTopic('addInstruction_topic');
+        _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
+        break;
       case UserType.NurseShiftManager:
         _fcm.subscribeToTopic('addInstruction_topic');
+        _fcm.subscribeToTopic('removeInstruction_topic');
         _fcm.subscribeToTopic("messagesFromAdmin_nurse_topic");
         break;
       case UserType.DepartmentManager:
