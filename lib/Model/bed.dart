@@ -69,6 +69,7 @@ class Bed {
     if (O2) bedStatuses.insert(index++,BedStatus.O2);
     if (Infected) bedStatuses.insert(index++,BedStatus.Infected);
     if (Fasting) bedStatuses.insert(index++,BedStatus.Fasting);
+    if (pranola) bedStatuses.add(BedStatus.Pranola);
 
 
 
