@@ -1,6 +1,7 @@
 
 
 import 'package:BridgeTeam/Model/User.dart';
+import 'package:BridgeTeam/Views/listview_rooms.dart';
 import 'package:BridgeTeam/Views/shiftview.dart';
 import 'package:flutter/material.dart';
 import 'package:BridgeTeam/Views/ui_login.dart';
@@ -13,14 +14,45 @@ import 'Views/instanseMessage.dart';
 import 'Views/landing_page.dart';
 import 'Views/settings_view.dart';
 
-void main() {
+
+import 'dart:async';
+
+import 'package:camera/camera.dart';
+import 'Views/takepicture.dart';
+
+
+
+
+Future<void> main() async {
+
+
+    setupLocator();
+     WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+ // final firstCamera = cameras.first;
+
+
+  runApp(MyApp(firstCamera: cameras.first,));
+
+}
+
+
+/*void main() {
   setupLocator();
   runApp(MyApp());
-}
+}*/
 
 class MyApp extends StatelessWidget {
 // create FirebaseMessaging Obj
-
+final firstCamera;
+ MyApp(
+      {
+      @required this.firstCamera
+      });
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -40,6 +72,8 @@ class MyApp extends StatelessWidget {
           '/IM': (context) => InstanceMessage(),
           '/UserMng': (context) => UsersDashboardPage(),
           '/ShiftMng':(context) => ShiftView(),
+          '/rooms':(context) => ListViewRooms(),
+          '/camera':(context) => TakePictureScreen(camera: firstCamera),
         },
         theme: new ThemeData(
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),

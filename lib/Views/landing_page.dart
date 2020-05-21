@@ -10,6 +10,8 @@ import 'package:BridgeTeam/Views/ui_login.dart';
 import 'package:BridgeTeam/services/auth.dart';
 import 'package:BridgeTeam/services/crud.dart';
 
+import 'index_view.dart';
+
 class LandingPage extends StatelessWidget {
   static Session sessionObj;
   @override
@@ -28,7 +30,7 @@ class LandingPage extends StatelessWidget {
             future: setUser(user.uid,user.displayName),
             builder: (context,AsyncSnapshot<bool> snapshot) {
               if(snapshot.hasData)
-              return ListViewRooms();
+              return IndexView();
               else{
                 return Container(
                     child: Center(
