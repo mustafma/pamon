@@ -74,6 +74,7 @@ final firstCamera;
           '/ShiftMng':(context) => ShiftView(),
           '/rooms':(context) => ListViewRooms(),
           '/camera':(context) => TakePictureScreen(camera: firstCamera),
+          '/Pic':(context) => DisplayPictureScreen(imagePath: "",),
         },
         theme: new ThemeData(
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),

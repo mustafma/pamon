@@ -161,7 +161,7 @@ class IndexView extends StatelessWidget {
   }
 
     takePicture(BuildContext context) {
-  Navigator.pushNamed(context, '/camera');
+  Navigator.pushNamed(context, '/Pic');
   }
 
 }

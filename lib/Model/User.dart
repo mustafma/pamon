@@ -15,6 +15,7 @@ class User with ChangeNotifier {
   bool isInShift;
   bool isAdmin;
   UserType userole;
+  String meshmeretFileName;
 
   Map<BridgeOperation, bool> userPermessions = new Map();
 
@@ -33,6 +34,7 @@ class User with ChangeNotifier {
     this.role,
     this.title,
     this.isInShift,
+    this.meshmeretFileName,
   });
   void setUserType(UserType type) {
     userole = type;
@@ -40,6 +42,13 @@ class User with ChangeNotifier {
 
   String getUID() {
     return uid;
+  }
+    String getMeshmeretImpagePath() {
+    return meshmeretFileName;
+  }
+
+  void setMeshmeretImpagePath(String name) {
+    meshmeretFileName = name;
   }
 
   void setUID(String id) {
@@ -222,5 +231,6 @@ class User with ChangeNotifier {
         name = snapshot['name'] ?? '',
         isAdmin = snapshot['isAdmin'] ?? false,
         hospitalId = snapshot['hospitalId'] ?? '',
-        departmentId = snapshot['departmentId'] ?? '';
+        departmentId = snapshot['departmentId'] ?? '',
+        meshmeretFileName = snapshot['imageName'] ?? '';
 }

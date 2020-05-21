@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:io' as io;
 
+import 'package:BridgeTeam/Model/User.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
@@ -80,18 +81,22 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Construct the path where the image should be saved using the
             // pattern package.
 
+            
 
             
             final path = join(
               // Store the picture in the temp directory.
               // Find the temp directory using the `path_provider` plugin.
               (await getApplicationDocumentsDirectory()).path,
-              'mshmerot.png',
+               '${DateTime.now()}.png',
             );
+
+        
+   
 
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
-
+       User.getInstance().setMeshmeretImpagePath(path);
             // If the picture was taken, display it on a new screen.
             Navigator.push(
               context,
@@ -117,11 +122,20 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String path =  User.getInstance().getMeshmeretImpagePath() == null ? "" :User.getInstance().getMeshmeretImpagePath() ;
     return Scaffold(
       appBar: AppBar(title: Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
-    );
+      body: Image.file(io.File(path)),
+
+       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),        // Provide an onPressed callback.
+        onPressed: ()  {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, '/camera');
+
+        }
+    ));
   }
 }
