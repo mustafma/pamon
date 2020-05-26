@@ -22,7 +22,7 @@ _indicator(bool isActive, int index) {
 
  if (surveyModels[index].selectionType == AnswerSelectionType.SINGLE_ANSWER)
  {
-      isAnswered = surveyModels[index].selectedAnsIndexSingle != -1;
+      isAnswered =  surveyModels[index].selectedAnsIndexSingle != null && surveyModels[index].selectedAnsIndexSingle != -1;
  } else if (surveyModels[index].selectionType == AnswerSelectionType.MULTIPLE_ANSWER)
  {
       isAnswered = surveyModels[index].selectedAnsIndexForMultiple != null &&

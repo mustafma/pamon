@@ -74,11 +74,14 @@ class _SurveyItemState extends State<SurveyItem> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
-          "QUESTION ${widget.index + 1} OF ${widget.length} ",
+          "שאלה ${widget.index + 1} מתוך ${widget.length} ",
           style: TextStyle(
               color: Colors.white,
               letterSpacing: 2,
               fontWeight: FontWeight.w600),
+        ),
+        Divider(
+                                  color: Colors.orange,
         ),
         SizedBox(
           height: 16,
@@ -87,10 +90,11 @@ class _SurveyItemState extends State<SurveyItem> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(widget.surveyQuestionModel.question,
               style: TextStyle(
+                
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18,
                   letterSpacing: 2,
-                  fontWeight: FontWeight.bold)),
+                  fontWeight: FontWeight.bold),softWrap: true , textDirection: TextDirection.rtl,),
         ),
         Expanded(
           child: ListView.builder(
@@ -121,7 +125,7 @@ class _SurveyItemState extends State<SurveyItem> {
                                   answer,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w600),
                                 ))
                           ],

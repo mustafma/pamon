@@ -197,7 +197,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.exit_to_app,
           color: Color.fromRGBO(134, 165, 195, 9),
         ),
-        title: Text('סקר'),
+        title: Text('שאלון'),
       ),
     ));
 

@@ -104,13 +104,13 @@ class _SurveyUiState extends State<SurveyUi> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text("Completed"),
+            title: Text("הסתיים"),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             content: Container(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[Text("Thanks for giving feedback")],
+                children: <Widget>[Text("תודה של השתתפותך בשאלון זה")],
               ),
             ),
             actions: <Widget>[
@@ -121,7 +121,7 @@ class _SurveyUiState extends State<SurveyUi> {
                 padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                 color: bgDarkColor,
                 child: Text(
-                  "Okay",
+                  "סגור",
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
