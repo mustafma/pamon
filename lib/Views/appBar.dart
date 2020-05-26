@@ -68,6 +68,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     case 7:
                       _handleShiftView(context);
                       break;
+                     case 8:
+                      _handleSurvey(context);
+                      break;
                   }
                 },
               ),
@@ -184,6 +187,22 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Text('יציאה'),
       ),
     ));
+
+
+
+    _listOfType.add(new PopupMenuItem<int>(
+      value: 8,
+      child: ListTile(
+        trailing: Icon(
+          Icons.exit_to_app,
+          color: Color.fromRGBO(134, 165, 195, 9),
+        ),
+        title: Text('סקר'),
+      ),
+    ));
+
+
+
     return _listOfType;
   }
 }
@@ -211,5 +230,9 @@ void _handleUserMangments(BuildContext context) {
 
 void _handleShiftView(BuildContext context) {
   Navigator.pushNamed(context, '/ShiftMng');
+  //return LoginWidget();
+}
+void _handleSurvey(BuildContext context) {
+  Navigator.pushNamed(context, '/ZZZ');
   //return LoginWidget();
 }

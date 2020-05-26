@@ -9,6 +9,7 @@ import 'package:BridgeTeam/locator.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'Views/Survey/survey.ui.dart';
 import 'Views/UserDashboard.dart';
 import 'Views/instanseMessage.dart';
 import 'Views/landing_page.dart';
@@ -74,7 +75,8 @@ final firstCamera;
           '/ShiftMng':(context) => ShiftView(),
           '/rooms':(context) => ListViewRooms(),
           '/camera':(context) => TakePictureScreen(camera: firstCamera),
-          '/Pic':(context) => DisplayPictureScreen(imagePath: "",),
+           '/Pic':(context) => DisplayPictureScreen(imagePath: "",),
+          '/ZZZ':(context) => SurveyUi(),
         },
         theme: new ThemeData(
           //  primaryColor: Color.fromRGBO(58, 66, 86, 1.0),
