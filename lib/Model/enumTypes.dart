@@ -20,7 +20,8 @@ enum BedAction {
     Move,
     Swap,
     Clean,
-    Release
+    Release,
+    Infected
   }
   
 enum RoomAction { 
@@ -53,7 +54,9 @@ enum FieldType {
       ChangeBedStatus,
       UserManagment,
       SetRoomAsInfected,
-      CancelRoomInfectectionStatus
+      CancelRoomInfectectionStatus,
+      SetBedAsInfected,
+      CancelBedInfectectionStatus,
       
 
   }

@@ -77,12 +77,16 @@ class _CustomDialog extends State<CustomDialog> {
         widget.crudObj.cleanBed(widget.roomId, widget.bedId);
     else if(widget.operationName.toString().toLowerCase() ==  "releasebed")
           releaseBed(true);
+    else if(widget.operationName.toString().toLowerCase() ==  "inficted")
+          widget.crudObj.markBedAsInfected(widget.roomId, widget.bedId , true);
   }
 
     void handleNoButton()
   {
   if(widget.operationName.toString().toLowerCase() ==  "releasebed")
           releaseBed(false);
+  else if(widget.operationName.toString().toLowerCase() ==  "inficted")
+          widget.crudObj.markBedAsInfected(widget.roomId, widget.bedId , false);
   }
 
 

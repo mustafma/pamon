@@ -1,7 +1,5 @@
 import 'package:BridgeTeam/Model/User.dart';
-
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 import 'appBar.dart';
 
@@ -9,26 +7,26 @@ class IndexView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Dog App',
+      title: '',
       home: Scaffold(
-        appBar:  BaseAppBar(
-        title: Text('Bridge',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20)),
-        backButtonVisible: false,
-        appBar: AppBar(),
-      ),
+        appBar: BaseAppBar(
+          title: Text('Bridge',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
+          backButtonVisible: false,
+          appBar: AppBar(),
+        ),
         body: Container(
           child: DecoratedBox(
-            decoration:  new BoxDecoration(
-            gradient: new LinearGradient(
-                colors: [const Color(0xFF003C64), const Color(0xFF428879)],
-                begin: FractionalOffset.topLeft,
-                end: FractionalOffset.bottomRight,
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp)),
+            decoration: new BoxDecoration(
+                gradient: new LinearGradient(
+                    colors: [const Color(0xFF003C64), const Color(0xFF428879)],
+                    begin: FractionalOffset.topLeft,
+                    end: FractionalOffset.bottomRight,
+                    stops: [0.0, 1.0],
+                    tileMode: TileMode.clamp)),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -55,7 +53,10 @@ class IndexView extends StatelessWidget {
                       children: <Widget>[
                         Directionality(
                           textDirection: TextDirection.rtl,
-                          child: Text( User.getInstance().getUserName() == null ? ".":User.getInstance().getUserName(),
+                          child: Text(
+                              User.getInstance().getUserName() == null
+                                  ? "."
+                                  : User.getInstance().getUserName(),
                               textAlign: TextAlign.right,
                               textDirection: TextDirection.rtl,
                               style: TextStyle(
@@ -63,7 +64,7 @@ class IndexView extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
                         ),
-                      ], 
+                      ],
                     ),
                   ),
                   Center(
@@ -127,16 +128,10 @@ class IndexView extends StatelessWidget {
                                                     Icons.note,
                                                     color: Colors.white,
                                                   ),
-                                                  Text("משמרות שלי", style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 14)),
-
-
-
-
-
-
-
+                                                  Text("משמרות שלי",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14)),
                                                 ])),
 
                                         onTap: () => takePicture(context),
@@ -155,13 +150,16 @@ class IndexView extends StatelessWidget {
       ),
     );
   }
-  
+
   goToRooms(BuildContext context) {
-  Navigator.pushNamed(context, '/rooms');
+    Navigator.pushNamed(context, '/rooms');
   }
 
-    takePicture(BuildContext context) {
-  Navigator.pushNamed(context, '/Pic');
+  takePicture(BuildContext context) {
+    Navigator.pushNamed(context, '/Pic');
   }
+  
+
+  // Check  if there are open servey that need to be filled .
 
 }

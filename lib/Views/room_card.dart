@@ -508,7 +508,7 @@ class _RoomCardState extends State<RoomCard> {
           }
         }
 
-        if (User.getInstance().loggedInUserType == UserType.Doctor) {
+        if (User.getInstance().loggedInUserType == UserType.Doctor || User.getInstance().loggedInUserType ==UserType.DepartmentManager) {
           if (!widget.room.nurseAcceptedTalk2) iconTalkColor2 = Colors.yellow;
           // set docAcceptedTalk to true
           widget.crudObj.updateRoomTalkUpdates(

@@ -1,4 +1,5 @@
 import 'package:BridgeTeam/Model/enumTypes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class User with ChangeNotifier {
@@ -16,6 +17,11 @@ class User with ChangeNotifier {
   bool isAdmin;
   UserType userole;
   String meshmeretFileName;
+  bool  _showAlert = true;
+
+
+
+  List<dynamic> survies = new List<UserSurvey>();
 
   Map<BridgeOperation, bool> userPermessions = new Map();
 
@@ -43,12 +49,23 @@ class User with ChangeNotifier {
   String getUID() {
     return uid;
   }
-    String getMeshmeretImpagePath() {
+
+
+
+
+  String getMeshmeretImpagePath() {
     return meshmeretFileName;
   }
 
   void setMeshmeretImpagePath(String name) {
     meshmeretFileName = name;
+  }
+
+  bool needToSubmitSurvey() {
+    for (int i = 0; i < survies.length; i++) {
+      if (!(survies[i] as UserSurvey).issubmitted) return true;
+    }
+    return false;
   }
 
   void setUID(String id) {
@@ -73,6 +90,15 @@ class User with ChangeNotifier {
     return _instance;
   }
 
+
+
+  bool get showAlert => _showAlert;
+
+  set showAlert(bool showAlert) {
+    _showAlert = showAlert;
+  }
+
+  
   UserType stringToUserTypeConvert(String typeAsString) {
     switch (typeAsString.toLowerCase()) {
       case "dr":
@@ -109,112 +135,99 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserSurvies(List<UserSurvey> userSurvies) async {
+    survies = userSurvies;
+  }
+
   void populateUserPermessions() async {
-   /* if (!isInShift) {
-      userPermessions[BridgeOperation.CleanBed] = false;
-      userPermessions[BridgeOperation.ReleaseBed] = false;
-      userPermessions[BridgeOperation.MoveBed] = false;
-      userPermessions[BridgeOperation.AddInstruction] = false;
-      userPermessions[BridgeOperation.RemoveInstruction] = false;
-      if (this.userole == UserType.DepartmentManager ||
-          this.userole == UserType.NurseShiftManager)
-        userPermessions[BridgeOperation.BuildNursesShift] = true;
-      else
+    switch (this.userole) {
+      case UserType.Doctor:
+        userPermessions[BridgeOperation.CleanBed] = false;
+        userPermessions[BridgeOperation.ReleaseBed] = true;
+        userPermessions[BridgeOperation.MoveBed] = false;
+        userPermessions[BridgeOperation.AddInstruction] = true;
+        userPermessions[BridgeOperation.RemoveInstruction] = false;
         userPermessions[BridgeOperation.BuildNursesShift] = false;
-      if (this.userole == UserType.DepartmentManager ||
-          this.userole == UserType.NurseShiftManager)
-        userPermessions[BridgeOperation.BuildDoctorsShift] = true;
-      else
         userPermessions[BridgeOperation.BuildDoctorsShift] = false;
-      userPermessions[BridgeOperation.SendMessages] = false;
-      userPermessions[BridgeOperation.ChangeBedStatus] = false;
-      if (this.userole == UserType.DepartmentManager ||
-          this.userole == UserType.NurseShiftManager)
-        userPermessions[BridgeOperation.UserManagment] = true;
-      else
+        userPermessions[BridgeOperation.SendMessages] = false;
+        userPermessions[BridgeOperation.ChangeBedStatus] = true;
         userPermessions[BridgeOperation.UserManagment] = false;
-      userPermessions[BridgeOperation.SetRoomAsInfected] = false;
-      userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
-    } else {*/
-      switch (this.userole) {
-        case UserType.Doctor:
-          userPermessions[BridgeOperation.CleanBed] = false;
-          userPermessions[BridgeOperation.ReleaseBed] = true;
-          userPermessions[BridgeOperation.MoveBed] = false;
-          userPermessions[BridgeOperation.AddInstruction] = true;
-          userPermessions[BridgeOperation.RemoveInstruction] = false;
-          userPermessions[BridgeOperation.BuildNursesShift] = false;
-          userPermessions[BridgeOperation.BuildDoctorsShift] = false;
-          userPermessions[BridgeOperation.SendMessages] = false;
-          userPermessions[BridgeOperation.ChangeBedStatus] = true;
-          userPermessions[BridgeOperation.UserManagment] = false;
-          userPermessions[BridgeOperation.SetRoomAsInfected] = true;
-          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+        userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+        userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+        userPermessions[BridgeOperation.SetBedAsInfected] = true;
+        userPermessions[BridgeOperation.CancelBedInfectectionStatus] = true;
+        break;
 
-          break;
+      case UserType.Nurse:
+        userPermessions[BridgeOperation.CleanBed] = true;
+        userPermessions[BridgeOperation.ReleaseBed] = false;
+        userPermessions[BridgeOperation.MoveBed] = true;
+        userPermessions[BridgeOperation.AddInstruction] = false;
+        userPermessions[BridgeOperation.RemoveInstruction] = true;
+        userPermessions[BridgeOperation.BuildNursesShift] = false;
+        userPermessions[BridgeOperation.BuildDoctorsShift] = false;
+        userPermessions[BridgeOperation.SendMessages] = false;
+        userPermessions[BridgeOperation.ChangeBedStatus] = true;
+        userPermessions[BridgeOperation.UserManagment] = false;
+        userPermessions[BridgeOperation.SetRoomAsInfected] = false;
+        userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
+                userPermessions[BridgeOperation.SetBedAsInfected] = true;
+        userPermessions[BridgeOperation.CancelBedInfectectionStatus] = true;
 
-        case UserType.Nurse:
-          userPermessions[BridgeOperation.CleanBed] = true;
-          userPermessions[BridgeOperation.ReleaseBed] = false;
-          userPermessions[BridgeOperation.MoveBed] = true;
-          userPermessions[BridgeOperation.AddInstruction] = false;
-          userPermessions[BridgeOperation.RemoveInstruction] = true;
-          userPermessions[BridgeOperation.BuildNursesShift] = false;
-          userPermessions[BridgeOperation.BuildDoctorsShift] = false;
-          userPermessions[BridgeOperation.SendMessages] = false;
-          userPermessions[BridgeOperation.ChangeBedStatus] = true;
-          userPermessions[BridgeOperation.UserManagment] = false;
-          userPermessions[BridgeOperation.SetRoomAsInfected] = false;
-          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
+        break;
 
-          break;
+      case UserType.DepartmentManager:
+        userPermessions[BridgeOperation.CleanBed] = true;
+        userPermessions[BridgeOperation.ReleaseBed] = true;
+        userPermessions[BridgeOperation.MoveBed] = true;
+        userPermessions[BridgeOperation.AddInstruction] = true;
+        userPermessions[BridgeOperation.RemoveInstruction] = false;
+        userPermessions[BridgeOperation.BuildNursesShift] = true;
+        userPermessions[BridgeOperation.BuildDoctorsShift] = true;
+        userPermessions[BridgeOperation.SendMessages] = true;
+        userPermessions[BridgeOperation.ChangeBedStatus] = true;
+        userPermessions[BridgeOperation.UserManagment] = true;
+        userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+        userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+        userPermessions[BridgeOperation.SetBedAsInfected] = true;
+        userPermessions[BridgeOperation.CancelBedInfectectionStatus] = true;
 
-        case UserType.DepartmentManager:
-          userPermessions[BridgeOperation.CleanBed] = true;
-          userPermessions[BridgeOperation.ReleaseBed] = true;
-          userPermessions[BridgeOperation.MoveBed] = true;
-          userPermessions[BridgeOperation.AddInstruction] = true;
-          userPermessions[BridgeOperation.RemoveInstruction] = false;
-          userPermessions[BridgeOperation.BuildNursesShift] = true;
-          userPermessions[BridgeOperation.BuildDoctorsShift] = true;
-          userPermessions[BridgeOperation.SendMessages] = true;
-          userPermessions[BridgeOperation.ChangeBedStatus] = true;
-          userPermessions[BridgeOperation.UserManagment] = true;
-          userPermessions[BridgeOperation.SetRoomAsInfected] = true;
-          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+        break;
 
-          break;
+      case UserType.NurseShiftManager:
+        userPermessions[BridgeOperation.CleanBed] = true;
+        userPermessions[BridgeOperation.ReleaseBed] = true;
+        userPermessions[BridgeOperation.MoveBed] = true;
+        userPermessions[BridgeOperation.AddInstruction] = false;
+        userPermessions[BridgeOperation.RemoveInstruction] = true;
+        userPermessions[BridgeOperation.BuildNursesShift] = true;
+        userPermessions[BridgeOperation.BuildDoctorsShift] = true;
+        userPermessions[BridgeOperation.SendMessages] = true;
+        userPermessions[BridgeOperation.ChangeBedStatus] = true;
+        userPermessions[BridgeOperation.UserManagment] = true;
+        userPermessions[BridgeOperation.SetRoomAsInfected] = true;
+        userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
+        userPermessions[BridgeOperation.SetBedAsInfected] = true;
+        userPermessions[BridgeOperation.CancelBedInfectectionStatus] = true;
+        break;
 
-        case UserType.NurseShiftManager:
-          userPermessions[BridgeOperation.CleanBed] = true;
-          userPermessions[BridgeOperation.ReleaseBed] = true;
-          userPermessions[BridgeOperation.MoveBed] = true;
-          userPermessions[BridgeOperation.AddInstruction] = false;
-          userPermessions[BridgeOperation.RemoveInstruction] = true;
-          userPermessions[BridgeOperation.BuildNursesShift] = true;
-          userPermessions[BridgeOperation.BuildDoctorsShift] = true;
-          userPermessions[BridgeOperation.SendMessages] = true;
-          userPermessions[BridgeOperation.ChangeBedStatus] = true;
-          userPermessions[BridgeOperation.UserManagment] = true;
-          userPermessions[BridgeOperation.SetRoomAsInfected] = true;
-          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = true;
-          break;
-
-        case UserType.Other:
-          userPermessions[BridgeOperation.CleanBed] = false;
-          userPermessions[BridgeOperation.ReleaseBed] = false;
-          userPermessions[BridgeOperation.MoveBed] = false;
-          userPermessions[BridgeOperation.AddInstruction] = false;
-          userPermessions[BridgeOperation.RemoveInstruction] = false;
-          userPermessions[BridgeOperation.BuildNursesShift] = false;
-          userPermessions[BridgeOperation.BuildDoctorsShift] = false;
-          userPermessions[BridgeOperation.SendMessages] = false;
-          userPermessions[BridgeOperation.ChangeBedStatus] = false;
-          userPermessions[BridgeOperation.UserManagment] = false;
-          userPermessions[BridgeOperation.SetRoomAsInfected] = false;
-          userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
-          break;
-      }
+      case UserType.Other:
+        userPermessions[BridgeOperation.CleanBed] = false;
+        userPermessions[BridgeOperation.ReleaseBed] = false;
+        userPermessions[BridgeOperation.MoveBed] = false;
+        userPermessions[BridgeOperation.AddInstruction] = false;
+        userPermessions[BridgeOperation.RemoveInstruction] = false;
+        userPermessions[BridgeOperation.BuildNursesShift] = false;
+        userPermessions[BridgeOperation.BuildDoctorsShift] = false;
+        userPermessions[BridgeOperation.SendMessages] = false;
+        userPermessions[BridgeOperation.ChangeBedStatus] = false;
+        userPermessions[BridgeOperation.UserManagment] = false;
+        userPermessions[BridgeOperation.SetRoomAsInfected] = false;
+        userPermessions[BridgeOperation.CancelRoomInfectectionStatus] = false;
+        userPermessions[BridgeOperation.SetBedAsInfected] = false;
+        userPermessions[BridgeOperation.CancelBedInfectectionStatus] = false;
+        break;
+    }
     //}
   }
 
@@ -232,5 +245,58 @@ class User with ChangeNotifier {
         isAdmin = snapshot['isAdmin'] ?? false,
         hospitalId = snapshot['hospitalId'] ?? '',
         departmentId = snapshot['departmentId'] ?? '',
-        meshmeretFileName = snapshot['imageName'] ?? '';
+        meshmeretFileName = snapshot['imageName'] ?? '',
+        // Get Shalonem for User that are still opened
+        survies = snapshot['shalonem']
+            .map((map) => new UserSurvey.fromMap(map))
+            .toList(); //.sort((a,b)
+
+}
+
+class UserSurvey {
+  String surveyid;
+  DateTime dueDate;
+  bool _issubmitted;
+
+  List<dynamic> answers = new List<SurveyAnswer>();
+
+  bool get issubmitted => _issubmitted;
+
+  set issubmitted(bool issubmitted) {
+    _issubmitted = issubmitted;
+  }
+
+  UserSurvey.fromMap(Map snapshot)
+      :
+
+        // documentID =  id,
+        surveyid = snapshot['survey_id'],
+        _issubmitted = snapshot['issubmitted'],
+        dueDate = (snapshot['duedate'] as Timestamp) != null
+            ? (snapshot['duedate'] as Timestamp).toDate()
+            : DateTime.now(),
+        answers = snapshot['answers']
+            .map((map) => new SurveyAnswer.fromMap(map))
+            .toList();
+}
+
+class SurveyAnswer {
+  String _questionid;
+  String _answer;
+
+  String get question_id => _questionid;
+
+  set question_id(String _questionid) {
+    _questionid = question_id;
+  }
+
+  String get answer => _answer;
+
+  set answer(String answer) {
+    _answer = answer;
+  }
+
+  SurveyAnswer.fromMap(Map snapshot)
+      : _questionid = snapshot['question_id'],
+        _answer = snapshot['answer'];
 }

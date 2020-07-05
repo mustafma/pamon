@@ -142,6 +142,14 @@ class _BedCardState extends State<BedCard> {
                                     PamonIcons.exit,
                                     color: Colors.green,
                                   ),
+
+                               if (widget.bed.Inficted)
+                                  new Icon(
+                                    PamonIcons.pamon_infection,
+                                    color: Colors.red,
+                                  ),
+
+
                                 new Padding(padding: EdgeInsets.all(10.0)),
                                 Text(widget.bed.name,
                                     style: TextStyle(
@@ -367,6 +375,17 @@ class _BedCardState extends State<BedCard> {
                   bedId: widget.bed.bedId,
                   roomId: widget.roomId,
                   operationName: "releasebed");
+            });
+        break;
+        case BedAction.Infected:
+       showDialog(
+            context: context,
+            builder: (context) {
+              return new CustomDialog(
+                  text: "המיטה מזוהמת",
+                  bedId: widget.bed.bedId,
+                  roomId: widget.roomId,
+                  operationName: "inficted");
             });
         break;
     }
@@ -662,11 +681,13 @@ class _BedCardState extends State<BedCard> {
               url,
             ),
             fit: BoxFit.cover,
+           
           ),
           height: 32,
           width: 32,
         ),
         iconSize: 32,
+       
         //color: Colors.yellow,
         onPressed: () => alertDialog(context, getMessageToShow(stat), stat),
       ));

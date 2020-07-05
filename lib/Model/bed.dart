@@ -10,6 +10,7 @@ class Bed {
   String name;
   bool Cateter = false;
   bool Infected = false;
+  bool Inficted = false;
   bool CT = false;
   bool Fasting = false;
   bool SocialAid = false;
@@ -32,6 +33,7 @@ class Bed {
         name = snapshot['bedName'] ?? '',
         Cateter = snapshot['Cateter'] ?? false,
         Infected = snapshot['Infected'] ?? false,
+        Inficted = snapshot['Inficted'] ?? false,
         CT = snapshot['CT'] ?? false,
         Fasting = snapshot['Fasting'] ?? false,
         SocialAid = snapshot['SocialAid'] ?? false,

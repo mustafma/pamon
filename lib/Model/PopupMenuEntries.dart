@@ -145,6 +145,25 @@ if (loggedInUser.userPermessions[BridgeOperation.ReleaseBed])
 
 }
 
+if (loggedInUser.userPermessions[BridgeOperation.SetBedAsInfected])
+{
+  var popMenuItem4 =   new PopupMenuItem<BedAction>(
+      value: BedAction.Infected,
+      child: ListTile(
+        trailing: Icon(
+          Icons.sim_card_alert,
+          color: Color.fromRGBO(64, 75, 96, 9),
+        ),
+        title: Text('מיטה מזוהמת'),
+      ),
+    );
+    _listBedActions.add(popMenuItem4);
+
+}
+
+
+
+
     return _listBedActions;
   }
 
